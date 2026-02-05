@@ -768,9 +768,12 @@ function scenarioStem(term, rng){
       `Scenario: The organization wants a strategic leader who defines secure defaults, governs security policy, and ensures architectural guidance is available to product teams. Which role best matches that strategic oversight?`
     ],
     "Core Concepts":[
-      `Scenario: The stem describes a practical security objective and constraints; your task is to select the single concept or practice that most directly satisfies those constraints in a real engineering context. Which concept best fits the described need?`,
-      `Scenario: For certification-style preparation, the question provides a concise real-world use case and asks you to match the security concept that most precisely addresses the scenario. Choose the best match.`,
-      `Scenario: Several plausible answers may exist, but only one satisfies the scenario’s constraints about timing, scope, and risk trade-offs. Select the option that most closely aligns with those constraints.`
+      `A team needs a specific security practice to meet the stated objective within the project constraints. Which concept best fits the need?`,
+      `A real-world use case is described; pick the security concept that most precisely matches the requirement. Which option best fits?`,
+      `The prompt describes a goal, a constraint, and a timing requirement. Which concept directly satisfies those three elements?`,
+      `Select the concept that best matches the objective and environment described.`,
+      `Pick the option that directly addresses the security objective in the prompt.`,
+      `Choose the concept that best fits the use case and scope described.`
     ]
   };
 
@@ -778,7 +781,7 @@ function scenarioStem(term, rng){
   const base = list[Math.floor(rng()*list.length)];
 
   const hint = (term.usage || term.definition || "").trim();
-  const extra = hint ? `\n\nContext: The team is specifically trying to address: ${hint}` : "";
+  const extra = hint ? `\n\nThe team is trying to address ${hint}` : "";
 
   return base + extra;
 }

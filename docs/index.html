@@ -802,17 +802,19 @@ function scenarioStem(term, rng){
       `A central team is needed to run security assessments across phases and coordinate SDL activities. Which role or team most directly owns that work?`
     ],
     "Core Concepts":[
-      `The stem describes a practical security objective and constraints; your task is to select the concept that most directly satisfies those constraints. Which concept best fits the described need?`,
-      `The question provides a concise real-world use case and asks you to match the security concept that most precisely addresses it. Choose the best match.`,
-      `Several plausible answers may exist, but only one satisfies the constraints about timing, scope, and risk trade-offs. Select the option that most closely aligns with those constraints.`,
-      `You must pick the most precise concept for the goal and environment described. Which option best fits?`
+      `A team needs a specific security practice to meet the stated objective within the project constraints. Which concept best fits the need?`,
+      `A real-world use case is described; pick the security concept that most precisely matches the requirement. Which option best fits?`,
+      `The prompt describes a goal, a constraint, and a timing requirement. Which concept directly satisfies those three elements?`,
+      `Select the concept that best matches the objective and environment described.`,
+      `Pick the option that directly addresses the security objective in the prompt.`,
+      `Choose the concept that best fits the use case and scope described.`
     ]
   };
 
   const list = stems[cat] || stems["Core Concepts"];
   const base = list[Math.floor(rng()*list.length)];
 
-  const extra = clue ? `\n\nThe team is specifically trying to address: ${normalizeSentence(clue)}.` : "";
+  const extra = clue ? `\n\nThe team is trying to address ${normalizeSentence(clue)}.` : "";
 
   return base + extra;
 }
