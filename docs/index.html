@@ -179,6 +179,8 @@
     .choice:active{transform: translateY(1px)}
     .choice.disabled{opacity:.6;cursor:not-allowed}
     .choice.triedWrong{border-color: rgba(255,176,32,.75);background: rgba(255,176,32,.06);}
+    .choice.correct{border-color: rgba(37,196,106,.75);background: rgba(37,196,106,.10);}
+    .choice.selected{outline: 2px solid rgba(106,166,255,.55);}
     .bullet{
       width:26px;height:26px;border-radius: 10px;
       background: rgba(106,166,255,.16);
@@ -760,22 +762,12 @@ const SCENARIO_BANK = {
       system: "a customer-facing web portal with file uploads and PDF parsing",
       trigger: "QA can crash the service using corrupted PDFs, oversized payloads, and malformed MIME headers",
       timing: "two days from a scheduled release",
-      constraints: [
-        "must be automatable and repeatable (nightly CI runs)",
-        "goal is to force error-handling and parser paths",
-        "should surface security bugs that normal scripted tests miss"
-      ],
       ask: "Which testing strategy best matches this approach?"
     },
     {
       system: "an internal API gateway validating JSON and JWT claims",
       trigger: "security reviewers found inconsistent handling of invalid encodings, missing fields, and extreme input sizes",
       timing: "during release hardening in staging",
-      constraints: [
-        "should generate malformed inputs at scale",
-        "must capture crashes and unexpected exceptions as evidence",
-        "should help identify parsing and validation weaknesses"
-      ],
       ask: "Which option is the best fit?"
     }
   ],
@@ -785,11 +777,6 @@ const SCENARIO_BANK = {
       system: "a new service exposing internal + external APIs and storing customer PII",
       trigger: "the team is unsure where trust boundaries and authorization checks must be enforced",
       timing: "before implementation begins",
-      constraints: [
-        "must document data flows and trust boundaries",
-        "identify entry points and abuse cases",
-        "produce a mitigation backlog for engineering"
-      ],
       ask: "What security activity best fits?"
     }
   ]
@@ -810,53 +797,53 @@ function detailedScenarioStem(term, rng) {
   const bank = SCENARIO_BANK[cat] || SCENARIO_BANK["Testing & Verification"];
   const s = pick(bank);
 
-  const bullets = (s.constraints || []).map(c => `- ${c}`).join("\n");
+  // Single natural paragraph (no labels, no bullets, no constraints)
+  const pieces = [];
 
-  return `${persona}
-Context: The team is working on ${s.system}.
-What happened: ${s.trigger}.
-Timing: ${s.timing}.
+  // Keep persona (remove this line if you want zero persona text)
+  pieces.push(persona);
 
-Constraints:
-${bullets}
+  if (s.system) pieces.push(`The team is working on ${s.system}.`);
+  if (s.trigger) pieces.push(`${String(s.trigger).replace(/\.\.+/g, ".")}`.replace(/[.\s]+$/g,".") + ".");
+  if (s.timing) pieces.push(`${String(s.timing).replace(/\.\.+/g, ".")}`.replace(/[.\s]+$/g,".") + ".");
 
-${s.ask}`;
+  const ask = s.ask || "Which option best fits this scenario?";
+
+  return `${pieces.join(" ")} ${ask}`.replace(/\s+/g, " ").trim();
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
-  // Must be very detailed (>=3 sentences) AND explain why others are incorrect.
-  const clue = normalizeSentence(buildClue(term));
-  const explain = formatTermExplain(term);
+  const correctName = term.term;
+  const correctExplain = formatTermExplain(term);
 
-  const otherLines = optionTexts
+  const others = optionTexts
     .map((txt, i)=>({txt, i}))
     .filter(x=>x.i !== correctIdx)
     .map(x => {
       const t = getTermByName(x.txt);
-      const base = formatTermExplain(t);
-      const why = `It does not align with the constraints about ${scenarioNeed}.`;
-      return `• <strong>${x.txt}</strong>: ${base || "This option addresses a different security activity."} ${why}`;
+      const line = t ? formatTermExplain(t) : "";
+      return `• <strong>${x.txt}</strong>: ${line}`;
     })
     .join("<br><br>");
 
   return `
-    <strong>Correct — teaching explanation</strong><br><br>
-    <strong>What this term means:</strong> ${explain || "This term describes a specific security practice."}<br><br>
-    <strong>Why this is the correct answer:</strong> The described activity matches the constraints and goal in the prompt, including scope, timing, and risk objective. It fits the need better than alternatives because it directly addresses ${scenarioNeed}.${clue ? ` The key clue is: ${clue}.` : ""}<br><br>
+    <strong>Correct</strong><br><br>
+    <strong>${correctName}</strong> is correct because ${correctExplain}
+    ${scenarioNeed ? ` This matches the scenario need: <em>${scenarioNeed}</em>.` : ``}
+    <br><br>
     <strong>Why the other options are not the best fit:</strong><br><br>
-    ${otherLines}
+    ${others}
   `;
 }
 
 function buildRationaleWrong(selectedTerm, scenarioNeed){
-  // Must be >=3 sentences and must not reveal the correct answer.
-  const clue = normalizeSentence(buildClue(selectedTerm));
+  const name = selectedTerm?.term || "This option";
   const explain = formatTermExplain(selectedTerm);
 
   return `
-    <strong>Not correct — teaching explanation</strong><br><br>
-    <strong>What this term means:</strong> ${explain || "This term describes a security concept."}<br><br>
-    <strong>Why this is not the best fit:</strong> The prompt emphasizes constraints about ${scenarioNeed}, and this option does not align with those constraints. It focuses on a different objective or stage than the one described. Re-read the prompt and match the activity to the specific goal it calls for.${clue ? ` The option you picked mainly addresses: ${clue}.` : ""}
+    <strong>${name}</strong> is not the best fit here.<br><br>
+    ${explain}
+    ${scenarioNeed ? `<br><br><strong>What the scenario is really asking for:</strong> ${scenarioNeed}.` : ``}
   `;
 }
 
@@ -895,7 +882,7 @@ function buildTermQuestion(correctTerm, rng){
 
   const correctKey = optionObjs[correctIdx].key;
 
-  const scenarioNeed = categorizeTerm(correctTerm) + " objective under real constraints";
+  const scenarioNeed = categorizeTerm(correctTerm) + " objective";
 
   // Build per-option rationales (for practice wrong selection)
   const optionToTermObj = {};
@@ -1369,9 +1356,19 @@ function renderQuestion(){
     div.className = "choice";
     if(disabled) div.classList.add("disabled");
 
+    // highlight current selection
+    if(qState.selectedKey === opt.key){
+      div.classList.add("selected");
+    }
+
     // mark tried wrong options (practice only)
     const triedWrong = (a.mode==="practice") && (qState.wrongSelectedKeys||[]).includes(opt.key) && !qState.locked;
     if(triedWrong) div.classList.add("triedWrong");
+
+    // highlight correct answer when locked (practice)
+    if(a.mode === "practice" && qState.locked && opt.key === q.correctKey){
+      div.classList.add("correct");
+    }
 
     div.innerHTML = `
       <div class="bullet">${String.fromCharCode(65+idx)}</div>
