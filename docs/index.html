@@ -756,8 +756,6 @@ function pickDistractors(correctTerm, rng){
 
 function scenarioStem(term, rng){
   const cat = categorizeTerm(term);
-  const clue = normalizeSentence(buildClue(term));
-
   const pick = (arr) => arr[Math.floor(rng()*arr.length)];
 
   const personas = [
@@ -768,115 +766,177 @@ function scenarioStem(term, rng){
     "You are a security analyst helping a dev team prepare for launch."
   ];
 
-  const endings = [
-    "Which security testing approach should you recommend, and why?",
-    "Which security practice should the team choose, and why?",
-    "Which option best fits this job task, and why?",
-    "What is the best next security step for the team?",
-    "Which approach is most appropriate for this release scenario?"
-  ];
-
-  const situations = {
+  const templates = {
     "Threat Modeling":[
-      "The team is designing a new service that will handle customer data and expose both internal and external APIs.",
-      "An architecture review is underway for a new platform with multiple services and unclear trust boundaries.",
-      "Leadership wants risk owners to understand where attackers could abuse the design before development starts."
+      {
+        context: "A new service is being designed that will handle customer data and expose internal and external APIs. The team wants to surface abuse cases early and build mitigations into the design.",
+        goals: [
+          "identify threats before coding starts",
+          "map risks to components and trust boundaries",
+          "produce a backlog of mitigations for the design"
+        ],
+        question: "Which approach best matches this work?"
+      },
+      {
+        context: "During an architecture review, teams are unclear about where authentication and authorization boundaries should be enforced across services.",
+        goals: [
+          "document trust boundaries and data flows",
+          "identify attacker entry points",
+          "prioritize fixes for engineering"
+        ],
+        question: "Which approach should the team use?"
+      }
     ],
     "Scanning & Tools":[
-      "A customer-facing web app is about to go live, and management wants common web weaknesses identified first.",
-      "The team needs a repeatable way to scan a web app during release readiness.",
-      "Security needs an automated tool to discover and test web endpoints with minimal manual effort."
+      {
+        context: "A customer-facing web app is about to go live. Management wants an automated approach to identify common web weaknesses like SQL injection, XSS, insecure cookies, and missing headers.",
+        goals: [
+          "quickly scan the application",
+          "identify known vulnerabilities",
+          "produce a report for developers",
+          "require minimal manual effort",
+          "run regularly as part of release"
+        ],
+        question: "Which security testing approach should you recommend, and why?"
+      },
+      {
+        context: "The team needs a repeatable, automated check that can run in staging without disrupting data or workflows.",
+        goals: [
+          "minimize false positives",
+          "avoid intrusive payloads",
+          "produce defensible findings"
+        ],
+        question: "Which approach best fits this need?"
+      }
     ],
     "Testing & Verification":[
-      "The team must validate that security controls behave as intended under realistic conditions.",
-      "QA wants to exercise error paths and malformed inputs to find security bugs before release.",
-      "You need evidence from a running system that access controls and input validation work."
+      {
+        context: "You are part of a QA team testing a new internal application before release. The team submits malformed inputs such as broken file formats, incorrect data types, oversized payloads, and corrupted requests to see how the system behaves.",
+        goals: [
+          "force the application down error-handling paths",
+          "test how parsers and validators respond",
+          "identify vulnerabilities normal testing might miss",
+          "support QA and penetration testing"
+        ],
+        question: "Which testing approach best matches what the QA team is doing?"
+      },
+      {
+        context: "A security tester needs to validate access controls and input validation against a running system with realistic traffic.",
+        goals: [
+          "observe how controls behave at runtime",
+          "use realistic inputs",
+          "capture evidence for remediation"
+        ],
+        question: "Which approach best fits this activity?"
+      }
     ],
     "Governance & Measurement":[
-      "Executives want consistent severity scoring and naming across findings and reports.",
-      "Audit preparation requires traceability from requirements to tests and results.",
-      "Security leadership needs a program-wide way to measure maturity and progress."
+      {
+        context: "Executives want consistent severity scoring and naming across tools, bug trackers, and reports.",
+        goals: [
+          "standardize how vulnerabilities are labeled",
+          "prioritize remediation consistently",
+          "support audit reporting"
+        ],
+        question: "Which governance standard best fits this request?"
+      },
+      {
+        context: "Security leadership needs a program-wide way to measure maturity and plan improvements over time.",
+        goals: [
+          "assess current practices",
+          "identify gaps",
+          "track progress"
+        ],
+        question: "Which framework best supports this work?"
+      }
     ],
     "Lifecycle & Process":[
-      "The organization wants security integrated across planning, design, build, test, release, and maintenance.",
-      "A release is approaching and the team must finalize risk decisions and post-release plans.",
-      "After launch, vulnerability intake and patching must run reliably."
+      {
+        context: "The organization wants security integrated across planning, design, build, test, release, and maintenance rather than bolted on at the end.",
+        goals: [
+          "assign security responsibilities per phase",
+          "produce required security artifacts",
+          "reduce late-stage risk"
+        ],
+        question: "Which lifecycle approach best fits this need?"
+      },
+      {
+        context: "After launch, vulnerability reports must be validated and fixes coordinated across teams with clear disclosure timelines.",
+        goals: [
+          "validate external reports",
+          "coordinate remediation",
+          "manage disclosure"
+        ],
+        question: "Which function or team best matches this responsibility?"
+      }
     ],
     "Methodologies":[
-      "The project follows a defined delivery cadence and needs a development model that fits it.",
-      "The team delivers in short cycles and needs continuous feedback and testing.",
-      "Requirements must be validated with corresponding tests throughout delivery."
+      {
+        context: "The team delivers in short cycles and wants continuous feedback, frequent releases, and automated testing in the pipeline.",
+        goals: [
+          "support rapid iteration",
+          "enable continuous integration",
+          "deliver working software frequently"
+        ],
+        question: "Which development methodology best fits this workflow?"
+      },
+      {
+        context: "A program requires formal sign-offs, heavy documentation, and long planned releases.",
+        goals: [
+          "enforce sequential phases",
+          "use formal documentation",
+          "control change tightly"
+        ],
+        question: "Which methodology best matches this environment?"
+      }
     ],
     "Roles & Response":[
-      "A program needs clear ownership for security activities and accountability for outcomes.",
-      "An external vulnerability report arrives and must be validated, triaged, and coordinated across teams.",
-      "A product group needs embedded security guidance during daily development."
+      {
+        context: "An external vulnerability report arrives and must be validated, triaged, and coordinated across teams.",
+        goals: [
+          "validate the report",
+          "coordinate fixes",
+          "manage disclosure timelines"
+        ],
+        question: "Which role or team is primarily responsible?"
+      },
+      {
+        context: "A product team needs someone embedded in development to coach secure coding and flag design risks during sprints.",
+        goals: [
+          "support developers daily",
+          "promote secure practices",
+          "bridge to the central security team"
+        ],
+        question: "Which role best fits this need?"
+      }
     ],
     "Core Concepts":[
-      "A dev team needs a security practice that fits a specific release risk and timeline.",
-      "A product owner asks for a concrete security action to reduce a known exposure.",
-      "A security requirement is defined and needs the most practical matching approach."
-    ]
-  };
-
-  const constraints = {
-    "Threat Modeling":[
-      ["happen before code is written", "map risks to components and owners", "produce mitigations that influence design"],
-      ["identify attacker goals and entry points", "document trust boundaries", "prioritize threats for engineering"],
-      ["create a repeatable threat list", "tie findings to controls", "support architecture decisions"]
-    ],
-    "Scanning & Tools":[
-      ["quickly scan the application", "identify known vulnerabilities", "produce a report for developers", "require minimal manual effort", "run regularly as part of release"],
-      ["avoid intrusive payloads", "minimize false positives", "work in staging", "produce defensible findings"],
-      ["discover endpoints and inputs", "automate reconnaissance", "feed follow-up testing"]
-    ],
-    "Testing & Verification":[
-      ["run against a live system", "observe control behavior", "use realistic inputs"],
-      ["exercise error paths", "use malformed inputs", "expose parsing bugs"],
-      ["validate access controls", "identify externally visible weaknesses", "require minimal internal knowledge"]
-    ],
-    "Governance & Measurement":[
-      ["standardize severity", "support prioritization", "be auditable"],
-      ["trace requirements to tests", "prove coverage", "support compliance"],
-      ["measure maturity", "compare teams consistently", "guide improvement"]
-    ],
-    "Lifecycle & Process":[
-      ["integrate security across phases", "assign responsibilities", "produce required artifacts"],
-      ["finalize risk decisions", "confirm release readiness", "set post-release response"],
-      ["validate reports", "coordinate fixes", "manage disclosures"]
-    ],
-    "Methodologies":[
-      ["support short iterations", "enable continuous feedback", "deliver frequently"],
-      ["use formal sign-offs", "emphasize documentation", "plan long releases"],
-      ["map requirements to tests", "enforce verification per phase", "reduce missed validation"]
-    ],
-    "Roles & Response":[
-      ["own end-to-end response", "coordinate fixes", "manage disclosures"],
-      ["embed in a dev team", "coach developers", "escalate architectural gaps"],
-      ["set security policy", "guide architecture", "drive SDL adoption"]
-    ],
-    "Core Concepts":[
-      ["match the objective", "fit the constraints", "apply at the right stage"],
-      ["address the stated risk", "produce actionable output", "support engineering decisions"],
-      ["be practical to run", "align with the environment", "solve the described need"]
+      {
+        context: "A product owner asks for a concrete security action to reduce a known exposure before release.",
+        goals: [
+          "target the specific risk",
+          "be practical to run",
+          "produce actionable results"
+        ],
+        question: "Which security approach is the best match?"
+      },
+      {
+        context: "A dev team needs a security practice that fits the project timeline and reduces common web risks.",
+        goals: [
+          "fit the release schedule",
+          "address the stated risk",
+          "produce usable output"
+        ],
+        question: "Which approach should the team choose?"
+      }
     ]
   };
 
   const persona = pick(personas);
-  const situation = pick(situations[cat] || situations["Core Concepts"]);
-  const constraintSet = (pick(constraints[cat] || constraints["Core Concepts"]) || []).slice();
-  if(clue) constraintSet.push(`focus on ${clue.toLowerCase()}`);
+  const template = pick(templates[cat] || templates["Core Concepts"]);
+  const bullets = (template.goals || []).map(g=>`- ${g}`).join("\n");
 
-  const endLine = pick(endings);
-  const useLong = rng() < 0.5;
-
-  if(useLong){
-    const bullets = constraintSet.map(c=>`- ${c}`).join("\n");
-    return `${persona}\n${situation}\n\nYou are asked to use an approach that:\n\n${bullets}\n\n${endLine}`;
-  }
-
-  const shortList = constraintSet.slice(0, 3).join(", ");
-  return `${persona} ${situation} The approach must ${shortList}. ${endLine}`;
+  return `${persona}\n${template.context}\n\nThe goal is to:\n\n${bullets}\n\n${template.question}`;
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){

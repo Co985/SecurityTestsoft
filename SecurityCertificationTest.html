@@ -364,128 +364,188 @@
             </div>
 
             <div class="small muted" style="margin-top:10px;">
-              Practice mode rules: wrong = explain why your selected option is wrong (no correct reveal) + try again. Correct = green teaching explanation + lock only that question.
-            </div>
+              const cat = categorizeTerm(term);
+              const pick = (arr) => arr[Math.floor(rng()*arr.length)];
 
-          </div>
-        </div>
-      </div>
+              const personas = [
+                "You have recently joined a company as a Junior Security Analyst.",
+                "You are the application security engineer on a release team.",
+                "You are supporting a product team as a security advisor.",
+                "You are part of a security team reviewing a new release.",
+                "You are a security analyst helping a dev team prepare for launch."
+              ];
 
-      <!-- RIGHT -->
-      <div class="card">
-        <div class="hd">
-          <h2 id="qTitle">Question</h2>
-          <span class="tag" id="qStatusTag">—</span>
-        </div>
-        <div class="bd">
-          <div class="qMeta">
-            <span class="tag" id="qNumberTag">#—</span>
-            <span class="tag" id="qCategoryTag">—</span>
-            <span class="tag" id="qTypeTag">—</span>
-          </div>
+              const templates = {
+                "Threat Modeling":[
+                  {
+                    context: "A new service is being designed that will handle customer data and expose internal and external APIs. The team wants to surface abuse cases early and build mitigations into the design.",
+                    goals: [
+                      "identify threats before coding starts",
+                      "map risks to components and trust boundaries",
+                      "produce a backlog of mitigations for the design"
+                    ],
+                    question: "Which approach best matches this work?"
+                  },
+                  {
+                    context: "During an architecture review, teams are unclear about where authentication and authorization boundaries should be enforced across services.",
+                    goals: [
+                      "document trust boundaries and data flows",
+                      "identify attacker entry points",
+                      "prioritize fixes for engineering"
+                    ],
+                    question: "Which approach should the team use?"
+                  }
+                ],
+                "Scanning & Tools":[
+                  {
+                    context: "A customer-facing web app is about to go live. Management wants an automated approach to identify common web weaknesses like SQL injection, XSS, insecure cookies, and missing headers.",
+                    goals: [
+                      "quickly scan the application",
+                      "identify known vulnerabilities",
+                      "produce a report for developers",
+                      "require minimal manual effort",
+                      "run regularly as part of release"
+                    ],
+                    question: "Which security testing approach should you recommend, and why?"
+                  },
+                  {
+                    context: "The team needs a repeatable, automated check that can run in staging without disrupting data or workflows.",
+                    goals: [
+                      "minimize false positives",
+                      "avoid intrusive payloads",
+                      "produce defensible findings"
+                    ],
+                    question: "Which approach best fits this need?"
+                  }
+                ],
+                "Testing & Verification":[
+                  {
+                    context: "You are part of a QA team testing a new internal application before release. The team submits malformed inputs such as broken file formats, incorrect data types, oversized payloads, and corrupted requests to see how the system behaves.",
+                    goals: [
+                      "force the application down error-handling paths",
+                      "test how parsers and validators respond",
+                      "identify vulnerabilities normal testing might miss",
+                      "support QA and penetration testing"
+                    ],
+                    question: "Which testing approach best matches what the QA team is doing?"
+                  },
+                  {
+                    context: "A security tester needs to validate access controls and input validation against a running system with realistic traffic.",
+                    goals: [
+                      "observe how controls behave at runtime",
+                      "use realistic inputs",
+                      "capture evidence for remediation"
+                    ],
+                    question: "Which approach best fits this activity?"
+                  }
+                ],
+                "Governance & Measurement":[
+                  {
+                    context: "Executives want consistent severity scoring and naming across tools, bug trackers, and reports.",
+                    goals: [
+                      "standardize how vulnerabilities are labeled",
+                      "prioritize remediation consistently",
+                      "support audit reporting"
+                    ],
+                    question: "Which governance standard best fits this request?"
+                  },
+                  {
+                    context: "Security leadership needs a program-wide way to measure maturity and plan improvements over time.",
+                    goals: [
+                      "assess current practices",
+                      "identify gaps",
+                      "track progress"
+                    ],
+                    question: "Which framework best supports this work?"
+                  }
+                ],
+                "Lifecycle & Process":[
+                  {
+                    context: "The organization wants security integrated across planning, design, build, test, release, and maintenance rather than bolted on at the end.",
+                    goals: [
+                      "assign security responsibilities per phase",
+                      "produce required security artifacts",
+                      "reduce late-stage risk"
+                    ],
+                    question: "Which lifecycle approach best fits this need?"
+                  },
+                  {
+                    context: "After launch, vulnerability reports must be validated and fixes coordinated across teams with clear disclosure timelines.",
+                    goals: [
+                      "validate external reports",
+                      "coordinate remediation",
+                      "manage disclosure"
+                    ],
+                    question: "Which function or team best matches this responsibility?"
+                  }
+                ],
+                "Methodologies":[
+                  {
+                    context: "The team delivers in short cycles and wants continuous feedback, frequent releases, and automated testing in the pipeline.",
+                    goals: [
+                      "support rapid iteration",
+                      "enable continuous integration",
+                      "deliver working software frequently"
+                    ],
+                    question: "Which development methodology best fits this workflow?"
+                  },
+                  {
+                    context: "A program requires formal sign-offs, heavy documentation, and long planned releases.",
+                    goals: [
+                      "enforce sequential phases",
+                      "use formal documentation",
+                      "control change tightly"
+                    ],
+                    question: "Which methodology best matches this environment?"
+                  }
+                ],
+                "Roles & Response":[
+                  {
+                    context: "An external vulnerability report arrives and must be validated, triaged, and coordinated across teams.",
+                    goals: [
+                      "validate the report",
+                      "coordinate fixes",
+                      "manage disclosure timelines"
+                    ],
+                    question: "Which role or team is primarily responsible?"
+                  },
+                  {
+                    context: "A product team needs someone embedded in development to coach secure coding and flag design risks during sprints.",
+                    goals: [
+                      "support developers daily",
+                      "promote secure practices",
+                      "bridge to the central security team"
+                    ],
+                    question: "Which role best fits this need?"
+                  }
+                ],
+                "Core Concepts":[
+                  {
+                    context: "A product owner asks for a concrete security action to reduce a known exposure before release.",
+                    goals: [
+                      "target the specific risk",
+                      "be practical to run",
+                      "produce actionable results"
+                    ],
+                    question: "Which security approach is the best match?"
+                  },
+                  {
+                    context: "A dev team needs a security practice that fits the project timeline and reduces common web risks.",
+                    goals: [
+                      "fit the release schedule",
+                      "address the stated risk",
+                      "produce usable output"
+                    ],
+                    question: "Which approach should the team choose?"
+                  }
+                ]
+              };
 
-          <div class="stem" id="qStem">Click “Start new attempt”.</div>
-          <div id="choices"></div>
+              const persona = pick(personas);
+              const template = pick(templates[cat] || templates["Core Concepts"]);
+              const bullets = (template.goals || []).map(g=>`- ${g}`).join("\n");
 
-          <div class="feedback" id="feedbackBox">
-            <h3 id="feedbackTitle">Feedback</h3>
-            <p id="feedbackText"></p>
-            <div class="mini" id="feedbackMini"></div>
-          </div>
-
-          <div class="footerBar">
-            <div class="progressRow">
-              <div class="bar"><div id="progressBar"></div></div>
-              <div class="small muted" id="progressText">0% complete</div>
-            </div>
-            <div class="row" style="gap:10px">
-              <button class="btn" id="btnPause">Pause</button>
-              <button class="btn good" id="btnResumeTimer" style="display:none;">Resume timer</button>
-            </div>
-          </div>
-
-          <div class="small muted" style="margin-top:10px;">
-            Exam mode: no teaching feedback during the test; full strengths/weaknesses report after submit.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- MODAL -->
-<div class="modalBackdrop" id="modalBackdrop">
-  <div class="modal">
-    <div class="hd">
-      <h2 id="modalTitle">Modal</h2>
-      <button class="btn" id="modalClose">Close</button>
-    </div>
-    <div class="bd" id="modalBody"></div>
-  </div>
-</div>
-
-<script>
-/* =========================================================
-   STORAGE + CONSTANTS
-   ========================================================= */
-const LS = {
-  ACTIVE: "d487_active_attempt_cert_v1",
-  ATTEMPTS: "d487_attempt_history_cert_v1"
-};
-const QUESTION_COUNT = 100;
-const IDLE_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
-const AUTO_SAVE_MS = 10 * 1000;
-
-/* =========================================================
-   UTIL
-   ========================================================= */
-function safeParse(json, fallback){ try { return JSON.parse(json); } catch { return fallback; } }
-function nowISO(){ return new Date().toISOString(); }
-function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
-function fmtTime(ms){
-  if(ms == null) return "—";
-  const s = Math.max(0, Math.floor(ms/1000));
-  const m = Math.floor(s/60);
-  const r = s%60;
-  return `${m}:${String(r).padStart(2,"0")}`;
-}
-function mulberry32(seed){
-  let a = seed >>> 0;
-  return function(){
-    a |= 0;
-    a = (a + 0x6D2B79F5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  }
-}
-function shuffle(arr, rng){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(rng()*(i+1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function unique(arr){
-  const seen = new Set();
-  const out = [];
-  for(const x of arr){
-    const key = String(x).trim();
-    if(!key) continue;
-    if(seen.has(key)) continue;
-    seen.add(key);
-    out.push(x);
-  }
-  return out;
-}
-function simpleHash(str){
-  let h = 2166136261;
-  for(let i=0;i<str.length;i++){
-    h ^= str.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0).toString(16);
+              return `${persona}\n${template.context}\n\nThe goal is to:\n\n${bullets}\n\n${template.question}`;
 }
 function $(id){ return document.getElementById(id); }
 
