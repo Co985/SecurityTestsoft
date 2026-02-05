@@ -824,22 +824,28 @@ function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
   const clue = normalizeSentence(buildClue(term));
   const explain = formatTermExplain(term);
 
+  const buildDistractorExplain = (termObj) => {
+    const base = formatTermExplain(termObj);
+    const usage = termObj && termObj.usage ? normalizeSentence(termObj.usage) : "";
+    const useSentence = usage ? `Typical use: ${usage}.` : "Typical use: a different security objective or stage.";
+    return `${base || "This option covers a different security practice."} ${useSentence} It does not match the prompt constraints as well as the correct choice.`;
+  };
+
   const otherLines = optionTexts
     .map((txt, i)=>({txt, i}))
     .filter(x=>x.i !== correctIdx)
     .map(x => {
       const t = getTermByName(x.txt);
-      const base = formatTermExplain(t);
-      const why = `It does not align with the constraints about ${scenarioNeed}.`;
-      return `• <strong>${x.txt}</strong>: ${base || "This option addresses a different security activity."} ${why}`;
+      const key = String.fromCharCode(65 + x.i);
+      const detail = buildDistractorExplain(t);
+      return `${key}. <strong>${x.txt}</strong>: ${detail}`;
     })
     .join("<br><br>");
 
   return `
     <strong>Correct — teaching explanation</strong><br><br>
-    <strong>What this term means:</strong> ${explain || "This term describes a specific security practice."}<br><br>
-    <strong>Why this is the correct answer:</strong> The described activity matches the constraints and goal in the prompt, including scope, timing, and risk objective. It fits the need better than alternatives because it directly addresses ${scenarioNeed}.${clue ? ` The key clue is: ${clue}.` : ""}<br><br>
-    <strong>Why the other options are not the best fit:</strong><br><br>
+    <strong>Why this is the correct answer:</strong> <strong>${term.term}</strong> is the most appropriate choice because ${explain || "it directly addresses the need described"}. It is fast, repeatable, and fits the prompt constraints. ${clue ? `Key clue: ${clue}.` : ""}<br><br>
+    <strong>Why the other options are less suitable:</strong><br><br>
     ${otherLines}
   `;
 }
@@ -851,8 +857,7 @@ function buildRationaleWrong(selectedTerm, scenarioNeed){
 
   return `
     <strong>Not correct — teaching explanation</strong><br><br>
-    <strong>What this term means:</strong> ${explain || "This term describes a security concept."}<br><br>
-    <strong>Why this is not the best fit:</strong> The prompt emphasizes constraints about ${scenarioNeed}, and this option does not align with those constraints. It focuses on a different objective or stage than the one described. Re-read the prompt and match the activity to the specific goal it calls for.${clue ? ` The option you picked mainly addresses: ${clue}.` : ""}
+    <strong>Why this is less suitable:</strong> ${explain || "This option is valid in other contexts."} It does not fit the prompt constraints as well as the best choice. ${clue ? `It is mainly used to ${clue}.` : ""}
   `;
 }
 

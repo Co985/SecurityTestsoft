@@ -790,19 +790,30 @@ function buildRationaleCorrect(term, optionTexts, correctIdx){
   // Must be very detailed (>=3 sentences) AND explain why others are incorrect.
   const def = (term.definition || "").trim();
   const use = (term.usage || "").trim();
+  const explain = [def, use].filter(Boolean).join(". ");
+
+  const formatExplain = (termObj) => {
+    if(!termObj) return "";
+    const d = (termObj.definition || "").trim();
+    const u = (termObj.usage || "").trim();
+    return [d, u].filter(Boolean).join(". ");
+  };
 
   const otherLines = optionTexts
     .map((txt, i)=>({txt, i}))
     .filter(x=>x.i !== correctIdx)
     .map(x => {
-      return `• <strong>${x.txt}</strong>: This is not the best answer because it targets a different security objective than the scenario requires. In certification questions, this is a common distractor that sounds related, but it either happens at the wrong time, is too narrow, or does not address the core risk driver described. Use it when its scope matches the scenario, not as a substitute for the correct concept.`;
+      const key = String.fromCharCode(65 + x.i);
+      const t = TERMS.find(y => (y.term || "").toLowerCase() === x.txt.toLowerCase()) || null;
+      const base = formatExplain(t) || "This option covers a different security practice.";
+      return `${key}. <strong>${x.txt}</strong>: ${base} It does not match the prompt constraints as well as the correct choice.`;
     })
     .join("<br><br>");
 
   return `
-    <strong>Why this is correct:</strong> ${def ? def + "." : ""} ${use ? use : ""}<br><br>
-    This is the best answer because it directly matches the scenario’s constraints and the decision the team must make (scope, timing, and risk objective). In certification-style items, the correct choice is the one that satisfies the most constraints with the least unnecessary risk or wasted effort. A good test-taking habit is to underline what the scenario needs (e.g., “runtime evidence,” “trust boundaries,” “standardized naming,” or “post-release patching”) and choose the option that most precisely maps to that need.<br><br>
-    <strong>Why the other options are not the best fit:</strong><br><br>
+    <strong>Correct — teaching explanation</strong><br><br>
+    <strong>Why this is the correct answer:</strong> <strong>${term.term}</strong> is the most appropriate choice because ${explain || "it directly addresses the need described"}. It is fast, repeatable, and fits the prompt constraints.<br><br>
+    <strong>Why the other options are less suitable:</strong><br><br>
     ${otherLines}
   `;
 }
@@ -811,10 +822,11 @@ function buildRationaleWrong(selectedTerm, scenarioNeed){
   // Must be >=3 sentences and must not reveal the correct answer.
   const def = (selectedTerm.definition || "").trim();
   const use = (selectedTerm.usage || "").trim();
+  const explain = [def, use].filter(Boolean).join(". ");
 
   return `
-    <strong>Why your selected option is not correct for this scenario:</strong> ${def ? def + "." : ""} ${use ? use : ""}<br><br>
-    In this question, the scenario is primarily testing whether you can match the <em>constraints</em> and <em>security objective</em> to the right concept, not just recognize a definition. Your choice is related to security, but it does not fully satisfy what the scenario is asking for (for example, it may be the wrong lifecycle stage, too intrusive for the environment, or focused on measurement when the scenario needs engineering analysis). A strong certification strategy is to restate the scenario need in your own words—<em>${scenarioNeed}</em>—then pick the option that most directly supports that need.
+    <strong>Not correct — teaching explanation</strong><br><br>
+    <strong>Why this is less suitable:</strong> ${explain || "This option is valid in other contexts."} It does not fit the prompt constraints as well as the best choice.
   `;
 }
 
