@@ -769,11 +769,11 @@ function scenarioStem(term, rng){
   ];
 
   const endings = [
-    "Which approach should you recommend, and why?",
-    "Which option best fits, and why?",
-    "Which approach is the best match for this need?",
-    "Which concept should the team use?",
-    "Which option best addresses the requirement?"
+    "Which security testing approach should you recommend, and why?",
+    "Which security practice should the team choose, and why?",
+    "Which option best fits this job task, and why?",
+    "What is the best next security step for the team?",
+    "Which approach is most appropriate for this release scenario?"
   ];
 
   const situations = {
@@ -813,9 +813,9 @@ function scenarioStem(term, rng){
       "A product group needs embedded security guidance during daily development."
     ],
     "Core Concepts":[
-      "A team must select the most appropriate security practice for the stated objective.",
-      "A security requirement is defined and the team must match it to the right concept.",
-      "A practical use case is described and needs the best matching security approach."
+      "A dev team needs a security practice that fits a specific release risk and timeline.",
+      "A product owner asks for a concrete security action to reduce a known exposure.",
+      "A security requirement is defined and needs the most practical matching approach."
     ]
   };
 
@@ -865,7 +865,7 @@ function scenarioStem(term, rng){
   const persona = pick(personas);
   const situation = pick(situations[cat] || situations["Core Concepts"]);
   const constraintSet = (pick(constraints[cat] || constraints["Core Concepts"]) || []).slice();
-  if(clue) constraintSet.push(`specifically focus on ${clue.toLowerCase()}`);
+  if(clue) constraintSet.push(`focus on ${clue.toLowerCase()}`);
 
   const endLine = pick(endings);
   const useLong = rng() < 0.5;
@@ -880,15 +880,19 @@ function scenarioStem(term, rng){
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
-  // Must be very detailed (>=3 sentences) AND explain why others are incorrect.
-  const clue = normalizeSentence(buildClue(term));
-  const explain = formatTermExplain(term);
+  const def = normalizeSentence(term.definition || "");
+  const use = normalizeSentence(term.usage || "");
+  const cat = categorizeTerm(term).toLowerCase();
+  const focus = scenarioNeed ? `The prompt centers on ${scenarioNeed}.` : "The prompt centers on a specific security need.";
 
   const buildDistractorExplain = (termObj) => {
-    const base = formatTermExplain(termObj);
-    const usage = termObj && termObj.usage ? normalizeSentence(termObj.usage) : "";
-    const useSentence = usage ? `Typical use: ${usage}.` : "Typical use: a different security objective or stage.";
-    return `${base || "This option covers a different security practice."} ${useSentence} It does not match the prompt constraints as well as the correct choice.`;
+    const d = normalizeSentence(termObj?.definition || "");
+    const u = normalizeSentence(termObj?.usage || "");
+    const lines = [];
+    if(termObj?.term && d) lines.push(`${termObj.term}: ${d}.`);
+    if(u) lines.push(`${u}.`);
+    lines.push("It is useful in the right situation, but the prompt is asking for a different kind of work.");
+    return lines.join(" ");
   };
 
   const otherLines = optionTexts
@@ -902,22 +906,33 @@ function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
     })
     .join("<br><br>");
 
+  const mainLines = [];
+  if(def) mainLines.push(`${term.term}: ${def}.`);
+  if(use) mainLines.push(`${use}.`);
+  mainLines.push(`It is commonly used in ${cat} work to reduce risk before release or during ongoing security checks.`);
+  mainLines.push(focus);
+
   return `
-    <strong>Correct — teaching explanation</strong><br><br>
-    <strong>Why this is the correct answer:</strong> <strong>${term.term}</strong> is the most appropriate choice because ${explain || "it directly addresses the need described"}. It is fast, repeatable, and fits the prompt constraints. ${clue ? `Key clue: ${clue}.` : ""}<br><br>
+    <strong>${term.term}</strong>: ${mainLines.join(" ")}<br><br>
     <strong>Why the other options are less suitable:</strong><br><br>
     ${otherLines}
   `;
 }
 
 function buildRationaleWrong(selectedTerm, scenarioNeed){
-  // Must be >=3 sentences and must not reveal the correct answer.
-  const clue = normalizeSentence(buildClue(selectedTerm));
-  const explain = formatTermExplain(selectedTerm);
+  const def = normalizeSentence(selectedTerm?.definition || "");
+  const use = normalizeSentence(selectedTerm?.usage || "");
+  const name = selectedTerm?.term || "This option";
+  const focus = scenarioNeed ? `The prompt centers on ${scenarioNeed}.` : "The prompt centers on a different need.";
+
+  const lines = [];
+  if(def) lines.push(`${name}: ${def}.`);
+  if(use) lines.push(`${use}.`);
+  lines.push("It is valuable in the right situation, but it is not the best fit for this question.");
+  lines.push(focus);
 
   return `
-    <strong>Not correct — teaching explanation</strong><br><br>
-    <strong>Why this is less suitable:</strong> ${explain || "This option is valid in other contexts."} It does not fit the prompt constraints as well as the best choice. ${clue ? `It is mainly used to ${clue}.` : ""}
+    <strong>${name}</strong>: ${lines.join(" ")}
   `;
 }
 
@@ -956,7 +971,7 @@ function buildTermQuestion(correctTerm, rng){
 
   const correctKey = optionObjs[correctIdx].key;
 
-  const scenarioNeed = categorizeTerm(correctTerm) + " objective under real constraints";
+  const scenarioNeed = normalizeSentence(buildClue(correctTerm)) || categorizeTerm(correctTerm).toLowerCase();
 
   // Build per-option rationales (for practice wrong selection)
   const optionToTermObj = {};
@@ -1340,17 +1355,17 @@ function selectChoice(selectedKey){
       qState.locked = true; // lock ONLY this question
 
       const full = q.rationales?.[selectedKey]?.correctFull || `
-        <strong>Why this is correct:</strong> This choice best matches the scenario’s constraints and objective. It is the option that most directly solves the problem described without introducing unnecessary risk. In certification questions, the best answer is the one that fits the scenario’s timing, environment, and risk priority.
+        <strong>Explanation:</strong> This choice is the best fit for the prompt and supports the security need described.
       `;
 
       showFeedback(
         "good",
-        "Correct — teaching explanation",
+        "Explanation",
         full,
         "This question is now locked because you answered it correctly."
       );
 
-      a.feedbackByQid[q.id] = { kind:"good", title:"Correct — teaching explanation", html: full, mini:"This question is now locked because you answered it correctly." };
+      a.feedbackByQid[q.id] = { kind:"good", title:"Explanation", html: full, mini:"This question is now locked because you answered it correctly." };
     } else {
       qState.isCorrect = false;
       if(!qState.wrongSelectedKeys.includes(selectedKey)){
@@ -1358,14 +1373,14 @@ function selectChoice(selectedKey){
       }
 
       const wrong = q.rationales?.[selectedKey]?.wrong || `
-        <strong>Why your selection is not correct:</strong> Your choice is related, but it does not satisfy the scenario’s main constraint or objective. Re-read the stem and identify what must be optimized (risk reduction, timing, environment safety, or scope). Then choose the option that most directly supports that objective.
+        <strong>Explanation:</strong> Your choice is related, but the prompt is asking for a different kind of work. Re-read the stem and choose the option that best fits the situation described.
       `;
 
       // IMPORTANT: do NOT reveal correct
       const addTry = `<br><br><strong>Try again:</strong> Choose another option that better matches the scenario.`;
-      showFeedback("warn", "Not quite — why your selection is wrong", wrong + addTry, "No correct answer is revealed in practice mode unless you select it.");
+      showFeedback("warn", "Explanation", wrong + addTry, "No correct answer is revealed in practice mode unless you select it.");
 
-      a.feedbackByQid[q.id] = { kind:"warn", title:"Not quite — why your selection is wrong", html: wrong + addTry, mini:"No correct answer is revealed in practice mode unless you select it." };
+      a.feedbackByQid[q.id] = { kind:"warn", title:"Explanation", html: wrong + addTry, mini:"No correct answer is revealed in practice mode unless you select it." };
     }
 
     saveActiveAttempt();

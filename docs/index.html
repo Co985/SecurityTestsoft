@@ -756,79 +756,144 @@ function pickDistractors(correctTerm, rng){
 
 function scenarioStem(term, rng){
   const cat = categorizeTerm(term);
-  const clue = buildClue(term);
+  const clue = normalizeSentence(buildClue(term));
 
-  const stems = {
+  const pick = (arr) => arr[Math.floor(rng()*arr.length)];
+
+  const personas = [
+    "You have recently joined a company as a Junior Security Analyst.",
+    "You are the application security engineer on a release team.",
+    "You are supporting a product team as a security advisor.",
+    "You are part of a security team reviewing a new release.",
+    "You are a security analyst helping a dev team prepare for launch."
+  ];
+
+  const endings = [
+    "Which security testing approach should you recommend, and why?",
+    "Which security practice should the team choose, and why?",
+    "Which option best fits this job task, and why?",
+    "What is the best next security step for the team?",
+    "Which approach is most appropriate for this release scenario?"
+  ];
+
+  const situations = {
     "Threat Modeling":[
-      `You are in an early architecture workshop for a new service that handles sensitive data. The team must identify threats, map them to components, and produce a mitigation backlog before any code is written. Which concept or technique best fits this structured activity?`,
-      `Leadership wants a prioritized threat list tied to assets, data flows, and trust boundaries so owners can budget mitigations. The output must be repeatable and reviewable. Which concept best fits this responsibility?`,
-      `During a design review, multiple services exchange data across unclear trust boundaries. You need a method to capture attacker actions, entry points, and required controls so the design can be updated. Which concept most directly supports that need?`,
-      `The team needs a formal way to classify and reason about threats such as spoofing, tampering, and information disclosure per system component. Which approach best supports that analysis?`
+      "The team is designing a new service that will handle customer data and expose both internal and external APIs.",
+      "An architecture review is underway for a new platform with multiple services and unclear trust boundaries.",
+      "Leadership wants risk owners to understand where attackers could abuse the design before development starts."
     ],
     "Scanning & Tools":[
-      `A web app will be tested in staging, but you must avoid changing data or triggering intrusive payloads. You need defensible findings that minimize noise. Which tool or approach best supports safe discovery?`,
-      `The build pipeline needs lightweight, automatable checks for common web misconfigurations and risky headers on every commit. Which tool or approach best fits this requirement?`,
-      `A security engineer must inventory real endpoints and parameters so later testing targets true attack surfaces. Which option best describes this reconnaissance step?`,
-      `The team needs to identify open ports and services across a subnet to establish the external attack surface. Which tool or approach best matches this task?`
+      "A customer-facing web app is about to go live, and management wants common web weaknesses identified first.",
+      "The team needs a repeatable way to scan a web app during release readiness.",
+      "Security needs an automated tool to discover and test web endpoints with minimal manual effort."
     ],
     "Testing & Verification":[
-      `You must show that runtime controls behave as intended under real inputs and adversarial cases. The team wants observable evidence from a running system. Which testing approach best produces that evidence?`,
-      `Acting with zero internal knowledge, you probe external interfaces to identify weaknesses that are visible to attackers. Which testing methodology best fits this externally focused validation?`,
-      `The QA team wants to exercise error paths and parsers with malformed inputs to surface security bugs. Which option most closely matches this strategy?`,
-      `The team needs a review of source code paths and logic flows to detect insecure patterns without executing the program. Which testing approach best matches this need?`
+      "The team must validate that security controls behave as intended under realistic conditions.",
+      "QA wants to exercise error paths and malformed inputs to find security bugs before release.",
+      "You need evidence from a running system that access controls and input validation work."
     ],
     "Governance & Measurement":[
-      `Your organization struggles to correlate findings across tools because naming and severity are inconsistent. Leadership asks for a standard that makes prioritization reliable and auditable. Which governance concept best addresses this problem?`,
-      `A newly discovered vulnerability affects multiple products; executives need a single severity score to prioritize fixes. The scoring must be defensible and consistently applied. Which concept provides that standardized prioritization?`,
-      `Auditors require traceability from security requirements through design, implementation, and testing. You need a way to prove coverage and closure. Which governance practice best supports that need?`,
-      `The program must measure the effectiveness of security controls across teams with consistent metrics. Which governance or measurement model best fits this requirement?`
+      "Executives want consistent severity scoring and naming across findings and reports.",
+      "Audit preparation requires traceability from requirements to tests and results.",
+      "Security leadership needs a program-wide way to measure maturity and progress."
     ],
     "Lifecycle & Process":[
-      `Security must be integrated across planning, requirements, design, implementation, test, deployment, and maintenance. The team needs a lifecycle that assigns responsibilities and artifacts at each phase. Which lifecycle concept best matches this end-to-end approach?`,
-      `Ahead of release you must confirm open risks are mitigated or accepted and that patching and disclosure processes are ready. Which phase or process best matches that release-focused activity?`,
-      `After release, incoming vulnerability reports must be validated, triaged, and coordinated across teams. Which lifecycle function best fits this ongoing responsibility?`,
-      `You need to define security requirements and review them before design begins so downstream work is aligned. Which lifecycle phase best fits this activity?`
+      "The organization wants security integrated across planning, design, build, test, release, and maintenance.",
+      "A release is approaching and the team must finalize risk decisions and post-release plans.",
+      "After launch, vulnerability intake and patching must run reliably."
     ],
     "Methodologies":[
-      `The project follows long-lived, planned releases where changes are infrequent and sign-offs are formal; documentation and design reviews are central to security readiness. Which development methodology best fits these constraints?`,
-      `The product is delivered in short iterative cycles with frequent releases; security feedback must reach developers continuously. Which methodology supports this continuous approach?`,
-      `The program requires each requirement to map to tests and verification activities so nothing is left unvalidated. Which model or approach enforces that traceability?`,
-      `The team wants rapid iteration with built-in testing and continuous integration to improve quality. Which methodology best supports that working style?`
+      "The project follows a defined delivery cadence and needs a development model that fits it.",
+      "The team delivers in short cycles and needs continuous feedback and testing.",
+      "Requirements must be validated with corresponding tests throughout delivery."
     ],
     "Roles & Response":[
-      `A delivery team needs a teammate who can embed secure-by-default practices into sprint work, coach developers, and escalate architectural gaps. Which role best matches that day-to-day advocacy?`,
-      `An external security report arrives alleging a critical issue; you must validate it, coordinate fixes, and manage disclosure timelines. Which role or team is primarily responsible for this response?`,
-      `The organization wants a strategic leader who defines secure defaults, governs policy, and provides architectural guidance to product teams. Which role best matches that oversight?`,
-      `A central team is needed to run security assessments across phases and coordinate SDL activities. Which role or team most directly owns that work?`
+      "A program needs clear ownership for security activities and accountability for outcomes.",
+      "An external vulnerability report arrives and must be validated, triaged, and coordinated across teams.",
+      "A product group needs embedded security guidance during daily development."
     ],
     "Core Concepts":[
-      `A team needs a specific security practice to meet the stated objective within the project constraints. Which concept best fits the need?`,
-      `A real-world use case is described; pick the security concept that most precisely matches the requirement. Which option best fits?`,
-      `The prompt describes a goal, a constraint, and a timing requirement. Which concept directly satisfies those three elements?`,
-      `Select the concept that best matches the objective and environment described.`,
-      `Pick the option that directly addresses the security objective in the prompt.`,
-      `Choose the concept that best fits the use case and scope described.`
+      "A dev team needs a security practice that fits a specific release risk and timeline.",
+      "A product owner asks for a concrete security action to reduce a known exposure.",
+      "A security requirement is defined and needs the most practical matching approach."
     ]
   };
 
-  const list = stems[cat] || stems["Core Concepts"];
-  const base = list[Math.floor(rng()*list.length)];
+  const constraints = {
+    "Threat Modeling":[
+      ["happen before code is written", "map risks to components and owners", "produce mitigations that influence design"],
+      ["identify attacker goals and entry points", "document trust boundaries", "prioritize threats for engineering"],
+      ["create a repeatable threat list", "tie findings to controls", "support architecture decisions"]
+    ],
+    "Scanning & Tools":[
+      ["quickly scan the application", "identify known vulnerabilities", "produce a report for developers", "require minimal manual effort", "run regularly as part of release"],
+      ["avoid intrusive payloads", "minimize false positives", "work in staging", "produce defensible findings"],
+      ["discover endpoints and inputs", "automate reconnaissance", "feed follow-up testing"]
+    ],
+    "Testing & Verification":[
+      ["run against a live system", "observe control behavior", "use realistic inputs"],
+      ["exercise error paths", "use malformed inputs", "expose parsing bugs"],
+      ["validate access controls", "identify externally visible weaknesses", "require minimal internal knowledge"]
+    ],
+    "Governance & Measurement":[
+      ["standardize severity", "support prioritization", "be auditable"],
+      ["trace requirements to tests", "prove coverage", "support compliance"],
+      ["measure maturity", "compare teams consistently", "guide improvement"]
+    ],
+    "Lifecycle & Process":[
+      ["integrate security across phases", "assign responsibilities", "produce required artifacts"],
+      ["finalize risk decisions", "confirm release readiness", "set post-release response"],
+      ["validate reports", "coordinate fixes", "manage disclosures"]
+    ],
+    "Methodologies":[
+      ["support short iterations", "enable continuous feedback", "deliver frequently"],
+      ["use formal sign-offs", "emphasize documentation", "plan long releases"],
+      ["map requirements to tests", "enforce verification per phase", "reduce missed validation"]
+    ],
+    "Roles & Response":[
+      ["own end-to-end response", "coordinate fixes", "manage disclosures"],
+      ["embed in a dev team", "coach developers", "escalate architectural gaps"],
+      ["set security policy", "guide architecture", "drive SDL adoption"]
+    ],
+    "Core Concepts":[
+      ["match the objective", "fit the constraints", "apply at the right stage"],
+      ["address the stated risk", "produce actionable output", "support engineering decisions"],
+      ["be practical to run", "align with the environment", "solve the described need"]
+    ]
+  };
 
-  const extra = clue ? `\n\nThe team is trying to address ${normalizeSentence(clue)}.` : "";
+  const persona = pick(personas);
+  const situation = pick(situations[cat] || situations["Core Concepts"]);
+  const constraintSet = (pick(constraints[cat] || constraints["Core Concepts"]) || []).slice();
+  if(clue) constraintSet.push(`focus on ${clue.toLowerCase()}`);
 
-  return base + extra;
+  const endLine = pick(endings);
+  const useLong = rng() < 0.5;
+
+  if(useLong){
+    const bullets = constraintSet.map(c=>`- ${c}`).join("\n");
+    return `${persona}\n${situation}\n\nYou are asked to use an approach that:\n\n${bullets}\n\n${endLine}`;
+  }
+
+  const shortList = constraintSet.slice(0, 3).join(", ");
+  return `${persona} ${situation} The approach must ${shortList}. ${endLine}`;
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
   // Must be very detailed (>=3 sentences) AND explain why others are incorrect.
-  const clue = normalizeSentence(buildClue(term));
-  const explain = formatTermExplain(term);
+  const def = normalizeSentence(term.definition || "");
+  const use = normalizeSentence(term.usage || "");
+  const cat = categorizeTerm(term).toLowerCase();
+  const focus = scenarioNeed ? `The prompt centers on ${scenarioNeed}.` : "The prompt centers on a specific security need.";
 
   const buildDistractorExplain = (termObj) => {
-    const base = formatTermExplain(termObj);
-    const usage = termObj && termObj.usage ? normalizeSentence(termObj.usage) : "";
-    const useSentence = usage ? `Typical use: ${usage}.` : "Typical use: a different security objective or stage.";
-    return `${base || "This option covers a different security practice."} ${useSentence} It does not match the prompt constraints as well as the correct choice.`;
+    const d = normalizeSentence(termObj?.definition || "");
+    const u = normalizeSentence(termObj?.usage || "");
+    const lines = [];
+    if(termObj?.term && d) lines.push(`${termObj.term}: ${d}.`);
+    if(u) lines.push(`${u}.`);
+    lines.push("It is useful in the right situation, but the prompt is asking for a different kind of work.");
+    return lines.join(" ");
   };
 
   const otherLines = optionTexts
@@ -842,9 +907,14 @@ function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
     })
     .join("<br><br>");
 
+  const mainLines = [];
+  if(def) mainLines.push(`${term.term}: ${def}.`);
+  if(use) mainLines.push(`${use}.`);
+  mainLines.push(`It is commonly used in ${cat} work to reduce risk before release or during ongoing security checks.`);
+  mainLines.push(focus);
+
   return `
-    <strong>Correct — teaching explanation</strong><br><br>
-    <strong>Why this is the correct answer:</strong> <strong>${term.term}</strong> is the most appropriate choice because ${explain || "it directly addresses the need described"}. It is fast, repeatable, and fits the prompt constraints. ${clue ? `Key clue: ${clue}.` : ""}<br><br>
+    <strong>${term.term}</strong>: ${mainLines.join(" ")}<br><br>
     <strong>Why the other options are less suitable:</strong><br><br>
     ${otherLines}
   `;
@@ -852,12 +922,19 @@ function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
 
 function buildRationaleWrong(selectedTerm, scenarioNeed){
   // Must be >=3 sentences and must not reveal the correct answer.
-  const clue = normalizeSentence(buildClue(selectedTerm));
-  const explain = formatTermExplain(selectedTerm);
+  const def = normalizeSentence(selectedTerm?.definition || "");
+  const use = normalizeSentence(selectedTerm?.usage || "");
+  const name = selectedTerm?.term || "This option";
+  const focus = scenarioNeed ? `The prompt centers on ${scenarioNeed}.` : "The prompt centers on a different need.";
+
+  const lines = [];
+  if(def) lines.push(`${name}: ${def}.`);
+  if(use) lines.push(`${use}.`);
+  lines.push("It is valuable in the right situation, but it is not the best fit for this question.");
+  lines.push(focus);
 
   return `
-    <strong>Not correct — teaching explanation</strong><br><br>
-    <strong>Why this is less suitable:</strong> ${explain || "This option is valid in other contexts."} It does not fit the prompt constraints as well as the best choice. ${clue ? `It is mainly used to ${clue}.` : ""}
+    <strong>${name}</strong>: ${lines.join(" ")}
   `;
 }
 
@@ -896,7 +973,7 @@ function buildTermQuestion(correctTerm, rng){
 
   const correctKey = optionObjs[correctIdx].key;
 
-  const scenarioNeed = categorizeTerm(correctTerm) + " objective under real constraints";
+  const scenarioNeed = normalizeSentence(buildClue(correctTerm)) || categorizeTerm(correctTerm).toLowerCase();
 
   // Build per-option rationales (for practice wrong selection)
   const optionToTermObj = {};
@@ -1280,17 +1357,17 @@ function selectChoice(selectedKey){
       qState.locked = true; // lock ONLY this question
 
       const full = q.rationales?.[selectedKey]?.correctFull || `
-        <strong>Why this is correct:</strong> This choice best matches the scenario’s constraints and objective. It is the option that most directly solves the problem described without introducing unnecessary risk. In certification questions, the best answer is the one that fits the scenario’s timing, environment, and risk priority.
+        <strong>Explanation:</strong> This choice is the best fit for the prompt and supports the security need described.
       `;
 
       showFeedback(
         "good",
-        "Correct — teaching explanation",
+        "Explanation",
         full,
         "This question is now locked because you answered it correctly."
       );
 
-      a.feedbackByQid[q.id] = { kind:"good", title:"Correct — teaching explanation", html: full, mini:"This question is now locked because you answered it correctly." };
+      a.feedbackByQid[q.id] = { kind:"good", title:"Explanation", html: full, mini:"This question is now locked because you answered it correctly." };
     } else {
       qState.isCorrect = false;
       if(!qState.wrongSelectedKeys.includes(selectedKey)){
@@ -1298,14 +1375,14 @@ function selectChoice(selectedKey){
       }
 
       const wrong = q.rationales?.[selectedKey]?.wrong || `
-        <strong>Why your selection is not correct:</strong> Your choice is related, but it does not satisfy the scenario’s main constraint or objective. Re-read the stem and identify what must be optimized (risk reduction, timing, environment safety, or scope). Then choose the option that most directly supports that objective.
+        <strong>Explanation:</strong> Your choice is related, but the prompt is asking for a different kind of work. Re-read the stem and choose the option that best fits the situation described.
       `;
 
       // IMPORTANT: do NOT reveal correct
       const addTry = `<br><br><strong>Try again:</strong> Choose another option that better matches the scenario.`;
-      showFeedback("warn", "Not quite — why your selection is wrong", wrong + addTry, "No correct answer is revealed in practice mode unless you select it.");
+      showFeedback("warn", "Explanation", wrong + addTry, "No correct answer is revealed in practice mode unless you select it.");
 
-      a.feedbackByQid[q.id] = { kind:"warn", title:"Not quite — why your selection is wrong", html: wrong + addTry, mini:"No correct answer is revealed in practice mode unless you select it." };
+      a.feedbackByQid[q.id] = { kind:"warn", title:"Explanation", html: wrong + addTry, mini:"No correct answer is revealed in practice mode unless you select it." };
     }
 
     saveActiveAttempt();
