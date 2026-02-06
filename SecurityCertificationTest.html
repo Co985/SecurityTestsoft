@@ -884,13 +884,16 @@ function detailedScenarioStem(term, rng) {
     return pick(scenarios);
   }
   
-  // Default scenarios for other categories
+  // Specific scenario for Vulnerability term
+  if (termName === "vulnerability") {
+    return `During a security review, the team identified several weaknesses in the application: insecure configurations, missing security controls, design flaws that could be exploited, and outdated components with known security issues. Management wants to understand what category these security findings fall into and how to prioritize remediation efforts. What term best describes these types of security weaknesses that attackers could potentially exploit?`;
+  }
+  
+  // Default scenarios for other Core Concepts terms
   const defaultScenarios = [
     `Your team is developing a cloud-based platform that handles sensitive customer data. Leadership wants to ensure security is built into the development process from the beginning. The security team needs to establish when security activities should occur, what security controls are required, and how to validate that security requirements are met. They need a systematic approach that works throughout the development lifecycle. The goal is to reduce vulnerabilities and ensure compliance with security standards. What framework or approach should guide the team's security efforts?`,
     
-    `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`,
-    
-    `During a security review, the team identified several weaknesses in the application: insecure configurations, missing security controls, design flaws that could be exploited, and outdated components with known security issues. Management wants to understand what category these security findings fall into and how to prioritize remediation efforts. What term best describes these types of security weaknesses that attackers could potentially exploit?`
+    `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`
   ];
   
   return pick(defaultScenarios);
