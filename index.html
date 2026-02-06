@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Software Security Exam</title>
+  <script src="questions.js" defer></script>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    header {
+      background: #111827;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid #1f2937;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem 3rem;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    select {
+      background: #020617;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+      border-radius: 0.375rem;
+      padding: 0.4rem 0.6rem;
+    }
+    .question {
+      background: #020617;
+      border-radius: 0.5rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid #1f2937;
+    }
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .question-number {
+      font-weight: 600;
+      color: #93c5fd;
+    }
+    .scenario-tag {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: #f97316;
+      color: #111827;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .question-text {
+      margin: 0.4rem 0 0.6rem;
+    }
+    ul.choices {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.4rem 0 0.6rem;
+    }
+    ul.choices li {
+      margin-bottom: 0.25rem;
+    }
+    .choice-label {
+      font-weight: 600;
+      margin-right: 0.25rem;
+      color: #bfdbfe;
+    }
+    .answer-controls {
+      margin-top: 0.5rem;
+    }
+    .answer-btn {
+      background: #4b5563;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.7rem;
+    }
+    .answer-btn:hover {
+      background: #6b7280;
+    }
+    .explanations {
+      margin-top: 0.6rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed #1f2937;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .correct {
+      color: #22c55e;
+      font-weight: 600;
+    }
+    .wrong {
+      color: #f97373;
+    }
+    .meta {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-top: 0.25rem;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      padding-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Software Security Exam</h1>
+  </header>
+  <main>
+    <section class="controls">
+      <button onclick="generateTest()">Generate New 50‑Question Exam</button>
+      <label>
+        Questions per exam:
+        <select id="questionCountSelect" onchange="generateTest()">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50" selected>50</option>
+        </select>
+      </label>
+      <span class="meta">Questions are randomly selected from the full bank each time.</span>
+    </section>
+
+    <div id="testContainer"></div>
+
+    <footer>
+      Software Security Exam &mdash; Randomized question bank for SDL, AppSec, and SDLC concepts.
+    </footer>
+  </main>
+
+  <script>
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function generateTest() {
+      const container = document.getElementById('testContainer');
+      container.innerHTML = '';
+
+      const select = document.getElementById('questionCountSelect');
+      const count = parseInt(select.value, 10);
+
+      if (!Array.isArray(questionBank) || questionBank.length === 0) {
+        container.innerHTML = '<p>No questions loaded.</p>';
+        return;
+      }
+
+      const selected = shuffle([...questionBank]).slice(0, Math.min(count, questionBank.length));
+
+      selected.forEach((q, index) => {
+        const qDiv = document.createElement('div');
+        qDiv.className = 'question';
+
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'question-header';
+
+        const numSpan = document.createElement('span');
+        numSpan.className = 'question-number';
+        numSpan.textContent = `Question ${index + 1}`;
+
+        headerDiv.appendChild(numSpan);
+
+        if (q.scenario) {
+          const scenarioSpan = document.createElement('span');
+          scenarioSpan.className = 'scenario-tag';
+          scenarioSpan.textContent = 'Scenario';
+          headerDiv.appendChild(scenarioSpan);
+        }
+
+        qDiv.appendChild(headerDiv);
+
+        const textP = document.createElement('p');
+        textP.className = 'question-text';
+        textP.textContent = q.question;
+        qDiv.appendChild(textP);
+
+        const ul = document.createElement('ul');
+        ul.className = 'choices';
+
+        q.choices.forEach((choice, idx) => {
+          const li = document.createElement('li');
+          const labelSpan = document.createElement('span');
+          labelSpan.className = 'choice-label';
+          labelSpan.textContent = String.fromCharCode(65 + idx) + '.';
+          li.appendChild(labelSpan);
+          li.appendChild(document.createTextNode(' ' + choice));
+          ul.appendChild(li);
+        });
+
+        qDiv.appendChild(ul);
+
+        const answerControls = document.createElement('div');
+        answerControls.className = 'answer-controls';
+
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.textContent = 'Show Answer & Explanations';
+
+        const explanationsDiv = document.createElement('div');
+        explanationsDiv.className = 'explanations';
+
+        btn.addEventListener('click', () => {
+          explanationsDiv.style.display =
+            explanationsDiv.style.display === 'none' || explanationsDiv.style.display === ''
+              ? 'block'
+              : 'none';
+        });
+
+        answerControls.appendChild(btn);
+        qDiv.appendChild(answerControls);
+
+        const correctP = document.createElement('p');
+        correctP.innerHTML = `<span class="correct">Correct answer: ${q.correctLetter}. ${q.answer}</span>`;
+        explanationsDiv.appendChild(correctP);
+
+        const correctExpP = document.createElement('p');
+        correctExpP.textContent = 'Why this is correct: ' + q.explanationCorrect;
+        explanationsDiv.appendChild(correctExpP);
+
+        const wrongHeader = document.createElement('p');
+        wrongHeader.textContent = 'Why the other options are wrong:';
+        explanationsDiv.appendChild(wrongHeader);
+
+        const wrongList = document.createElement('ul');
+        Object.entries(q.explanationWrong || {}).forEach(([letter, text]) => {
+          const li = document.createElement('li');
+          li.className = 'wrong';
+          li.textContent = `${letter}. ${text}`;
+          wrongList.appendChild(li);
+        });
+        explanationsDiv.appendChild(wrongList);
+
+        if (q.conceptNote) {
+          const conceptP = document.createElement('p');
+          conceptP.className = 'meta';
+          conceptP.textContent = 'Concepts: ' + q.conceptNote;
+          explanationsDiv.appendChild(conceptP);
+        }
+
+        qDiv.appendChild(explanationsDiv);
+        container.appendChild(qDiv);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', generateTest);
+  </script>
+</body>
+</html>
