@@ -792,6 +792,9 @@ function validateScenarioMatch(term, scenario) {
     // Core Concepts
     "vulnerability": ["vulnerability", "vulnerabilities", "weakness", "security flaw", "exploit", "security issues"],
     "target machine": ["target", "practice", "test environment", "lab"],
+    "security development lifecycle (sdl)": ["sdl", "security development lifecycle", "roadmap", "secure software", "cia", "reduce vulnerabilities", "development lifecycle", "security activities"],
+    "software development lifecycle (sdlc)": ["sdlc", "software development lifecycle", "structured framework", "security throughout", "every stage", "development lifecycle"],
+    "sql injection": ["sql injection", "malicious code", "unsanitized input", "database", "input validation"],
     
     // Governance & Measurement
     "requirement traceability matrix": ["traceability", "requirement", "mapping", "mapped", "track", "trace", "design decisions"],
@@ -1033,11 +1036,23 @@ function detailedScenarioStem(term, rng) {
     return `Development teams must follow security policies, but compliance is inconsistent. The security team wants to track: Are security requirements documented? Is threat modeling performed? Are code reviews completed? Are security tests passed? They need a traceability system that maps every security requirement to design decisions, code implementations, and test results, ensuring nothing is missed and providing audit evidence. What artifact provides this requirement-to-implementation mapping?`;
   }
   
-  // Default scenarios for other Core Concepts terms
+  // Specific scenarios for SDL/SDLC terms
+  if (termName === "security development lifecycle (sdl)" || termName === "software development lifecycle (sdlc)") {
+    const sdlScenarios = [
+      `Your team is developing a cloud-based platform that handles sensitive customer data. Leadership wants to ensure security is built into the development process from the beginning. The security team needs to establish when security activities should occur, what security controls are required, and how to validate that security requirements are met. They need a systematic approach that works throughout the development lifecycle. The goal is to reduce vulnerabilities and ensure compliance with security standards. What framework or approach should guide the team's security efforts?`,
+      
+      `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`
+    ];
+    return pick(sdlScenarios);
+  }
+  
+  // Default scenarios for other Core Concepts terms (vulnerabilities, attacks, general concepts)
   const defaultScenarios = [
-    `Your team is developing a cloud-based platform that handles sensitive customer data. Leadership wants to ensure security is built into the development process from the beginning. The security team needs to establish when security activities should occur, what security controls are required, and how to validate that security requirements are met. They need a systematic approach that works throughout the development lifecycle. The goal is to reduce vulnerabilities and ensure compliance with security standards. What framework or approach should guide the team's security efforts?`,
+    `Your security team discovered that an attacker could manipulate user input to access unauthorized data or system resources. The application doesn't properly validate or sanitize inputs before processing them. This type of security weakness needs to be addressed through input validation, output encoding, and secure coding practices. What security issue has been identified?`,
     
-    `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`
+    `During penetration testing, the security team found that the application's authentication mechanism can be bypassed using specific techniques. Attackers could gain unauthorized access to protected resources or escalate their privileges. The development team needs to understand what category of security issue this represents to implement proper countermeasures. What type of security problem is this?`,
+    
+    `The application security review revealed that sensitive user data is being stored or transmitted in a way that could be intercepted or accessed by unauthorized parties. The security controls for protecting this data are insufficient or improperly implemented. The team must classify this finding to determine the appropriate remediation approach. What security concern does this represent?`
   ];
   
   return pick(defaultScenarios);
