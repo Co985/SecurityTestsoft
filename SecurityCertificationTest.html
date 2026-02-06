@@ -681,7 +681,7 @@ const SDL_FOCUS = {
    ========================================================= */
 function categorizeTerm(t){
   const s = (t.term||"").toLowerCase();
-  if(/stride|dread|threat model|threat|data flow|dfd|trust boundary|asset|attack tree|attack surface/.test(s)) return "Threat Modeling";
+  if(/stride|dread|threat model|threat|data flow|dfd|trust boundary|asset|attack tree|attack surface|spoofing|tampering|repudiation|information disclosure|denial of service|elevation of privilege/.test(s)) return "Threat Modeling";
   if(/scanner|scan|zap|nmap|spider|proxy|passive|active|intrusive/.test(s)) return "Scanning & Tools";
   if(/static analysis|dynamic analysis|fuzz|white.?box|black.?box|gray.?box|penetration|code review|system test|functional test|verification|testing|test|script/.test(s)) return "Testing & Verification";
   if(/cve|cvss|nvd|policy|compliance|benchmark|metric|measurement|risk profile|traceability|metric model|governance/.test(s)) return "Governance & Measurement";
