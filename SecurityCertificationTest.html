@@ -869,16 +869,28 @@ function detailedScenarioStem(term, rng) {
     return pick(scenarios);
   }
   
-  // Default scenarios for other categories
-  const defaultScenarios = [
-    `Your team is developing a cloud-based platform that handles sensitive customer data. Leadership wants to ensure security is built into the development process from the beginning. The security team needs to establish when security activities should occur, what security controls are required, and how to validate that security requirements are met. They need a systematic approach that works throughout the development lifecycle. The goal is to reduce vulnerabilities and ensure compliance with security standards. What framework or approach should guide the team's security efforts?`,
+  // Core Concepts scenarios - must work for ANY security term (vulnerability, threat types, security concepts, etc.)
+  const coreScenarios = [
+    `Your security team is reviewing recent incidents. In one case, an attacker was able to modify transaction amounts in API requests between the client and server because there was no integrity checking or signature verification. The data was altered in transit, and the system accepted the modified values without validation. What type of security threat does this represent?`,
     
-    `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`,
+    `During a security assessment, the team identified several issues: outdated dependencies with known CVEs, insecure coding patterns that could lead to exploitation, design flaws that create attack opportunities, and missing security controls. Management wants to understand what these findings represent and how to prioritize fixing them. What term best describes these security weaknesses that need remediation?`,
     
-    `Your development team is building a new application from scratch. Security must be considered at every stage: requirements definition, architecture design, coding, testing, deployment, and maintenance. The team needs clear guidance on what security activities to perform and when. The approach should prevent vulnerabilities rather than just finding them late in development. What should guide the team's security practices throughout development?`
+    `Your application processes user-uploaded files including images, PDFs, and documents. The security review found that the system doesn't properly validate file types, doesn't scan for malicious content, doesn't enforce size limits, and doesn't sanitize filenames. An attacker could exploit these gaps to compromise the system. What security practice is missing from this implementation?`,
+    
+    `The security team is analyzing a production incident where an attacker gained unauthorized access by stealing session tokens and impersonating a legitimate administrator. The system lacked proper identity validation, multi-factor authentication, and session binding. What category of security threat allowed this attack to succeed?`,
+    
+    `Your development team is working on features that handle payment processing, authentication, and data encryption. Security requires that this code be written following established patterns that prevent common vulnerabilities. The code must properly validate inputs, handle errors securely, use cryptography correctly, and avoid introducing exploitable flaws. What type of code is the team being asked to produce?`,
+    
+    `During threat modeling, the team identified a scenario where users could deny having performed actions in the system because there's insufficient logging, no digital signatures on transactions, and weak authentication. This makes it impossible to prove who did what. What security threat does this scenario describe?`,
+    
+    `Your organization acquired a company whose software was built years ago using outdated frameworks, no longer supported libraries, and deprecated security practices. The codebase hasn't been updated in years and likely contains multiple security issues. The team must assess risks before integrating this software. What type of code are they evaluating?`,
+    
+    `A security incident occurred where an attacker accessed sensitive customer records they weren't authorized to view. The application failed to enforce proper access controls, allowing users to access data beyond their permission level. What security threat enabled unauthorized access to this information?`,
+    
+    `Your web application accepts user input in forms, URL parameters, and API requests. A security review found that the application doesn't sanitize or validate this input before using it in database queries, system commands, or HTML output. This creates opportunities for attackers to inject malicious code. What security weakness must be addressed?`
   ];
   
-  return pick(defaultScenarios);
+  return pick(coreScenarios);
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
