@@ -756,60 +756,101 @@ function pickDistractors(correctTerm, rng){
   return out.slice(0,3);
 }
 
-const SCENARIO_BANK = {
-  "Testing & Verification": [
-    {
-      system: "a customer-facing web portal with file uploads and PDF parsing",
-      trigger: "QA can crash the service using corrupted PDFs, oversized payloads, and malformed MIME headers",
-      timing: "two days from a scheduled release",
-      ask: "Which testing strategy best matches this approach?"
-    },
-    {
-      system: "an internal API gateway validating JSON and JWT claims",
-      trigger: "security reviewers found inconsistent handling of invalid encodings, missing fields, and extreme input sizes",
-      timing: "during release hardening in staging",
-      ask: "Which option is the best fit?"
-    }
-  ],
-
-  "Threat Modeling": [
-    {
-      system: "a new service exposing internal + external APIs and storing customer PII",
-      trigger: "the team is unsure where trust boundaries and authorization checks must be enforced",
-      timing: "before implementation begins",
-      ask: "What security activity best fits?"
-    }
-  ]
-
-  // Add similar entries for Scanning & Tools, Governance & Measurement, etc.
-};
-
 function detailedScenarioStem(term, rng) {
   const cat = categorizeTerm(term);
   const pick = (arr) => arr[Math.floor(rng() * arr.length)];
-  const persona = pick([
+  
+  const roles = [
     "You are the AppSec engineer embedded with a product team.",
     "You are a security analyst supporting QA and release readiness.",
     "You are the security advisor reviewing a high-risk release.",
-    "You are the engineer on-call for a security hardening sprint."
-  ]);
-
-  const bank = SCENARIO_BANK[cat] || SCENARIO_BANK["Testing & Verification"];
-  const s = pick(bank);
-
-  // Single natural paragraph (no labels, no bullets, no constraints)
-  const pieces = [];
-
-  // Keep persona (remove this line if you want zero persona text)
-  pieces.push(persona);
-
-  if (s.system) pieces.push(`The team is working on ${s.system}.`);
-  if (s.trigger) pieces.push(`${String(s.trigger).replace(/\.\.+/g, ".")}`.replace(/[.\s]+$/g,".") + ".");
-  if (s.timing) pieces.push(`${String(s.timing).replace(/\.\.+/g, ".")}`.replace(/[.\s]+$/g,".") + ".");
-
-  const ask = s.ask || "Which option best fits this scenario?";
-
-  return `${pieces.join(" ")} ${ask}`.replace(/\s+/g, " ").trim();
+    "You are the lead security engineer for a software development project.",
+    "You are a security consultant advising on SDL implementation.",
+    "You are the security team lead evaluating development practices."
+  ];
+  
+  const contexts = [
+    "working on a customer-facing web application",
+    "developing an internal API gateway",
+    "building a cloud-based SaaS platform",
+    "working on a mobile banking application",
+    "developing a healthcare data management system",
+    "building an e-commerce platform",
+    "working on an IoT device management system",
+    "developing a financial trading application",
+    "building a social media platform",
+    "working on a government services portal"
+  ];
+  
+  // Create unique scenario based on the term's actual definition and usage
+  const usage = (term.usage || term.definition || "").toLowerCase();
+  const termName = term.term.toLowerCase();
+  
+  let situation = "";
+  let question = "Which approach best fits this situation?";
+  
+  if (usage.includes("test") || usage.includes("scan") || usage.includes("vulnerabilit")) {
+    const testContexts = [
+      "The team needs to identify security weaknesses before the next release.",
+      "Management wants evidence that security controls are working as intended.",
+      "The release is approaching and security validation is required.",
+      "Security issues were found in production and must be identified earlier.",
+      "The compliance team requires proof of security testing practices."
+    ];
+    situation = pick(testContexts);
+  } else if (usage.includes("threat") || usage.includes("model") || usage.includes("risk")) {
+    const threatContexts = [
+      "The architecture team needs to identify potential security threats early in design.",
+      "Stakeholders want to understand what could go wrong from a security perspective.",
+      "The team needs to prioritize security controls based on realistic attack scenarios.",
+      "Senior management wants visibility into security risks for this system.",
+      "The security review identified gaps in understanding attack surfaces."
+    ];
+    situation = pick(threatContexts);
+  } else if (usage.includes("phase") || usage.includes("stage") || usage.includes("lifecycle")) {
+    const phaseContexts = [
+      "The project manager needs to know when specific security activities should occur.",
+      "The team is planning the security activities for each development stage.",
+      "Security must be integrated at the right points in the development process.",
+      "The organization is establishing when security reviews are mandatory.",
+      "The audit team wants to verify security activities match the project phase."
+    ];
+    situation = pick(phaseContexts);
+  } else if (usage.includes("role") || usage.includes("responsib") || usage.includes("team")) {
+    const roleContexts = [
+      "The organization needs to assign clear ownership for security activities.",
+      "A person is needed to drive this security initiative consistently.",
+      "Management wants accountability for security outcomes.",
+      "The security program needs someone to perform these duties full-time.",
+      "Leadership is defining roles and responsibilities for security work."
+    ];
+    situation = pick(roleContexts);
+  } else if (usage.includes("policy") || usage.includes("compliance") || usage.includes("governance")) {
+    const govContexts = [
+      "The organization needs consistent standards across all development teams.",
+      "Auditors require documented evidence of security practices.",
+      "Leadership wants to ensure regulatory requirements are met.",
+      "The security team needs a framework for measuring effectiveness.",
+      "The company must demonstrate security due diligence to stakeholders."
+    ];
+    situation = pick(govContexts);
+  } else if (usage.includes("code") || usage.includes("static") || usage.includes("dynamic")) {
+    const codeContexts = [
+      "Developers need to identify security flaws in the codebase.",
+      "The team wants to catch security issues before they reach production.",
+      "Code quality and security must be validated during development.",
+      "The security review found issues that should have been caught earlier.",
+      "Automated security checks are needed in the development workflow."
+    ];
+    situation = pick(codeContexts);
+  } else {
+    situation = "The team needs to address a security concern in the development process.";
+  }
+  
+  const persona = pick(roles);
+  const context = pick(contexts);
+  
+  return `${persona} The team is ${context}. ${situation} ${question}`;
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
