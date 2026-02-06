@@ -552,7 +552,7 @@ const TERMS = [
   {term:"Metric Model",definition:"Determine the effectiveness of security controls using NVD and SCAP.",usage:"Automate vulnerability management, security measurement, and compliance."},
   {term:"National Institute of Standards and Technology (NIST)",definition:"Federal standard research providing info and tools for government and corporate security.",usage:"Suggests integrating security best practices into the SDLC as a security reference."},
   {term:"Nmap",definition:"Network scanning tool and security auditing tool.",usage:"Audit open ports in a subnet for security assessments."},
-  {term:"Non-Functional Requirements",definition:"Describes constraints or restrictions on design that do not impact the purpose.",usage:"Check for vulnerabilities during test planning and evaluate security behaviors."},
+  {term:"Non-Functional Requirements",definition:"Describes requirements or restrictions on design that do not impact the purpose.",usage:"Check for vulnerabilities during test planning and evaluate security behaviors."},
   {term:"NVD Database",definition:"National Vulnerability Database is a US government archive of vulnerability standards.",usage:"Communicate risks of IT vulnerabilities and used as security checklist using CVSS."},
   {term:"Open Software Assurance Maturity Model (OpenSAMM)",definition:"Implement software security that targets company needs with flexible activities.",usage:"Review software security practices and determine maturity of security program."},
   {term:"Open-Source Security Testing Methodology Manual (OSSTMM)",definition:"Templates and standards when developing testing techniques with focus on operational security.",usage:"Covers human security, facilities, access control; used during testing and pen-testing."},
@@ -760,97 +760,125 @@ function detailedScenarioStem(term, rng) {
   const cat = categorizeTerm(term);
   const pick = (arr) => arr[Math.floor(rng() * arr.length)];
   
-  const roles = [
-    "You are the AppSec engineer embedded with a product team.",
-    "You are a security analyst supporting QA and release readiness.",
-    "You are the security advisor reviewing a high-risk release.",
-    "You are the lead security engineer for a software development project.",
-    "You are a security consultant advising on SDL implementation.",
-    "You are the security team lead evaluating development practices."
-  ];
-  
-  const contexts = [
-    "working on a customer-facing web application",
-    "developing an internal API gateway",
-    "building a cloud-based SaaS platform",
-    "working on a mobile banking application",
-    "developing a healthcare data management system",
-    "building an e-commerce platform",
-    "working on an IoT device management system",
-    "developing a financial trading application",
-    "building a social media platform",
-    "working on a government services portal"
-  ];
-  
-  // Create unique scenario based on the term's actual definition and usage
   const usage = (term.usage || term.definition || "").toLowerCase();
   const termName = term.term.toLowerCase();
   
-  let situation = "";
-  let question = "Which approach best fits this situation?";
-  
-  if (usage.includes("test") || usage.includes("scan") || usage.includes("vulnerabilit")) {
-    const testContexts = [
-      "The team needs to identify security weaknesses before the next release.",
-      "Management wants evidence that security controls are working as intended.",
-      "The release is approaching and security validation is required.",
-      "Security issues were found in production and must be identified earlier.",
-      "The compliance team requires proof of security testing practices."
+  // Create detailed, specific scenarios based on category
+  if (cat === "Testing & Verification") {
+    const scenarios = [
+      `Your team is developing a payment processing API that handles credit card transactions. During sprint review, QA discovered that sending malformed JSON payloads with extremely long strings, special characters, and null bytes causes the parser to throw unhandled exceptions. The release is scheduled in 5 days. You need an automated approach that can generate thousands of invalid inputs to test all parser code paths and identify similar vulnerabilities. The solution must integrate with CI/CD and provide reproducible test cases. Which testing technique should you implement?`,
+      
+      `You are reviewing a web application before production deployment. The security team needs to validate all authentication flows, session management, and authorization checks without access to source code. The application is deployed in a staging environment that mirrors production. You have API documentation and user credentials for different role levels. Time is limited, and you need to verify that the application handles edge cases and security controls correctly during actual execution. What testing approach is most appropriate?`,
+      
+      `Your organization maintains a legacy C++ application with known buffer overflow vulnerabilities. The codebase is 500,000 lines, and manual code review would take months. You need to identify security issues like SQL injection, XSS, insecure API usage, and buffer overflows before the security audit next month. The solution must analyze the code without executing it and provide line-number references to vulnerabilities. Management wants automated scanning that developers can run during development. What technique should you prioritize?`,
+      
+      `A microservices architecture uses authentication tokens and encrypts data at rest. Before launch, the security team must verify that JWT validation, encryption implementations, and API authorization rules work correctly under real-world conditions. You need to test with actual HTTP traffic, database queries, and third-party service calls to ensure runtime security controls function as designed. The application must remain running during testing. Which approach validates runtime security effectively?`,
+      
+      `Your team built a file upload feature that processes PDFs, images, and Office documents. Security testing must verify the system handles corrupted files, oversized uploads, files with malicious payloads, and unusual MIME types safely. You need evidence that error handling prevents crashes and that the system fails securely. The testing should reveal weaknesses in input validation and parser robustness with minimal manual effort. What testing strategy fits these requirements?`
     ];
-    situation = pick(testContexts);
-  } else if (usage.includes("threat") || usage.includes("model") || usage.includes("risk")) {
-    const threatContexts = [
-      "The architecture team needs to identify potential security threats early in design.",
-      "Stakeholders want to understand what could go wrong from a security perspective.",
-      "The team needs to prioritize security controls based on realistic attack scenarios.",
-      "Senior management wants visibility into security risks for this system.",
-      "The security review identified gaps in understanding attack surfaces."
-    ];
-    situation = pick(threatContexts);
-  } else if (usage.includes("phase") || usage.includes("stage") || usage.includes("lifecycle")) {
-    const phaseContexts = [
-      "The project manager needs to know when specific security activities should occur.",
-      "The team is planning the security activities for each development stage.",
-      "Security must be integrated at the right points in the development process.",
-      "The organization is establishing when security reviews are mandatory.",
-      "The audit team wants to verify security activities match the project phase."
-    ];
-    situation = pick(phaseContexts);
-  } else if (usage.includes("role") || usage.includes("responsib") || usage.includes("team")) {
-    const roleContexts = [
-      "The organization needs to assign clear ownership for security activities.",
-      "A person is needed to drive this security initiative consistently.",
-      "Management wants accountability for security outcomes.",
-      "The security program needs someone to perform these duties full-time.",
-      "Leadership is defining roles and responsibilities for security work."
-    ];
-    situation = pick(roleContexts);
-  } else if (usage.includes("policy") || usage.includes("compliance") || usage.includes("governance")) {
-    const govContexts = [
-      "The organization needs consistent standards across all development teams.",
-      "Auditors require documented evidence of security practices.",
-      "Leadership wants to ensure regulatory requirements are met.",
-      "The security team needs a framework for measuring effectiveness.",
-      "The company must demonstrate security due diligence to stakeholders."
-    ];
-    situation = pick(govContexts);
-  } else if (usage.includes("code") || usage.includes("static") || usage.includes("dynamic")) {
-    const codeContexts = [
-      "Developers need to identify security flaws in the codebase.",
-      "The team wants to catch security issues before they reach production.",
-      "Code quality and security must be validated during development.",
-      "The security review found issues that should have been caught earlier.",
-      "Automated security checks are needed in the development workflow."
-    ];
-    situation = pick(codeContexts);
-  } else {
-    situation = "The team needs to address a security concern in the development process.";
+    return pick(scenarios);
   }
   
-  const persona = pick(roles);
-  const context = pick(contexts);
+  if (cat === "Threat Modeling") {
+    const scenarios = [
+      `Your team is designing a new healthcare portal that will store patient records, integrate with insurance systems, and allow patients to schedule appointments. The system has external APIs for partners, internal admin interfaces, and mobile apps. Before writing any code, the security architect wants to identify where trust boundaries exist, what data flows between components, which assets attackers might target, and what security controls are needed. The goal is to find and mitigate threats during design rather than after deployment. What security activity should the team perform first?`,
+      
+      `A financial services company is building a trading platform that processes real-time stock transactions. Senior management is concerned about potential attacks: unauthorized trading, data breaches, denial of service, and insider threats. The architecture includes web servers, APIs, databases, message queues, and third-party market data feeds. The security team needs a structured way to categorize threats, evaluate their severity, and prioritize which risks to address with limited budget and time. What framework should they use to systematically analyze threats?`,
+      
+      `You are reviewing the architecture for a multi-tenant SaaS application. The system has user authentication, role-based access control, data encryption, audit logging, and API rate limiting. Each component must be analyzed for specific threat categories: identity spoofing, data tampering, repudiation of actions, information disclosure, denial of service, and privilege escalation. The team needs a methodology that maps threats to each architectural element and ensures comprehensive coverage. Which threat analysis approach provides this systematic categorization?`,
+      
+      `Your organization is developing a cloud-native application with containers, serverless functions, and managed databases. The CTO wants to know: What are the most critical assets? What threats could compromise them? What is the likelihood and impact of each threat? Security must be prioritized based on business risk, not just technical vulnerability. The assessment should guide budget allocation for security controls. What type of security analysis delivers business-focused risk evaluation?`,
+      
+      `An IoT platform connects millions of devices, processes telemetry data, and sends commands to devices in the field. The architecture review identified trust boundaries between device firmware, cloud APIs, data storage, and admin consoles. Security needs to understand how data flows through the system, where it's validated, where it's stored, and what security controls protect each transition. The team needs a visual way to analyze the system architecture and identify where attacks might occur. What modeling technique best supports this architectural analysis?`
+    ];
+    return pick(scenarios);
+  }
   
-  return `${persona} The team is ${context}. ${situation} ${question}`;
+  if (cat === "Lifecycle & Process") {
+    const scenarios = [
+      `Your project team has just completed initial requirements gathering for a new customer data platform. The product will handle PII including names, addresses, payment information, and health data. Before any design or coding begins, the security team must evaluate business risks, establish security goals, define compliance requirements (GDPR, HIPAA, PCI-DSS), and create a security plan. This assessment will determine how rigorous security testing must be and what security activities are needed throughout development. Which SDL phase is the team entering?`,
+      
+      `Development has finished writing code for a new features release. The application is now in staging, and the security team is conducting final validation before production deployment. Activities include: penetration testing of the deployed application, final vulnerability scans, security regression testing, open-source license compliance review, and obtaining security sign-off from stakeholders. The goal is to verify the application meets all security and compliance requirements before it goes live. What phase of the SDL is this?`,
+      
+      `Your team is in active development of a REST API. Developers are writing code, committing to version control, and running unit tests. Security requirements specify that: all code must follow secure coding standards, static analysis must run on every commit, code reviews must check for security flaws, and secure libraries must be used for cryptography and input validation. The team needs continuous feedback on security issues while coding. Which SDL phase activities are being performed?`,
+      
+      `A production application has been running for two years. Yesterday, a security researcher disclosed a critical vulnerability via responsible disclosure. The PSIRT team validated the vulnerability, assessed its severity (CVSS 9.1), and determined it affects all customers. Now the team must: develop and test a security patch, prepare a security advisory, coordinate disclosure timing with the researcher, deploy the patch to production, and notify affected customers. What phase of the software lifecycle handles this scenario?`,
+      
+      `The product architecture has been approved, and technical design is underway. The team is creating detailed component designs, defining APIs, selecting frameworks and libraries, and documenting data flows. Security activities include: performing threat modeling on the architecture, reviewing design documents for security weaknesses, validating that security controls from requirements are reflected in the design, and ensuring privacy requirements are addressed. Which SDL phase encompasses these activities?`
+    ];
+    return pick(scenarios);
+  }
+  
+  if (cat === "Roles & Response") {
+    const scenarios = [
+      `Your organization needs someone to: provide technical security guidance to development teams, design secure architecture patterns, lead threat modeling sessions, review code for security vulnerabilities, drive security tool adoption, and participate in security incident response. This person must have deep technical expertise in software security and work hands-on with code and architecture. They will set the technical direction for secure development practices across the engineering organization. Which role matches these responsibilities?`,
+      
+      `A software development team of 15 engineers needs a dedicated person to: advocate for security within the team, attend security training and share knowledge, run security tools and interpret results, coordinate with the central security team, conduct peer code reviews for security issues, and ensure the team follows secure coding standards. This person remains a full-time developer but has additional security responsibilities and acts as the security liaison. What role best describes this position?`,
+      
+      `Your company is implementing SDL across 20 development teams. Someone must: promote SDL adoption organization-wide, train Security Champions across all teams, develop and communicate security policies, ensure policy compliance, drive security assessments for new projects, and evangelize security culture. This person operates at the organizational level, not embedded in individual teams, and focuses on process, policy, and education. Which role fits this scope?`,
+      
+      `A security researcher just emailed your company reporting a SQL injection vulnerability in your customer portal. Someone must: receive and validate the vulnerability report, assess severity and impact, coordinate with engineering to develop a fix, manage disclosure timeline with the researcher, prepare a security advisory, notify affected customers, and track the issue through resolution. This requires managing external vulnerability disclosures and coordinating cross-functional response. What team handles this responsibility?`,
+      
+      `Your organization needs to establish a person who will: drive threat modeling during architecture reviews, ensure security activities happen in each SDL phase (A1 through A5), conduct security assessments of new projects, coordinate penetration testing, review security test results, and validate that security requirements are met before release. This person owns security quality gates across the development lifecycle. Which role owns end-to-end SDL execution?`
+    ];
+    return pick(scenarios);
+  }
+  
+  if (cat === "Governance & Measurement") {
+    const scenarios = [
+      `Your security team uses multiple scanning tools: one reports "HIGH severity SQL injection," another reports "CRITICAL severity injection vulnerability" for the same issue. Different vendors use incompatible severity scales, making it impossible to prioritize findings consistently across tools. The team needs a standardized way to score vulnerability severity so that findings can be compared, prioritized, and tracked uniformly regardless of which tool discovered them. What system provides this standardized scoring?`,
+      
+      `Your organization scans applications weekly and generates hundreds of findings. The compliance team asks: "How do we prove we're fixing the most critical issues first? How do we measure if our security posture is improving over time? How do we track remediation progress across 50 applications?" Management wants metrics that demonstrate security effectiveness and support audit requirements. The solution must provide consistent measurement across tools and teams. What framework enables security measurement and tracking at scale?`,
+      
+      `A new vulnerability is discovered in OpenSSL, and your security team needs to quickly identify which applications are affected. You need a way to reference this specific vulnerability consistently across all security tools, databases, and communications so teams can search their environments and validate if they're vulnerable. The identifier must be universally recognized and work across different vendors' tools. What naming system provides this common vulnerability reference?`,
+      
+      `Your company is merging with another organization. Due diligence requires evaluating the acquisition target's security program. You need to assess: Do they have secure coding practices? Do they perform threat modeling? Do they do security testing? How mature is their SDL? The evaluation must be objective, measurable, and comparable to your organization's practices. What framework provides a maturity model for assessing software security programs?`,
+      
+      `Development teams must follow security policies, but compliance is inconsistent. The security team wants to track: Are security requirements documented? Is threat modeling performed? Are code reviews completed? Are security tests passed? They need a traceability system that maps every security requirement to design decisions, code implementations, and test results, ensuring nothing is missed and providing audit evidence. What artifact provides this requirement-to-implementation mapping?`
+    ];
+    return pick(scenarios);
+  }
+  
+  if (cat === "Scanning & Tools") {
+    const scenarios = [
+      `Your security team needs to scan production web applications without disrupting business operations. The scanning must identify vulnerabilities like missing security headers, insecure cookies, potential XSS, and information disclosure, but cannot send attack payloads or modify data. The tool should analyze HTTP traffic passively as the application runs under normal use. This scan must be safe to run continuously in production environments. What scanning approach meets these requirements?`,
+      
+      `Before a major release, security must validate the entire application for vulnerabilities. The scan should test for SQL injection, XSS, CSRF, authentication bypass, and other OWASP Top 10 issues by actually sending exploit attempts and analyzing responses. The application is deployed in staging, and aggressive testing is acceptable. You need comprehensive coverage of all vulnerabilities that can be detected through black-box testing. What scanner type should you use?`,
+      
+      `Your team is scanning an internal application that requires login. Unauthenticated scans only see the login page and miss 90% of the application's functionality. The security team has test credentials and wants the scanner to log in, navigate through the application using valid sessions, and test authenticated features, API endpoints, and admin functions. This will significantly improve coverage and reduce false negatives. What scanning approach requires credentials to test internal application features?`,
+      
+      `You're assessing a large web application with hundreds of pages and dynamic content. Before running vulnerability tests, you need to map the entire application: discover all URLs, forms, API endpoints, parameters, and inputs. The tool must crawl the application like a search engine, following links, submitting forms, and executing JavaScript to build a complete map of the attack surface. What tool creates this comprehensive application map?`,
+      
+      `Your security team needs a tool that integrates multiple capabilities: it should automatically discover the application structure, provide both passive analysis and active testing, allow manual testing workflows, and generate detailed reports. The tool must help security testers perform comprehensive web application assessments combining automated scanning with manual verification. What type of tool provides this integrated testing platform?`
+    ];
+    return pick(scenarios);
+  }
+  
+  if (cat === "Methodologies") {
+    const scenarios = [
+      `Your project has well-defined requirements that are unlikely to change. The system must meet strict regulatory compliance with documented security gates at each phase. The customer expects a fixed-price contract with clear deliverables. Security reviews must be formal and documented before proceeding to the next phase. The project needs predictable timelines and comprehensive documentation. Which development methodology fits these requirements?`,
+      
+      `Your startup is building a new product with evolving requirements. Customer feedback will drive feature priorities, and the team needs to release working software every 2-3 weeks. Security must be integrated without slowing down rapid iterations. The development approach emphasizes collaboration, quick adaptation to change, and continuous delivery of value. Which methodology supports this fast-paced, feedback-driven development?`,
+      
+      `Your team is developing safety-critical software where security requirements must be verified at each stage. For every development phase (requirements, design, implementation), there must be a corresponding testing phase that validates security controls were implemented correctly. The methodology ensures traceability between requirements and tests, with security verification mirroring each development step. What development model enforces this parallel testing structure?`,
+      
+      `Your development team wants to improve code quality and security through: pair programming, continuous integration with automated tests, test-driven development, frequent small releases, and collective code ownership. The approach emphasizes engineering excellence, automated testing, and rapid feedback loops. Developers write tests before code, refactor continuously, and maintain a sustainable pace. Which agile methodology focuses on these technical practices?`,
+      
+      `Your organization needs a framework to assess and improve its software security practices over time. The framework should evaluate current security activities (like threat modeling, security testing, and security training), measure maturity levels, and provide a roadmap for improvement. This assessment model is based on observing real-world security programs, not prescriptive requirements. What framework offers this maturity-based assessment approach?`
+    ];
+    return pick(scenarios);
+  }
+  
+  // Default scenarios for other categories
+  const defaultScenarios = [
+    `Your team is developing a cloud-based platform that handles sensitive customer data. Leadership wants to ensure security is built into the development process from the beginning. The security team needs to establish when security activities should occur, what security controls are required, and how to validate that security requirements are met. They need a systematic approach that works throughout the development lifecycle. The goal is to reduce vulnerabilities and ensure compliance with security standards. What framework or approach should guide the team's security efforts?`,
+    
+    `A security audit identified gaps in your organization's software development practices. Management wants to improve security across all development teams. The team needs guidance on: when to perform threat modeling, how to validate security requirements, what testing to perform, and how to handle vulnerabilities after release. The approach must integrate security into existing development workflows without requiring a complete process overhaul. What methodology or framework should the organization adopt?`,
+    
+    `Your development team is building a new application from scratch. Security must be considered at every stage: requirements definition, architecture design, coding, testing, deployment, and maintenance. The team needs clear guidance on what security activities to perform and when. The approach should prevent vulnerabilities rather than just finding them late in development. What should guide the team's security practices throughout development?`
+  ];
+  
+  return pick(defaultScenarios);
 }
 
 function buildRationaleCorrect(term, optionTexts, correctIdx, scenarioNeed){
@@ -1307,7 +1335,7 @@ function selectChoice(selectedKey){
       qState.locked = true; // lock ONLY this question
 
       const full = q.rationales?.[selectedKey]?.correctFull || `
-        <strong>Why this is correct:</strong> This choice best matches the scenario’s constraints and objective. It is the option that most directly solves the problem described without introducing unnecessary risk. In certification questions, the best answer is the one that fits the scenario’s timing, environment, and risk priority.
+        <strong>Why this is correct:</strong> This choice best matches the scenario’s requirements and objective. It is the option that most directly solves the problem described without introducing unnecessary risk. In certification questions, the best answer is the one that fits the scenario’s timing, environment, and risk priority.
       `;
 
       showFeedback(
@@ -1517,13 +1545,13 @@ function buildAttemptReport(a){
 
   function recommend(cat){
     if(cat==="Threat Modeling") return "Practice mapping STRIDE categories to DFD elements and trust boundaries. Then use DREAD-like thinking to prioritize what matters most based on impact and likelihood.";
-    if(cat==="Testing & Verification") return "Reinforce when to use static vs dynamic analysis, black/white/gray box testing, fuzzing, and code review. Focus on matching the technique to the environment constraints and the kind of evidence needed.";
+    if(cat==="Testing & Verification") return "Reinforce when to use static vs dynamic analysis, black/white/gray box testing, fuzzing, and code review. Focus on matching the technique to the environment and the kind of evidence needed.";
     if(cat==="Scanning & Tools") return "Review passive vs active scanning tradeoffs, authenticated scanning value, and how spiders/proxies help discover true attack surface. Emphasize safe execution in staging vs production.";
     if(cat==="Governance & Measurement") return "Review CVE/CVSS/NVD relationships and how policies/traceability provide auditable proof. Practice deciding what belongs in compliance gates vs engineering controls.";
     if(cat==="Lifecycle & Process") return "Rehearse SDLC vs SDL relationships and what happens in each stage (assessment, architecture, development, verification, ship, post-release). Tie activities to the correct stage purpose.";
-    if(cat==="Methodologies") return "Compare Agile vs Waterfall vs V-model and decide which fits given constraints: stability of requirements, compliance needs, and feedback cycles.";
+    if(cat==="Methodologies") return "Compare Agile vs Waterfall vs V-model and decide which fits given: stability of requirements, compliance needs, and feedback cycles.";
     if(cat==="Roles & Responsibilities") return "Differentiate architect vs champion vs evangelist responsibilities, and map incident response ownership (e.g., PSIRT) to post-release realities.";
-    return "Revisit the definitions and, more importantly, practice reading scenario constraints and selecting the option that best fits the objective and timing.";
+    return "Revisit the definitions and, more importantly, practice reading scenario requirements and selecting the option that best fits the objective and timing.";
   }
 
   const timeTakenMs = a.finishedAtMs && a.startedAtMs ? (a.finishedAtMs - a.startedAtMs) : (Date.now() - a.startedAtMs);
@@ -1923,3 +1951,4 @@ $("modeSelect").addEventListener("change", ()=>{
 </script>
 </body>
 </html>
+
