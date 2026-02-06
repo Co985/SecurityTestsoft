@@ -996,17 +996,29 @@ function detailedScenarioStem(term, rng) {
     return pick(scenarios);
   }
   
+  // Specific scenarios for Methodology terms (MUST come BEFORE category check)
+  if (termName === "waterfall methodology") {
+    return `Your project has well-defined requirements that are unlikely to change. The system must meet strict regulatory compliance with documented security gates at each phase. The customer expects a fixed-price contract with clear deliverables. Security reviews must be formal and documented before proceeding to the next phase. The project needs predictable timelines and comprehensive documentation. Which development methodology fits these requirements?`;
+  }
+  
+  if (termName === "agile methodology") {
+    return `Your startup is building a new product with evolving requirements. Customer feedback will drive feature priorities, and the team needs to release working software every 2-3 weeks. Security must be integrated without slowing down rapid iterations. The development approach emphasizes collaboration, quick adaptation to change, and continuous delivery of value. Which methodology supports this fast-paced, feedback-driven development?`;
+  }
+  
+  if (termName === "v-model") {
+    return `Your team is developing safety-critical software where security requirements must be verified at each stage. For every development phase (requirements, design, implementation), there must be a corresponding testing phase that validates security controls were implemented correctly. The methodology ensures traceability between requirements and tests, with security verification mirroring each development step. What development model enforces this parallel testing structure?`;
+  }
+  
+  if (termName === "extreme programming") {
+    return `Your development team wants to improve code quality and security through: pair programming, continuous integration with automated tests, test-driven development, frequent small releases, and collective code ownership. The approach emphasizes engineering excellence, automated testing, and rapid feedback loops. Developers write tests before code, refactor continuously, and maintain a sustainable pace. Which agile methodology focuses on these technical practices?`;
+  }
+  
+  // Generic scenarios for BSIMM, SAMM, Scrum, and other methodology terms
   if (cat === "Methodologies") {
     const scenarios = [
-      `Your project has well-defined requirements that are unlikely to change. The system must meet strict regulatory compliance with documented security gates at each phase. The customer expects a fixed-price contract with clear deliverables. Security reviews must be formal and documented before proceeding to the next phase. The project needs predictable timelines and comprehensive documentation. Which development methodology fits these requirements?`,
+      `Your organization needs a framework to assess and improve its software security practices over time. The framework should evaluate current security activities (like threat modeling, security testing, and security training), measure maturity levels, and provide a roadmap for improvement. This assessment model is based on observing real-world security programs, not prescriptive requirements. What framework offers this maturity-based assessment approach?`,
       
-      `Your startup is building a new product with evolving requirements. Customer feedback will drive feature priorities, and the team needs to release working software every 2-3 weeks. Security must be integrated without slowing down rapid iterations. The development approach emphasizes collaboration, quick adaptation to change, and continuous delivery of value. Which methodology supports this fast-paced, feedback-driven development?`,
-      
-      `Your team is developing safety-critical software where security requirements must be verified at each stage. For every development phase (requirements, design, implementation), there must be a corresponding testing phase that validates security controls were implemented correctly. The methodology ensures traceability between requirements and tests, with security verification mirroring each development step. What development model enforces this parallel testing structure?`,
-      
-      `Your development team wants to improve code quality and security through: pair programming, continuous integration with automated tests, test-driven development, frequent small releases, and collective code ownership. The approach emphasizes engineering excellence, automated testing, and rapid feedback loops. Developers write tests before code, refactor continuously, and maintain a sustainable pace. Which agile methodology focuses on these technical practices?`,
-      
-      `Your organization needs a framework to assess and improve its software security practices over time. The framework should evaluate current security activities (like threat modeling, security testing, and security training), measure maturity levels, and provide a roadmap for improvement. This assessment model is based on observing real-world security programs, not prescriptive requirements. What framework offers this maturity-based assessment approach?`
+      `Your development team follows an iterative approach with 2-week sprints. Each sprint starts with planning, includes daily standups, and ends with a demo and retrospective. Security requirements are added to the product backlog and prioritized alongside features. The team needs a framework that integrates security into this existing sprint-based workflow. What development methodology is being used?`
     ];
     return pick(scenarios);
   }
