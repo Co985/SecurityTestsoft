@@ -778,20 +778,27 @@ function detailedScenarioStem(term, rng) {
   const usage = (term.usage || term.definition || "").toLowerCase();
   const termName = term.term.toLowerCase();
   
-  // Create detailed, specific scenarios based on category
-  if (cat === "Testing & Verification") {
-    const scenarios = [
+  // Specific scenarios for Testing & Verification terms
+  if (termName === "fuzz testing") {
+    const fuzzScenarios = [
       `Your team is developing a payment processing API that handles credit card transactions. During sprint review, QA discovered that sending malformed JSON payloads with extremely long strings, special characters, and null bytes causes the parser to throw unhandled exceptions. The release is scheduled in 5 days. You need an automated approach that can generate thousands of invalid inputs to test all parser code paths and identify similar vulnerabilities. The solution must integrate with CI/CD and provide reproducible test cases. Which testing technique should you implement?`,
-      
-      `You are reviewing a web application before production deployment. The security team needs to validate all authentication flows, session management, and authorization checks without access to source code. The application is deployed in a staging environment that mirrors production. You have API documentation and user credentials for different role levels. Time is limited, and you need to verify that the application handles edge cases and security controls correctly during actual execution. What testing approach is most appropriate?`,
-      
-      `Your organization maintains a legacy C++ application with known buffer overflow vulnerabilities. The codebase is 500,000 lines, and manual code review would take months. You need to identify security issues like SQL injection, XSS, insecure API usage, and buffer overflows before the security audit next month. The solution must analyze the code without executing it and provide line-number references to vulnerabilities. Management wants automated scanning that developers can run during development. What technique should you prioritize?`,
-      
-      `A microservices architecture uses authentication tokens and encrypts data at rest. Before launch, the security team must verify that JWT validation, encryption implementations, and API authorization rules work correctly under real-world conditions. You need to test with actual HTTP traffic, database queries, and third-party service calls to ensure runtime security controls function as designed. The application must remain running during testing. Which approach validates runtime security effectively?`,
       
       `Your team built a file upload feature that processes PDFs, images, and Office documents. Security testing must verify the system handles corrupted files, oversized uploads, files with malicious payloads, and unusual MIME types safely. You need evidence that error handling prevents crashes and that the system fails securely. The testing should reveal weaknesses in input validation and parser robustness with minimal manual effort. What testing strategy fits these requirements?`
     ];
-    return pick(scenarios);
+    return pick(fuzzScenarios);
+  }
+  
+  if (termName === "static analysis") {
+    return `Your organization maintains a legacy C++ application with known buffer overflow vulnerabilities. The codebase is 500,000 lines, and manual code review would take months. You need to identify security issues like SQL injection, XSS, insecure API usage, and buffer overflows before the security audit next month. The solution must analyze the code without executing it and provide line-number references to vulnerabilities. Management wants automated scanning that developers can run during development. What technique should you prioritize?`;
+  }
+  
+  if (termName === "dynamic analysis") {
+    const dynamicScenarios = [
+      `You are reviewing a web application before production deployment. The security team needs to validate all authentication flows, session management, and authorization checks without access to source code. The application is deployed in a staging environment that mirrors production. You have API documentation and user credentials for different role levels. Time is limited, and you need to verify that the application handles edge cases and security controls correctly during actual execution. What testing approach is most appropriate?`,
+      
+      `A microservices architecture uses authentication tokens and encrypts data at rest. Before launch, the security team must verify that JWT validation, encryption implementations, and API authorization rules work correctly under real-world conditions. You need to test with actual HTTP traffic, database queries, and third-party service calls to ensure runtime security controls function as designed. The application must remain running during testing. Which approach validates runtime security effectively?`
+    ];
+    return pick(dynamicScenarios);
   }
   
   if (cat === "Threat Modeling") {
@@ -809,19 +816,25 @@ function detailedScenarioStem(term, rng) {
     return pick(scenarios);
   }
   
-  if (cat === "Lifecycle & Process") {
-    const scenarios = [
-      `Your project team has just completed initial requirements gathering for a new customer data platform. The product will handle PII including names, addresses, payment information, and health data. Before any design or coding begins, the security team must evaluate business risks, establish security goals, define compliance requirements (GDPR, HIPAA, PCI-DSS), and create a security plan. This assessment will determine how rigorous security testing must be and what security activities are needed throughout development. Which SDL phase is the team entering?`,
-      
-      `Development has finished writing code for a new features release. The application is now in staging, and the security team is conducting final validation before production deployment. Activities include: penetration testing of the deployed application, final vulnerability scans, security regression testing, open-source license compliance review, and obtaining security sign-off from stakeholders. The goal is to verify the application meets all security and compliance requirements before it goes live. What phase of the SDL is this?`,
-      
-      `Your team is in active development of a REST API. Developers are writing code, committing to version control, and running unit tests. Security requirements specify that: all code must follow secure coding standards, static analysis must run on every commit, code reviews must check for security flaws, and secure libraries must be used for cryptography and input validation. The team needs continuous feedback on security issues while coding. Which SDL phase activities are being performed?`,
-      
-      `A production application has been running for two years. Yesterday, a security researcher disclosed a critical vulnerability via responsible disclosure. The PSIRT team validated the vulnerability, assessed its severity (CVSS 9.1), and determined it affects all customers. Now the team must: develop and test a security patch, prepare a security advisory, coordinate disclosure timing with the researcher, deploy the patch to production, and notify affected customers. What phase of the software lifecycle handles this scenario?`,
-      
-      `The product architecture has been approved, and technical design is underway. The team is creating detailed component designs, defining APIs, selecting frameworks and libraries, and documenting data flows. Security activities include: performing threat modeling on the architecture, reviewing design documents for security weaknesses, validating that security controls from requirements are reflected in the design, and ensuring privacy requirements are addressed. Which SDL phase encompasses these activities?`
-    ];
-    return pick(scenarios);
+  // Specific scenarios for SDL Phase terms
+  if (termName === "security assessment (a1) phase") {
+    return `Your project team has just completed initial requirements gathering for a new customer data platform. The product will handle PII including names, addresses, payment information, and health data. Before any design or coding begins, the security team must evaluate business risks, establish security goals, define compliance requirements (GDPR, HIPAA, PCI-DSS), and create a security plan. This assessment will determine how rigorous security testing must be and what security activities are needed throughout development. Which SDL phase is the team entering?`;
+  }
+  
+  if (termName === "ship (a5) phase") {
+    return `Development has finished writing code for a new features release. The application is now in staging, and the security team is conducting final validation before production deployment. Activities include: penetration testing of the deployed application, final vulnerability scans, security regression testing, open-source license compliance review, and obtaining security sign-off from stakeholders. The goal is to verify the application meets all security and compliance requirements before it goes live. What phase of the SDL is this?`;
+  }
+  
+  if (termName === "design and development (a3) phase") {
+    return `Your team is in active development of a REST API. Developers are writing code, committing to version control, and running unit tests. Security requirements specify that: all code must follow secure coding standards, static analysis must run on every commit, code reviews must check for security flaws, and secure libraries must be used for cryptography and input validation. The team needs continuous feedback on security issues while coding. Which SDL phase activities are being performed?`;
+  }
+  
+  if (termName === "post-release support phase") {
+    return `A production application has been running for two years. Yesterday, a security researcher disclosed a critical vulnerability via responsible disclosure. The PSIRT team validated the vulnerability, assessed its severity (CVSS 9.1), and determined it affects all customers. Now the team must: develop and test a security patch, prepare a security advisory, coordinate disclosure timing with the researcher, deploy the patch to production, and notify affected customers. What phase of the software lifecycle handles this scenario?`;
+  }
+  
+  if (termName === "architecture (a2) phase") {
+    return `The product architecture has been approved, and technical design is underway. The team is creating detailed component designs, defining APIs, selecting frameworks and libraries, and documenting data flows. Security activities include: performing threat modeling on the architecture, reviewing design documents for security weaknesses, validating that security controls from requirements are reflected in the design, and ensuring privacy requirements are addressed. Which SDL phase encompasses these activities?`;
   }
   
   if (cat === "Roles & Response") {
@@ -839,17 +852,26 @@ function detailedScenarioStem(term, rng) {
     return pick(scenarios);
   }
   
+  // Specific scenario for Metric Model term
+  if (termName === "metric model") {
+    return `Your organization scans applications weekly and generates hundreds of findings. The compliance team asks: "How do we prove we're fixing the most critical issues first? How do we measure if our security posture is improving over time? How do we track remediation progress across 50 applications?" Management wants metrics that demonstrate security effectiveness and support audit requirements. The solution must provide consistent measurement across tools and teams. What framework enables security measurement and tracking at scale?`;
+  }
+  
+  // Generic scenarios for other Governance & Measurement terms
   if (cat === "Governance & Measurement") {
     const scenarios = [
       `Your security team uses multiple scanning tools: one reports "HIGH severity SQL injection," another reports "CRITICAL severity injection vulnerability" for the same issue. Different vendors use incompatible severity scales, making it impossible to prioritize findings consistently across tools. The team needs a standardized way to score vulnerability severity so that findings can be compared, prioritized, and tracked uniformly regardless of which tool discovered them. What system provides this standardized scoring?`,
-      
-      `Your organization scans applications weekly and generates hundreds of findings. The compliance team asks: "How do we prove we're fixing the most critical issues first? How do we measure if our security posture is improving over time? How do we track remediation progress across 50 applications?" Management wants metrics that demonstrate security effectiveness and support audit requirements. The solution must provide consistent measurement across tools and teams. What framework enables security measurement and tracking at scale?`,
       
       `A new vulnerability is discovered in OpenSSL, and your security team needs to quickly identify which applications are affected. You need a way to reference this specific vulnerability consistently across all security tools, databases, and communications so teams can search their environments and validate if they're vulnerable. The identifier must be universally recognized and work across different vendors' tools. What naming system provides this common vulnerability reference?`,
       
       `Your company is merging with another organization. Due diligence requires evaluating the acquisition target's security program. You need to assess: Do they have secure coding practices? Do they perform threat modeling? Do they do security testing? How mature is their SDL? The evaluation must be objective, measurable, and comparable to your organization's practices. What framework provides a maturity model for assessing software security programs?`
     ];
     return pick(scenarios);
+  }
+  
+  // Specific scenario for Spider term
+  if (termName === "spider") {
+    return `You're assessing a large web application with hundreds of pages and dynamic content. Before running vulnerability tests, you need to map the entire application: discover all URLs, forms, API endpoints, parameters, and inputs. The tool must crawl the application like a search engine, following links, submitting forms, and executing JavaScript to build a complete map of the attack surface. What tool creates this comprehensive application map?`;
   }
   
   if (cat === "Scanning & Tools") {
@@ -859,8 +881,6 @@ function detailedScenarioStem(term, rng) {
       `Before a major release, security must validate the entire application for vulnerabilities. The scan should test for SQL injection, XSS, CSRF, authentication bypass, and other OWASP Top 10 issues by actually sending exploit attempts and analyzing responses. The application is deployed in staging, and aggressive testing is acceptable. You need comprehensive coverage of all vulnerabilities that can be detected through black-box testing. What scanner type should you use?`,
       
       `Your team is scanning an internal application that requires login. Unauthenticated scans only see the login page and miss 90% of the application's functionality. The security team has test credentials and wants the scanner to log in, navigate through the application using valid sessions, and test authenticated features, API endpoints, and admin functions. This will significantly improve coverage and reduce false negatives. What scanning approach requires credentials to test internal application features?`,
-      
-      `You're assessing a large web application with hundreds of pages and dynamic content. Before running vulnerability tests, you need to map the entire application: discover all URLs, forms, API endpoints, parameters, and inputs. The tool must crawl the application like a search engine, following links, submitting forms, and executing JavaScript to build a complete map of the attack surface. What tool creates this comprehensive application map?`,
       
       `Your security team needs a tool that integrates multiple capabilities: it should automatically discover the application structure, provide both passive analysis and active testing, allow manual testing workflows, and generate detailed reports. The tool must help security testers perform comprehensive web application assessments combining automated scanning with manual verification. What type of tool provides this integrated testing platform?`
     ];
