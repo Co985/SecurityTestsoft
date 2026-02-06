@@ -699,7 +699,8 @@ function categorizeTerm(t){
   if(/scanner|scan|zap|nmap|spider|proxy|passive|active|intrusive/.test(s)) return "Scanning & Tools";
   if(/static analysis|dynamic analysis|fuzz|white.?box|black.?box|gray.?box|penetration|code review|system test|functional test|verification|testing|test|script/.test(s)) return "Testing & Verification";
   if(/cve|cvss|nvd|policy|compliance|benchmark|metric|measurement|risk profile|traceability|metric model|governance/.test(s)) return "Governance & Measurement";
-  if(/sdl|sdlc|phase|planning|requirement|design|implementation|testing|deployment|maintenance|ship|post.?release|assessment|architecture|construction|development/.test(s)) return "Lifecycle & Process";
+  // Only recognize actual SDL phases (A1-A5) and SDLC, not generic "phase" terms
+  if(/\b(a1|a2|a3|a4|a5)\b|security assessment.*phase|architecture.*phase|design and development.*phase|ship.*phase|post.?release|sdlc?|planning phase|requirement phase|design phase|implementation phase|deployment phase|maintenance phase/.test(s)) return "Lifecycle & Process";
   if(/agile|scrum|waterfall|v.?model|extreme programming|methodology/.test(s)) return "Methodologies";
   if(/champion|psirt|evangelist|architect|role|team|incident response|response/.test(s)) return "Roles & Response";
   return "Core Concepts";
