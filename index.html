@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Software Security Exam</title>
-  <script src="questions.js" defer></script>
+  <script src="questions.js"></script>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -16,22 +16,29 @@
       background: #111827;
       padding: 1.5rem 2rem;
       border-bottom: 1px solid #1f2937;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
     h1 {
       margin: 0;
       font-size: 1.8rem;
     }
     main {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 2rem auto;
       padding: 0 1rem 3rem;
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(260px, 1.2fr);
+      gap: 1.5rem;
     }
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
-      margin-bottom: 1.5rem;
     }
     button {
       background: #2563eb;
@@ -45,6 +52,12 @@
     button:hover {
       background: #1d4ed8;
     }
+    button.secondary {
+      background: #4b5563;
+    }
+    button.secondary:hover {
+      background: #6b7280;
+    }
     select {
       background: #020617;
       color: #e5e7eb;
@@ -52,18 +65,23 @@
       border-radius: 0.375rem;
       padding: 0.4rem 0.6rem;
     }
-    .question {
+    .meta {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+    .question-card {
       background: #020617;
       border-radius: 0.5rem;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1rem;
+      padding: 1.1rem 1.25rem;
       border: 1px solid #1f2937;
+      min-height: 260px;
     }
     .question-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       gap: 0.5rem;
+      margin-bottom: 0.4rem;
     }
     .question-number {
       font-weight: 600;
@@ -79,35 +97,42 @@
       letter-spacing: 0.04em;
     }
     .question-text {
-      margin: 0.4rem 0 0.6rem;
+      margin: 0.4rem 0 0.8rem;
     }
-    ul.choices {
+    .choices {
       list-style: none;
       padding-left: 0;
-      margin: 0.4rem 0 0.6rem;
+      margin: 0;
     }
-    ul.choices li {
-      margin-bottom: 0.25rem;
+    .choices li {
+      margin-bottom: 0.35rem;
     }
     .choice-label {
       font-weight: 600;
       margin-right: 0.25rem;
       color: #bfdbfe;
     }
-    .answer-controls {
-      margin-top: 0.5rem;
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.9rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-    .answer-btn {
-      background: #4b5563;
+    .nav-left, .nav-right {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .status-text {
       font-size: 0.85rem;
-      padding: 0.35rem 0.7rem;
+      color: #9ca3af;
     }
-    .answer-btn:hover {
-      background: #6b7280;
-    }
-    .explanations {
-      margin-top: 0.6rem;
-      padding-top: 0.5rem;
+    .explanation-block {
+      margin-top: 0.9rem;
+      padding-top: 0.7rem;
       border-top: 1px dashed #1f2937;
       font-size: 0.9rem;
       display: none;
@@ -119,29 +144,110 @@
     .wrong {
       color: #f97373;
     }
-    .meta {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      margin-top: 0.25rem;
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
     }
-    footer {
+    .panel {
+      background: #020617;
+      border-radius: 0.5rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid #1f2937;
+    }
+    .panel h2 {
+      font-size: 1rem;
+      margin: 0 0 0.5rem;
+    }
+    .question-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+    .q-pill {
+      min-width: 32px;
       text-align: center;
+      padding: 0.2rem 0.4rem;
+      border-radius: 999px;
       font-size: 0.8rem;
-      color: #6b7280;
-      padding-bottom: 2rem;
+      border: 1px solid #374151;
+      cursor: pointer;
+      background: #020617;
+      color: #e5e7eb;
+    }
+    .q-pill.current {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+    .q-pill.answered {
+      border-color: #22c55e;
+    }
+    .q-pill.unanswered {
+      border-style: dashed;
+    }
+    .report-section {
+      font-size: 0.85rem;
+    }
+    .report-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .badge {
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-strong {
+      background: #16a34a33;
+      color: #4ade80;
+    }
+    .badge-weak {
+      background: #b91c1c33;
+      color: #fca5a5;
+    }
+    .badge-neutral {
+      background: #374151;
+      color: #e5e7eb;
+    }
+    .timer {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #facc15;
+    }
+    .timer.expired {
+      color: #f97373;
+    }
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      background: #020617;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+      border-radius: 0.375rem;
+      padding: 0.4rem 0.6rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 800px) {
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Software Security Exam</h1>
-  </header>
-  <main>
-    <section class="controls">
-      <button onclick="generateTest()">Generate New 50‑Question Exam</button>
+    <div class="controls">
+      <button id="newExamBtn">Start New Exam</button>
       <label>
-        Questions per exam:
-        <select id="questionCountSelect" onchange="generateTest()">
+        Questions:
+        <select id="questionCountSelect">
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
@@ -149,17 +255,105 @@
           <option value="50" selected>50</option>
         </select>
       </label>
-      <span class="meta">Questions are randomly selected from the full bank each time.</span>
+      <label>
+        Version / Filter:
+        <select id="filterSelect">
+          <option value="all" selected>All Topics (Version A)</option>
+          <option value="sdl">SDL Phases & Metrics (Version B)</option>
+          <option value="sdlc">SDLC & Lifecycle (Version C)</option>
+          <option value="threat">Threat Modeling & STRIDE/DREAD</option>
+          <option value="tools">Tools & Standards (CVE/NVD/OWASP)</option>
+          <option value="roles">Roles & Responsibilities</option>
+          <option value="testing">Scanning & Testing</option>
+        </select>
+      </label>
+      <label>
+        Timer:
+        <select id="timerSelect">
+          <option value="0" selected>No timer</option>
+          <option value="900">15 min</option>
+          <option value="1800">30 min</option>
+          <option value="3600">60 min</option>
+        </select>
+      </label>
+      <span class="timer" id="timerDisplay">No timer</span>
+      <button id="submitExamBtn" class="secondary">Submit Exam</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="question-card" id="questionCard">
+        <div class="question-header">
+          <span class="question-number" id="questionNumber">Question 1</span>
+          <span class="scenario-tag" id="scenarioTag" style="display:none;">Scenario</span>
+        </div>
+        <p class="question-text" id="questionText">Click “Start New Exam” to begin.</p>
+        <ul class="choices" id="choicesList"></ul>
+
+        <div class="nav-bar">
+          <div class="nav-left">
+            <button id="prevBtn" class="secondary">Previous</button>
+            <button id="nextBtn">Next</button>
+          </div>
+          <div class="nav-right">
+            <span class="status-text" id="progressText">0 / 0 answered</span>
+            <label>
+              Go to:
+              <select id="jumpSelect"></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="explanation-block" id="explanationBlock">
+          <p id="correctAnswerLine"></p>
+          <p id="correctExplanation"></p>
+          <p><strong>Why the other options are wrong:</strong></p>
+          <ul id="wrongExplanationList"></ul>
+          <p class="meta" id="conceptNoteLine"></p>
+        </div>
+      </div>
     </section>
 
-    <div id="testContainer"></div>
+    <aside class="sidebar">
+      <div class="panel">
+        <h2>Question Navigator</h2>
+        <div id="questionList" class="question-list"></div>
+        <p class="meta" id="navigatorHint">Start an exam to see questions.</p>
+      </div>
 
-    <footer>
-      Software Security Exam &mdash; Randomized question bank for SDL, AppSec, and SDLC concepts.
-    </footer>
+      <div class="panel">
+        <h2>Current Attempt Report</h2>
+        <div id="currentReport" class="report-section">
+          <p class="meta">Submit an exam to see your strengths and weaknesses.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Overall History</h2>
+        <div id="historyReport" class="report-section">
+          <p class="meta">We’ll track patterns across attempts using your browser’s storage.</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Export / Import Attempts</h2>
+        <div class="report-section">
+          <button id="exportBtn" class="secondary">Export Attempts JSON</button>
+          <textarea id="exportArea" placeholder="Exported attempts JSON will appear here..."></textarea>
+          <button id="importBtn" class="secondary">Import Attempts JSON</button>
+          <p class="meta">Paste JSON above and click Import to merge attempts into history.</p>
+        </div>
+      </div>
+    </aside>
   </main>
 
+  <footer>
+    Software Security Exam &mdash; SDL, SDLC, AppSec, Threat Modeling, and more.
+  </footer>
+
   <script>
+    // ---------- Utility ----------
     function shuffle(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -168,116 +362,532 @@
       return array;
     }
 
-    function generateTest() {
-      const container = document.getElementById('testContainer');
-      container.innerHTML = '';
+    function filterQuestions(filterKey) {
+      if (!Array.isArray(questionBank)) return [];
+      if (filterKey === 'all') return [...questionBank];
 
-      const select = document.getElementById('questionCountSelect');
-      const count = parseInt(select.value, 10);
+      const keyMap = {
+        sdl: ['SDL', 'A1', 'A2', 'A3', 'A4', 'A5', 'Post-Release', 'Ship phase'],
+        sdlc: ['SDLC', 'Planning', 'Requirements', 'Design', 'Implementation', 'Deployment', 'Maintenance'],
+        threat: ['STRIDE', 'DREAD', 'Threat modeling', 'DFD', 'PASTA'],
+        tools: ['CVE', 'CVSS', 'NVD', 'OWASP', 'ZAP', 'OpenSAMM', 'NIST'],
+        roles: ['Architect', 'Champion', 'Evangelist', 'PSIRT', 'Roles'],
+        testing: ['fuzz', 'scanning', 'penetration', 'static analysis', 'dynamic analysis', 'testing']
+      };
 
-      if (!Array.isArray(questionBank) || questionBank.length === 0) {
-        container.innerHTML = '<p>No questions loaded.</p>';
-        return;
-      }
+      const keywords = keyMap[filterKey] || [];
+      const lowerKeywords = keywords.map(k => k.toLowerCase());
 
-      const selected = shuffle([...questionBank]).slice(0, Math.min(count, questionBank.length));
-
-      selected.forEach((q, index) => {
-        const qDiv = document.createElement('div');
-        qDiv.className = 'question';
-
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'question-header';
-
-        const numSpan = document.createElement('span');
-        numSpan.className = 'question-number';
-        numSpan.textContent = `Question ${index + 1}`;
-
-        headerDiv.appendChild(numSpan);
-
-        if (q.scenario) {
-          const scenarioSpan = document.createElement('span');
-          scenarioSpan.className = 'scenario-tag';
-          scenarioSpan.textContent = 'Scenario';
-          headerDiv.appendChild(scenarioSpan);
-        }
-
-        qDiv.appendChild(headerDiv);
-
-        const textP = document.createElement('p');
-        textP.className = 'question-text';
-        textP.textContent = q.question;
-        qDiv.appendChild(textP);
-
-        const ul = document.createElement('ul');
-        ul.className = 'choices';
-
-        q.choices.forEach((choice, idx) => {
-          const li = document.createElement('li');
-          const labelSpan = document.createElement('span');
-          labelSpan.className = 'choice-label';
-          labelSpan.textContent = String.fromCharCode(65 + idx) + '.';
-          li.appendChild(labelSpan);
-          li.appendChild(document.createTextNode(' ' + choice));
-          ul.appendChild(li);
-        });
-
-        qDiv.appendChild(ul);
-
-        const answerControls = document.createElement('div');
-        answerControls.className = 'answer-controls';
-
-        const btn = document.createElement('button');
-        btn.className = 'answer-btn';
-        btn.textContent = 'Show Answer & Explanations';
-
-        const explanationsDiv = document.createElement('div');
-        explanationsDiv.className = 'explanations';
-
-        btn.addEventListener('click', () => {
-          explanationsDiv.style.display =
-            explanationsDiv.style.display === 'none' || explanationsDiv.style.display === ''
-              ? 'block'
-              : 'none';
-        });
-
-        answerControls.appendChild(btn);
-        qDiv.appendChild(answerControls);
-
-        const correctP = document.createElement('p');
-        correctP.innerHTML = `<span class="correct">Correct answer: ${q.correctLetter}. ${q.answer}</span>`;
-        explanationsDiv.appendChild(correctP);
-
-        const correctExpP = document.createElement('p');
-        correctExpP.textContent = 'Why this is correct: ' + q.explanationCorrect;
-        explanationsDiv.appendChild(correctExpP);
-
-        const wrongHeader = document.createElement('p');
-        wrongHeader.textContent = 'Why the other options are wrong:';
-        explanationsDiv.appendChild(wrongHeader);
-
-        const wrongList = document.createElement('ul');
-        Object.entries(q.explanationWrong || {}).forEach(([letter, text]) => {
-          const li = document.createElement('li');
-          li.className = 'wrong';
-          li.textContent = `${letter}. ${text}`;
-          wrongList.appendChild(li);
-        });
-        explanationsDiv.appendChild(wrongList);
-
-        if (q.conceptNote) {
-          const conceptP = document.createElement('p');
-          conceptP.className = 'meta';
-          conceptP.textContent = 'Concepts: ' + q.conceptNote;
-          explanationsDiv.appendChild(conceptP);
-        }
-
-        qDiv.appendChild(explanationsDiv);
-        container.appendChild(qDiv);
+      return questionBank.filter(q => {
+        const text = ((q.conceptNote || '') + ' ' + (q.question || '')).toLowerCase();
+        return lowerKeywords.some(k => text.includes(k));
       });
     }
 
-    document.addEventListener('DOMContentLoaded', generateTest);
+    // ---------- State ----------
+    let currentExam = {
+      questions: [],
+      answers: {},
+      submitted: false,
+      filterKey: 'all',
+      timerSeconds: 0
+    };
+    let currentIndex = 0;
+    let timerId = null;
+    let remainingSeconds = 0;
+
+    const STORAGE_KEY = 'securityExamAttempts_v2';
+
+    // ---------- DOM ----------
+    const questionNumberEl = document.getElementById('questionNumber');
+    const scenarioTagEl = document.getElementById('scenarioTag');
+    const questionTextEl = document.getElementById('questionText');
+    const choicesListEl = document.getElementById('choicesList');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressTextEl = document.getElementById('progressText');
+    const jumpSelectEl = document.getElementById('jumpSelect');
+    const questionListEl = document.getElementById('questionList');
+    const navigatorHintEl = document.getElementById('navigatorHint');
+
+    const explanationBlockEl = document.getElementById('explanationBlock');
+    const correctAnswerLineEl = document.getElementById('correctAnswerLine');
+    const correctExplanationEl = document.getElementById('correctExplanation');
+    const wrongExplanationListEl = document.getElementById('wrongExplanationList');
+    const conceptNoteLineEl = document.getElementById('conceptNoteLine');
+
+    const newExamBtn = document.getElementById('newExamBtn');
+    const submitExamBtn = document.getElementById('submitExamBtn');
+    const questionCountSelectEl = document.getElementById('questionCountSelect');
+    const filterSelectEl = document.getElementById('filterSelect');
+    const timerSelectEl = document.getElementById('timerSelect');
+    const timerDisplayEl = document.getElementById('timerDisplay');
+
+    const currentReportEl = document.getElementById('currentReport');
+    const historyReportEl = document.getElementById('historyReport');
+
+    const exportBtn = document.getElementById('exportBtn');
+    const importBtn = document.getElementById('importBtn');
+    const exportAreaEl = document.getElementById('exportArea');
+
+    // ---------- Timer ----------
+    function formatSeconds(sec) {
+      if (sec <= 0) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function startTimer(seconds) {
+      clearTimer();
+      if (!seconds || seconds <= 0) {
+        timerDisplayEl.textContent = 'No timer';
+        timerDisplayEl.classList.remove('expired');
+        return;
+      }
+      remainingSeconds = seconds;
+      timerDisplayEl.textContent = formatSeconds(remainingSeconds);
+      timerDisplayEl.classList.remove('expired');
+
+      timerId = setInterval(() => {
+        remainingSeconds--;
+        if (remainingSeconds <= 0) {
+          remainingSeconds = 0;
+          timerDisplayEl.textContent = 'Time up';
+          timerDisplayEl.classList.add('expired');
+          clearTimer();
+          if (!currentExam.submitted) {
+            alert('Time is up. Your exam will be submitted automatically.');
+            submitExam();
+          }
+        } else {
+          timerDisplayEl.textContent = formatSeconds(remainingSeconds);
+        }
+      }, 1000);
+    }
+
+    function clearTimer() {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+
+    // ---------- Exam Generation ----------
+    function startNewExam() {
+      if (!Array.isArray(questionBank) || questionBank.length === 0) {
+        alert('No questions loaded.');
+        return;
+      }
+      const count = parseInt(questionCountSelectEl.value, 10);
+      const filterKey = filterSelectEl.value;
+      const filtered = filterQuestions(filterKey);
+      if (!filtered.length) {
+        alert('No questions match this filter. Try another version.');
+        return;
+      }
+
+      const selected = shuffle([...filtered]).slice(0, Math.min(count, filtered.length));
+
+      currentExam = {
+        questions: selected,
+        answers: {},
+        submitted: false,
+        filterKey,
+        timerSeconds: parseInt(timerSelectEl.value, 10)
+      };
+      currentIndex = 0;
+
+      buildNavigator();
+      buildJumpSelect();
+      renderQuestion();
+      updateProgress();
+      explanationBlockEl.style.display = 'none';
+      currentReportEl.innerHTML = '<p class="meta">Submit this attempt to see your strengths and weaknesses.</p>';
+
+      startTimer(currentExam.timerSeconds);
+    }
+
+    function buildNavigator() {
+      questionListEl.innerHTML = '';
+      navigatorHintEl.textContent = 'Click a number to jump to that question.';
+      currentExam.questions.forEach((_, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'q-pill unanswered';
+        btn.textContent = idx + 1;
+        btn.addEventListener('click', () => {
+          currentIndex = idx;
+          renderQuestion();
+        });
+        questionListEl.appendChild(btn);
+      });
+    }
+
+    function buildJumpSelect() {
+      jumpSelectEl.innerHTML = '';
+      currentExam.questions.forEach((_, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `Q${idx + 1}`;
+        jumpSelectEl.appendChild(opt);
+      });
+    }
+
+    // ---------- Rendering ----------
+    function renderQuestion() {
+      const q = currentExam.questions[currentIndex];
+      if (!q) {
+        questionTextEl.textContent = 'Start a new exam to begin.';
+        choicesListEl.innerHTML = '';
+        return;
+      }
+
+      questionNumberEl.textContent = `Question ${currentIndex + 1} of ${currentExam.questions.length}`;
+      scenarioTagEl.style.display = q.scenario ? 'inline-block' : 'none';
+      questionTextEl.textContent = q.question;
+
+      choicesListEl.innerHTML = '';
+      q.choices.forEach((choice, idx) => {
+        const li = document.createElement('li');
+
+        const id = `q${currentIndex}_choice${idx}`;
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'currentQuestion';
+        input.id = id;
+        input.value = idx;
+
+        if (currentExam.answers[currentIndex] === idx) {
+          input.checked = true;
+        }
+
+        input.addEventListener('change', () => {
+          currentExam.answers[currentIndex] = idx;
+          updateProgress();
+          updateNavigatorPills();
+        });
+
+        const label = document.createElement('label');
+        label.setAttribute('for', id);
+
+        const letterSpan = document.createElement('span');
+        letterSpan.className = 'choice-label';
+        letterSpan.textContent = String.fromCharCode(65 + idx) + '.';
+
+        label.appendChild(letterSpan);
+        label.appendChild(document.createTextNode(' ' + choice));
+
+        li.appendChild(input);
+        li.appendChild(label);
+        choicesListEl.appendChild(li);
+      });
+
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === currentExam.questions.length - 1;
+
+      jumpSelectEl.value = currentIndex.toString();
+
+      if (currentExam.submitted) {
+        showExplanationForCurrent();
+      } else {
+        explanationBlockEl.style.display = 'none';
+      }
+
+      updateNavigatorPills();
+    }
+
+    function updateProgress() {
+      const total = currentExam.questions.length;
+      const answered = Object.keys(currentExam.answers).length;
+      progressTextEl.textContent = `${answered} / ${total} answered`;
+    }
+
+    function updateNavigatorPills() {
+      const pills = questionListEl.querySelectorAll('.q-pill');
+      pills.forEach((pill, idx) => {
+        pill.classList.remove('current', 'answered', 'unanswered');
+        if (idx === currentIndex) {
+          pill.classList.add('current');
+        }
+        if (currentExam.answers[idx] !== undefined) {
+          pill.classList.add('answered');
+        } else {
+          pill.classList.add('unanswered');
+        }
+      });
+    }
+
+    // ---------- Navigation ----------
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < currentExam.questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      }
+    });
+
+    jumpSelectEl.addEventListener('change', () => {
+      const idx = parseInt(jumpSelectEl.value, 10);
+      if (!isNaN(idx)) {
+        currentIndex = idx;
+        renderQuestion();
+      }
+    });
+
+    newExamBtn.addEventListener('click', startNewExam);
+
+    // ---------- Submission & Reporting ----------
+    submitExamBtn.addEventListener('click', () => {
+      if (!currentExam.questions.length) {
+        alert('Start an exam first.');
+        return;
+      }
+      if (currentExam.submitted) {
+        alert('This exam is already submitted. Start a new exam for another attempt.');
+        return;
+      }
+      if (!confirm('Submit this exam? You will see explanations and a report.')) {
+        return;
+      }
+      submitExam();
+    });
+
+    function submitExam() {
+      currentExam.submitted = true;
+      clearTimer();
+      const result = gradeCurrentExam();
+      saveAttempt(result);
+      renderCurrentReport(result);
+      renderHistoryReport();
+      showExplanationForCurrent();
+      alert(`You scored ${result.correctCount} / ${result.totalQuestions} (${Math.round(result.scorePercent)}%).`);
+    }
+
+    function gradeCurrentExam() {
+      const total = currentExam.questions.length;
+      let correctCount = 0;
+      const perConcept = {};
+
+      currentExam.questions.forEach((q, idx) => {
+        const userChoiceIdx = currentExam.answers[idx];
+        const correctIndex = q.choices.findIndex(c => c === q.answer);
+        const isCorrect = userChoiceIdx === correctIndex;
+        if (isCorrect) correctCount++;
+
+        const concept = q.conceptNote || 'General';
+        if (!perConcept[concept]) {
+          perConcept[concept] = { correct: 0, total: 0 };
+        }
+        perConcept[concept].total += 1;
+        if (isCorrect) perConcept[concept].correct += 1;
+      });
+
+      return {
+        timestamp: Date.now(),
+        totalQuestions: total,
+        correctCount,
+        scorePercent: (correctCount / total) * 100,
+        perConcept,
+        filterKey: currentExam.filterKey
+      };
+    }
+
+    function saveAttempt(result) {
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) history = JSON.parse(raw);
+      } catch (e) {
+        history = [];
+      }
+      history.push(result);
+      if (history.length > 50) {
+        history = history.slice(history.length - 50);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    }
+
+    function renderCurrentReport(result) {
+      const date = new Date(result.timestamp);
+      const dateStr = date.toLocaleString();
+
+      const lines = [];
+      lines.push(`<p><strong>Score:</strong> ${result.correctCount} / ${result.totalQuestions} (${Math.round(result.scorePercent)}%)</p>`);
+      lines.push(`<p class="meta">Attempt time: ${dateStr}</p>`);
+      lines.push(`<p class="meta">Version / Filter: ${filterSelectEl.options[filterSelectEl.selectedIndex].text}</p>`);
+
+      lines.push('<h3 style="font-size:0.9rem;margin:0.6rem 0 0.3rem;">Concept Breakdown</h3>');
+
+      const concepts = Object.entries(result.perConcept);
+      if (!concepts.length) {
+        lines.push('<p class="meta">No concept data.</p>');
+      } else {
+        lines.push('<div>');
+        concepts.forEach(([concept, stats]) => {
+          const ratio = stats.correct / stats.total;
+          let badgeClass = 'badge-neutral';
+          let label = 'Neutral';
+          if (stats.total >= 2 && ratio >= 0.8) {
+            badgeClass = 'badge-strong';
+            label = 'Strength';
+          } else if (stats.total >= 2 && ratio <= 0.5) {
+            badgeClass = 'badge-weak';
+            label = 'Weakness';
+          }
+          lines.push(
+            `<div class="report-row">
+              <span>${concept}</span>
+              <span>${stats.correct} / ${stats.total}
+                <span class="badge ${badgeClass}">${label}</span>
+              </span>
+            </div>`
+          );
+        });
+        lines.push('</div>');
+      }
+
+      currentReportEl.innerHTML = lines.join('');
+    }
+
+    function renderHistoryReport() {
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) history = JSON.parse(raw);
+      } catch (e) {
+        history = [];
+      }
+      if (!history.length) {
+        historyReportEl.innerHTML = '<p class="meta">No previous attempts stored yet.</p>';
+        return;
+      }
+
+      const aggregate = {};
+      let totalAttempts = history.length;
+
+      history.forEach(att => {
+        Object.entries(att.perConcept).forEach(([concept, stats]) => {
+          if (!aggregate[concept]) {
+            aggregate[concept] = { correct: 0, total: 0 };
+          }
+          aggregate[concept].correct += stats.correct;
+          aggregate[concept].total += stats.total;
+        });
+      });
+
+      const lines = [];
+      lines.push(`<p class="meta">Attempts stored: ${totalAttempts} (last 50 max)</p>`);
+      lines.push('<h3 style="font-size:0.9rem;margin:0.6rem 0 0.3rem;">Concept Trends</h3>');
+
+      const concepts = Object.entries(aggregate);
+      concepts.sort((a, b) => (a[0] > b[0] ? 1 : -1));
+
+      lines.push('<div>');
+      concepts.forEach(([concept, stats]) => {
+        const ratio = stats.correct / stats.total;
+        let badgeClass = 'badge-neutral';
+        let label = 'Neutral';
+        if (stats.total >= 4 && ratio >= 0.8) {
+          badgeClass = 'badge-strong';
+          label = 'Strength';
+        } else if (stats.total >= 4 && ratio <= 0.5) {
+          badgeClass = 'badge-weak';
+          label = 'Weakness';
+        }
+        lines.push(
+          `<div class="report-row">
+            <span>${concept}</span>
+            <span>${stats.correct} / ${stats.total}
+              <span class="badge ${badgeClass}">${label}</span>
+            </span>
+          </div>`
+        );
+      });
+      lines.push('</div>');
+
+      historyReportEl.innerHTML = lines.join('');
+    }
+
+    function showExplanationForCurrent() {
+      const q = currentExam.questions[currentIndex];
+      if (!q) return;
+
+      explanationBlockEl.style.display = 'block';
+
+      const correctLetter = q.correctLetter;
+      const correctText = q.answer;
+      correctAnswerLineEl.innerHTML = `<span class="correct">Correct answer: ${correctLetter}. ${correctText}</span>`;
+      correctExplanationEl.textContent = 'Why this is correct: ' + (q.explanationCorrect || '');
+
+      wrongExplanationListEl.innerHTML = '';
+      if (q.explanationWrong) {
+        Object.entries(q.explanationWrong).forEach(([letter, text]) => {
+          const li = document.createElement('li');
+          li.className = 'wrong';
+          li.textContent = `${letter}. ${text}`;
+          wrongExplanationListEl.appendChild(li);
+        });
+      }
+
+      conceptNoteLineEl.textContent = q.conceptNote ? 'Concepts: ' + q.conceptNote : '';
+    }
+
+    // ---------- Export / Import ----------
+    exportBtn.addEventListener('click', () => {
+      let history = [];
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) history = JSON.parse(raw);
+      } catch (e) {
+        history = [];
+      }
+      exportAreaEl.value = JSON.stringify(history, null, 2);
+    });
+
+    importBtn.addEventListener('click', () => {
+      const text = exportAreaEl.value.trim();
+      if (!text) {
+        alert('Paste JSON into the box first.');
+        return;
+      }
+      try {
+        const parsed = JSON.parse(text);
+        if (!Array.isArray(parsed)) {
+          alert('JSON must be an array of attempts.');
+          return;
+        }
+        let history = [];
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) history = JSON.parse(raw);
+        } catch (e) {
+          history = [];
+        }
+        history = history.concat(parsed);
+        if (history.length > 50) {
+          history = history.slice(history.length - 50);
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        alert('Attempts imported.');
+        renderHistoryReport();
+      } catch (e) {
+        alert('Invalid JSON.');
+      }
+    });
+
+    // ---------- Init ----------
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHistoryReport();
+      renderQuestion();
+    });
   </script>
 </body>
 </html>
+
