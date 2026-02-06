@@ -847,9 +847,7 @@ function detailedScenarioStem(term, rng) {
       
       `A new vulnerability is discovered in OpenSSL, and your security team needs to quickly identify which applications are affected. You need a way to reference this specific vulnerability consistently across all security tools, databases, and communications so teams can search their environments and validate if they're vulnerable. The identifier must be universally recognized and work across different vendors' tools. What naming system provides this common vulnerability reference?`,
       
-      `Your company is merging with another organization. Due diligence requires evaluating the acquisition target's security program. You need to assess: Do they have secure coding practices? Do they perform threat modeling? Do they do security testing? How mature is their SDL? The evaluation must be objective, measurable, and comparable to your organization's practices. What framework provides a maturity model for assessing software security programs?`,
-      
-      `Development teams must follow security policies, but compliance is inconsistent. The security team wants to track: Are security requirements documented? Is threat modeling performed? Are code reviews completed? Are security tests passed? They need a traceability system that maps every security requirement to design decisions, code implementations, and test results, ensuring nothing is missed and providing audit evidence. What artifact provides this requirement-to-implementation mapping?`
+      `Your company is merging with another organization. Due diligence requires evaluating the acquisition target's security program. You need to assess: Do they have secure coding practices? Do they perform threat modeling? Do they do security testing? How mature is their SDL? The evaluation must be objective, measurable, and comparable to your organization's practices. What framework provides a maturity model for assessing software security programs?`
     ];
     return pick(scenarios);
   }
@@ -887,6 +885,11 @@ function detailedScenarioStem(term, rng) {
   // Specific scenario for Vulnerability term
   if (termName === "vulnerability") {
     return `During a security review, the team identified several weaknesses in the application: insecure configurations, missing security controls, design flaws that could be exploited, and outdated components with known security issues. Management wants to understand what category these security findings fall into and how to prioritize remediation efforts. What term best describes these types of security weaknesses that attackers could potentially exploit?`;
+  }
+  
+  // Specific scenario for Requirement Traceability Matrix term
+  if (termName === "requirement traceability matrix") {
+    return `Development teams must follow security policies, but compliance is inconsistent. The security team wants to track: Are security requirements documented? Is threat modeling performed? Are code reviews completed? Are security tests passed? They need a traceability system that maps every security requirement to design decisions, code implementations, and test results, ensuring nothing is missed and providing audit evidence. What artifact provides this requirement-to-implementation mapping?`;
   }
   
   // Default scenarios for other Core Concepts terms
