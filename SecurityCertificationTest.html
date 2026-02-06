@@ -155,6 +155,13 @@
     .navBtn.tried{border-color: rgba(255,176,32,.75);background: rgba(255,176,32,.08);}
     .navBtn.answered{border-color: rgba(106,166,255,.55);}
     .navBtn.unanswered{opacity:.85;}
+    .navBtn.flagged::after{
+      content:"🚩";
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      font-size:12px;
+    }
 
     .qMeta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color: var(--muted);font-size:12px;margin-bottom: 10px;}
     .tag{
@@ -346,6 +353,10 @@
                 <div class="t">Tried (wrong)</div>
                 <div class="v" id="kpiTried">0</div>
               </div>
+              <div class="box">
+                <div class="t">Flagged</div>
+                <div class="v" id="kpiFlagged">0</div>
+              </div>
             </div>
 
             <div class="hr"></div>
@@ -377,7 +388,10 @@
       <div class="card">
         <div class="hd">
           <h2 id="qTitle">Question</h2>
-          <span class="tag" id="qStatusTag">—</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="tag" id="qStatusTag">—</span>
+            <button class="btn" id="btnFlag" style="padding:6px 10px;font-size:11px;" title="Flag this question">🚩 Flag</button>
+          </div>
         </div>
         <div class="bd">
           <div class="qMeta">
@@ -1304,7 +1318,8 @@ function selectChoice(selectedKey){
     isCorrect: false,
     locked: false,
     tries: 0,
-    wrongSelectedKeys: []
+    wrongSelectedKeys: [],
+    flagged: false
   });
 
   // only block if THIS question is locked
@@ -1403,7 +1418,8 @@ function renderQuestion(){
     isCorrect: false,
     locked: false,
     tries: 0,
-    wrongSelectedKeys: []
+    wrongSelectedKeys: [],
+    flagged: false
   });
 
   $("qNumberTag").textContent = `#${a.currentIndex+1}`;
@@ -1413,6 +1429,18 @@ function renderQuestion(){
   if(a.mode==="practice" && qState.locked) $("qStatusTag").textContent = "Locked ✅";
   else if(qState.selectedKey) $("qStatusTag").textContent = "Answered";
   else $("qStatusTag").textContent = "Unanswered";
+
+  // Update flag button
+  const flagBtn = $("btnFlag");
+  if(qState.flagged){
+    flagBtn.textContent = "🚩 Flagged";
+    flagBtn.style.background = "rgba(255,77,109,.18)";
+    flagBtn.style.borderColor = "rgba(255,77,109,.45)";
+  } else {
+    flagBtn.textContent = "🚩 Flag";
+    flagBtn.style.background = "";
+    flagBtn.style.borderColor = "";
+  }
 
   $("qStem").textContent = q.stem;
 
@@ -1482,17 +1510,20 @@ function renderNavGrid(){
     const hasWrong = (st.wrongSelectedKeys && st.wrongSelectedKeys.length>0) && !isLocked;
     const hasAnswer = !!st.selectedKey;
     const isUnanswered = !hasAnswer && !hasWrong && !isLocked;
+    const isFlagged = !!st.flagged;
 
     if(isLocked) btn.classList.add("locked");
     else if(hasWrong) btn.classList.add("tried");
     else if(hasAnswer) btn.classList.add("answered");
     else btn.classList.add("unanswered");
+    
+    if(isFlagged) btn.classList.add("flagged");
 
     btn.textContent = String(i+1);
-    btn.title = isLocked ? "Locked (Correct)"
+    btn.title = (isFlagged ? "🚩 " : "") + (isLocked ? "Locked (Correct)"
               : hasWrong ? "Tried (Not correct yet)"
               : hasAnswer ? "Answered"
-              : "Unanswered";
+              : "Unanswered");
 
     btn.addEventListener("click", ()=>{
       a.currentIndex = i;
@@ -1763,18 +1794,20 @@ function updateUI(){
   $("btnPause").disabled = !a.timed;
   $("btnResumeTimer").style.display = (a.timed && !a.timerRunning) ? "inline-block" : "none";
 
-  let locked = 0, answered = 0, tried = 0;
+  let locked = 0, answered = 0, tried = 0, flagged = 0;
   for(const q of a.questions){
     const st = a.answersByQid?.[q.id];
     if(st?.locked) locked++;
     if(st?.selectedKey) answered++;
     if(st?.wrongSelectedKeys?.length && !st.locked) tried++;
+    if(st?.flagged) flagged++;
   }
 
   $("kpiProgress").textContent = `${answered} / ${QUESTION_COUNT}`;
   $("kpiLocked").textContent = String(locked);
   $("kpiAnswered").textContent = String(answered);
   $("kpiTried").textContent = String(tried);
+  $("kpiFlagged").textContent = String(flagged);
 
   const pct = Math.round((answered/QUESTION_COUNT)*100);
   $("progressBar").style.width = `${pct}%`;
@@ -1852,6 +1885,27 @@ function goNext(){
   renderQuestion();
 }
 
+function toggleFlag(){
+  const a = state.attempt;
+  if(!a) return;
+  const q = a.questions[a.currentIndex];
+  if(!q) return;
+  
+  const qState = (a.answersByQid[q.id] ||= {
+    selectedKey: null,
+    isCorrect: false,
+    locked: false,
+    tries: 0,
+    wrongSelectedKeys: [],
+    flagged: false
+  });
+  
+  qState.flagged = !qState.flagged;
+  saveActiveAttempt();
+  updateUI();
+  renderQuestion();
+}
+
 function pauseTimer(){
   const a = state.attempt;
   if(!a?.timed) return;
@@ -1895,6 +1949,7 @@ $("btnResume").addEventListener("click", resumeAttempt);
 
 $("btnPrev").addEventListener("click", goPrev);
 $("btnNext").addEventListener("click", goNext);
+$("btnFlag").addEventListener("click", toggleFlag);
 
 $("btnSave").addEventListener("click", saveNow);
 $("btnSubmit").addEventListener("click", submitAttempt);
