@@ -771,6 +771,115 @@ function pickDistractors(correctTerm, rng){
   return out.slice(0,3);
 }
 
+// Validate that a scenario aligns with the term's definition/usage
+function validateScenarioMatch(term, scenario) {
+  const termName = (term.term || "").toLowerCase();
+  const termDef = (term.definition || "").toLowerCase();
+  const termUsage = (term.usage || "").toLowerCase();
+  const scenarioLower = (scenario || "").toLowerCase();
+  
+  // Extract key concepts from term
+  const termText = `${termName} ${termDef} ${termUsage}`;
+  
+  // Key concept patterns to check
+  const conceptChecks = {
+    // Testing & Verification
+    "fuzz testing": ["fuzz", "randomized", "malformed", "invalid input", "corrupted", "parser", "unexpected"],
+    "static analysis": ["static", "code analysis", "without executing", "source code", "analyze code", "line-number"],
+    "dynamic analysis": ["dynamic", "executing", "runtime", "real-world", "running", "actual execution", "deployed"],
+    "code review": ["code review", "review code", "peer review", "inspect code"],
+    
+    // Core Concepts
+    "vulnerability": ["vulnerability", "vulnerabilities", "weakness", "security flaw", "exploit", "security issues"],
+    "target machine": ["target", "practice", "test environment", "lab"],
+    
+    // Governance & Measurement
+    "requirement traceability matrix": ["traceability", "requirement", "mapping", "mapped", "track", "trace", "design decisions"],
+    "metric model": ["metric", "measurement", "measure", "effectiveness", "tracking at scale", "posture"],
+    "cvss": ["cvss", "severity", "score", "standardized", "common vulnerability scoring"],
+    "cve": ["cve", "common vulnerability", "identifier", "reference", "naming"],
+    "nvd database": ["nvd", "national vulnerability database", "archive", "vulnerability standards"],
+    "benchmarks": ["benchmark", "compare", "estimates to actual"],
+    "bsimm": ["bsimm", "maturity", "assess", "security program", "maturity model"],
+    "samm": ["samm", "software assurance", "maturity"],
+    "policy and compliance": ["policy", "compliance", "governance", "mandatory controls"],
+    
+    // SDL Phases
+    "security assessment (a1) phase": ["a1", "security assessment", "evaluate risk", "security plan", "initial", "requirements gathering"],
+    "architecture (a2) phase": ["a2", "architecture", "design", "threat model", "design document", "technical design"],
+    "design and development (a3) phase": ["a3", "development", "coding", "secure coding", "static analysis", "code review", "writing code"],
+    "design and development (a4) phase": ["a4", "readiness", "continued testing", "policy compliance"],
+    "ship (a5) phase": ["a5", "ship", "final validation", "before release", "penetration test", "compliance review", "staging"],
+    "post-release support phase": ["post-release", "after release", "patch", "incident response", "disclosed", "production"],
+    "planning phase": ["planning", "blueprint", "scope", "objectives"],
+    "design phase": ["design", "technical requirements", "business requirements"],
+    "implementation phase": ["implementation", "development phase", "testing the code"],
+    "deployment phase": ["deployment", "deploy", "push out", "distributed"],
+    "maintenance phase": ["maintenance", "ongoing", "monitoring after", "patch management"],
+    
+    // Scanning & Tools
+    "spider": ["spider", "crawl", "discover", "map application", "urls", "attack surface", "discover all"],
+    "passive scan": ["passive", "without disrupting", "no attack payloads", "production", "analyze traffic"],
+    "active scan": ["active", "exploit attempts", "aggressive testing", "owasp top 10", "sending"],
+    "authenticated scan": ["authenticated", "credentials", "login", "sessions", "test authenticated"],
+    "zap": ["zap", "proxy", "intercept", "owasp zap"],
+    "nmap": ["nmap", "network", "port scan", "subnet"],
+    
+    // Threat Modeling
+    "threat modeling": ["threat model", "find vulnerabilities", "abuse cases", "risk reduction", "design phase"],
+    "stride": ["stride", "spoofing", "tampering", "repudiation", "information disclosure", "denial of service", "elevation of privilege"],
+    "dread": ["dread", "damage", "reproducibility", "exploitability", "affected users", "discoverability", "risk rating"],
+    "attack tree": ["attack tree", "paths", "goal-based"],
+    "attack surface": ["attack surface", "entry points", "exposure"],
+    "data flow diagram": ["data flow", "dfd", "flows between"],
+    "trust boundary": ["trust boundary", "boundaries", "crosses"],
+    
+    // Methodologies
+    "agile methodology": ["agile", "iterative", "sprint", "adaptive", "customer feedback", "rapid", "2-3 weeks"],
+    "waterfall methodology": ["waterfall", "sequential", "phases", "formal", "predictable", "fixed-price", "documentation"],
+    "v-model": ["v-model", "v model", "corresponding testing", "parallel", "verification mirroring"],
+    "extreme programming": ["extreme programming", "xp", "pair programming", "test-driven", "tdd", "continuous integration"],
+    "scrum": ["scrum", "sprint", "backlog", "daily standup"],
+    
+    // Roles & Response
+    "security architect": ["security architect", "architect", "technical security", "architecture patterns", "hands-on"],
+    "security champion": ["security champion", "champion", "advocate", "liaison", "within the team", "developer"],
+    "security evangelist": ["security evangelist", "evangelist", "adoption", "organization-wide", "train champions", "culture"],
+    "psirt": ["psirt", "product security incident", "incident response", "vulnerability disclosure", "coordinate", "researcher"],
+    "sdl lead": ["sdl lead", "sdl", "quality gates", "end-to-end", "security assessments"]
+  };
+  
+  const keywords = conceptChecks[termName];
+  if (!keywords) {
+    // No specific validation rules for this term
+    return { valid: true, confidence: "unknown", message: `No validation rules for "${term.term}"` };
+  }
+  
+  // Check how many keywords match
+  let matches = 0;
+  const matched = [];
+  const missing = [];
+  
+  for (const keyword of keywords) {
+    if (scenarioLower.includes(keyword) || termText.includes(keyword)) {
+      matches++;
+      matched.push(keyword);
+    } else {
+      missing.push(keyword);
+    }
+  }
+  
+  const matchRatio = matches / keywords.length;
+  const valid = matchRatio >= 0.3; // At least 30% keyword match
+  const confidence = matchRatio >= 0.5 ? "high" : matchRatio >= 0.3 ? "medium" : "low";
+  
+  const message = valid 
+    ? `✓ Scenario matches "${term.term}" (${Math.round(matchRatio * 100)}% keywords found: ${matched.join(", ")})`
+    : `⚠️ WARNING: Scenario may not match "${term.term}" (only ${Math.round(matchRatio * 100)}% keywords: ${matched.join(", ")}). Missing: ${missing.join(", ")}`;
+  
+  return { valid, confidence, matchRatio, matched, missing, message };
+}
+
 function detailedScenarioStem(term, rng) {
   const cat = categorizeTerm(term);
   const pick = (arr) => arr[Math.floor(rng() * arr.length)];
@@ -957,9 +1066,39 @@ function buildRationaleWrong(selectedTerm, scenarioNeed){
   `;
 }
 
-function buildTermQuestion(correctTerm, rng){
+function buildTermQuestion(correctTerm, rng, validationStats){
   try {
     const stem = detailedScenarioStem(correctTerm, rng);
+    
+    // Validate that scenario matches the term
+    const validation = validateScenarioMatch(correctTerm, stem);
+    
+    // Track validation stats if provided
+    if (validationStats) {
+      validationStats.total++;
+      if (validation.confidence !== "unknown") {
+        validationStats.validated++;
+        if (validation.confidence === "high") validationStats.highConfidence++;
+        if (validation.confidence === "medium") validationStats.mediumConfidence++;
+        if (validation.confidence === "low") validationStats.lowConfidence++;
+      }
+      if (!validation.valid) {
+        validationStats.warnings.push({
+          term: correctTerm.term,
+          message: validation.message,
+          scenario: stem.substring(0, 100)
+        });
+      }
+    }
+    
+    if (!validation.valid) {
+      console.warn(validation.message);
+      console.warn(`Term: ${correctTerm.term}`);
+      console.warn(`Scenario preview: ${stem.substring(0, 150)}...`);
+    } else if (validation.confidence === "medium") {
+      console.log(validation.message);
+    }
+    
     const distractors = pickDistractors(correctTerm, rng);
 
   // options are term NAMES (cert-style: still applied because stem is scenario)
@@ -1107,6 +1246,17 @@ function assignUniqueId(q, attemptSeed, idx){
 function generateAttemptQuestions(seed){
   console.log("Starting question generation with TERMS length:", TERMS.length, "ROLES keys:", Object.keys(ROLES));
   
+  // Track validation stats
+  const validationStats = {
+    total: 0,
+    validated: 0,
+    highConfidence: 0,
+    mediumConfidence: 0,
+    lowConfidence: 0,
+    warnings: []
+  };
+  window._lastValidationStats = validationStats; // Store for debugging
+  
   const rng = mulberry32(seed);
 
   // Mix: mostly concept scenarios + some role scenarios
@@ -1119,7 +1269,7 @@ function generateAttemptQuestions(seed){
 
   // build term questions
   for(const t of chosenTerms){
-    const q = buildTermQuestion(t, rng);
+    const q = buildTermQuestion(t, rng, validationStats);
     questions.push(q);
   }
 
@@ -1132,7 +1282,7 @@ function generateAttemptQuestions(seed){
   let cursor = termCount;
   while(questions.length < QUESTION_COUNT){
     const t = TERMS[(cursor++) % TERMS.length];
-    const q = buildTermQuestion(t, rng);
+    const q = buildTermQuestion(t, rng, validationStats);
     // avoid duplicates in same attempt
     const sig = questionSignature(q);
     if(questions.some(x=>questionSignature(x)===sig)) continue;
@@ -1173,6 +1323,26 @@ function generateAttemptQuestions(seed){
     // store options
     q.options = shuffled.map(o=>({ key:o.key, text:o.text }));
   }
+  
+  // Log validation summary
+  console.log("\n=== Question Validation Summary ===");
+  console.log(`Total questions generated: ${final.length}`);
+  console.log(`Questions with validation rules: ${validationStats.validated} of ${validationStats.total}`);
+  console.log(`High confidence matches: ${validationStats.highConfidence}`);
+  console.log(`Medium confidence matches: ${validationStats.mediumConfidence}`);
+  console.log(`Low confidence / warnings: ${validationStats.lowConfidence}`);
+  
+  if (validationStats.warnings.length > 0) {
+    console.warn(`\n⚠️  ${validationStats.warnings.length} validation warnings detected:`);
+    validationStats.warnings.forEach((w, i) => {
+      console.warn(`${i+1}. ${w.term}`);
+      console.warn(`   ${w.message}`);
+    });
+    console.warn("\nThese questions may have incorrect scenario/answer pairings!");
+  } else {
+    console.log("✓ All validated questions passed scenario-term matching checks!");
+  }
+  console.log("===================================\n");
 
   return final;
 }
