@@ -3006,7 +3006,7 @@
       // ========== PRACTICAL SCENARIO QUESTIONS ==========
       {
         domain: "Security Principles",
-        question: "SCENARIO: You receive an urgent email appearing to be from your company's CEO requesting you immediately wire transfer $50,000 to a new vendor and marked 'CONFIDENTIAL - DO NOT DISCUSS'. What is the BEST action?",
+        question: "You receive an urgent email appearing to be from your company's CEO. The email requests that you immediately wire transfer $50,000 to a new vendor and is marked 'CONFIDENTIAL - DO NOT DISCUSS'. What is the BEST action to take?",
         choices: [
           "Immediately process the transfer as requested by the CEO",
           "Verify the request through a separate communication channel (call the CEO directly)",
@@ -3023,7 +3023,7 @@
       },
       {
         domain: "Security Principles",
-        question: "SCENARIO: A contractor working on-site for 2 weeks asks you to let them into the server room saying they forgot their access badge at home and need to check server logs as part of their project. What should you do?",
+        question: "A contractor who has been working on-site for 2 weeks asks you to let them into the server room. They explain they forgot their access badge at home and need to check server logs as part of their project. What should you do?",
         choices: [
           "Let them in since you recognize them from working together",
           "Direct them to security/badge office to get temporary access through proper channels",
@@ -3040,7 +3040,7 @@
       },
       {
         domain: "Security Principles",
-        question: "SCENARIO: You discover that a database containing customer information has been misconfigured for 6 months, allowing public internet access. No evidence of unauthorized access exists in available logs. What should be your FIRST action?",
+        question: "You discover that a database containing customer information has been misconfigured for 6 months, allowing public internet access. While no evidence of unauthorized access exists in available logs, the database was publicly accessible during this entire period. What should be your FIRST action?",
         choices: [
           "Fix the misconfiguration immediately to stop the exposure",
           "Document everything first, then fix the misconfiguration",
@@ -3057,7 +3057,7 @@
       },
       {
         domain: "Access Controls",
-        question: "SCENARIO: An employee from Marketing requests administrator access to the company file server saying 'everyone else in my department has it and I need it to do my job effectively'. What is the BEST response?",
+        question: "An employee from the Marketing department requests administrator access to the company file server. They claim that everyone else in their department has it and they need it to do their job effectively. What is the BEST response?",
         choices: [
           "Grant the access since other Marketing employees have it",
           "Ask their manager to verify the business justification and required access level",
@@ -3074,7 +3074,7 @@
       },
       {
         domain: "Access Controls",
-        question: "SCENARIO: You notice an ex-employee's user account is still active 2 weeks after their termination date visible in HR records. What should you do?",
+        question: "While reviewing system accounts, you notice an ex-employee's user account is still active 2 weeks after their termination date shown in HR records. What should you do?",
         choices: [
           "Ignore it since they can't physically access the building",
           "Immediately disable the account and report to IT security/management",
@@ -3091,7 +3091,7 @@
       },
       {
         domain: "Access Controls",
-        question: "SCENARIO: A user calls the help desk saying they forgot their password. The help desk  analyst verifies their identity by asking information easily found on social media (birth date, mother's maiden name). Is this adequate security?",
+        question: "A user calls the help desk saying they forgot their password. To verify their identity, the help desk analyst asks for information that can be easily found on social media platforms, such as their birth date and mother's maiden name. Is this adequate security for identity verification?",
         choices: [
           "Yes, this provides sufficient identity verification",
           "No, identity proofing should use information not publicly available",
@@ -3106,8 +3106,9 @@
           3: "While caution about password reset security is appropriate, categorically refusing all help desk password resets is impractical for business operations—users legitimately forget passwords and require support to regain access, making account recovery an essential IT support function. The solution is implementing secure password reset procedures using strong identity verification mechanisms that resist social engineering, not eliminating the support capability entirely. Proper password reset processes include: multi-factor authentication sending codes to pre-registered mobile devices or email addresses, calling back phone numbers on file in HR records rather than accepting inbound calls, requiring manager approval for resets, using self-service password reset with pre-registered security questions and authentication methods, implementing time delays before reset completes allowing fraud detection, or requiring in-person verification with government-issued identification for sensitive accounts. Balance security and usability through robust identity verification rather than prohibiting necessary business functions."
         }
       },
-      { domain: "Network Security",
-        question: "SCENARIO: You receive a text message claiming to be from your bank, saying your account is locked and to click a link to verify your identity. What should you do?",
+      {
+        domain: "Network Security",
+        question: "You receive a text message claiming to be from your bank. The message states that your account has been locked and asks you to click a link to verify your identity. What should you do?",
         choices: [
           "Click the link since it appears urgent",
           "Ignore the message completely",
@@ -3124,7 +3125,7 @@
       },
       {
         domain: "Network Security",
-        question: "SCENARIO: While working from a coffee shop, you need to access sensitive company files. The coffee shop offers free public Wi-Fi. What is the MOST secure approach?",
+        question: "While working remotely from a coffee shop, you need to access sensitive company files. The coffee shop offers free public Wi-Fi that anyone can connect to without a password. What is the MOST secure approach?",
         choices: [
           "Connect directly to public Wi-Fi and access the files",
           "Use your mobile hotspot or company VPN before accessing sensitive files",
@@ -3141,7 +3142,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: You discover malware on a workstation. It's isolated from the network but you haven't determined how it got there yet or if it spread. What should your NEXT step be?",
+        question: "You discover malware on a workstation and have successfully isolated it from the network. However, you haven't yet determined how the malware got there or whether it spread to other systems before isolation. What should your NEXT step be?",
         choices: [
           "Reimage the workstation immediately to remove the malware",
           "Investigate how the malware arrived and check other systems for infection before remediation",
@@ -3158,7 +3159,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: Your monitoring system alerts that 20 failed login attempts occurred on the CEO's account from a foreign IP address at 3 AM. What is your FIRST action?",
+        question: "Your monitoring system generates an alert showing that 20 failed login attempts occurred on the CEO's account from a foreign IP address at 3 AM local time. What is your FIRST action?",
         choices: [
           "Reset the CEO's password immediately",
           "Block the foreign IP address at the firewall",
@@ -3175,7 +3176,7 @@
       },
       {
         domain: "Business Continuity",
-        question: "SCENARIO: Ransomware has encrypted your organization's file servers but your backups were also encrypted by the ransomware. What does this situation reveal about your backup strategy?",
+        question: "Ransomware has encrypted your organization's file servers. When attempting recovery, you discover that your backup systems were also encrypted by the ransomware, making them unusable for restoration. What does this situation reveal about your backup strategy?",
         choices: [
           "Backups were working properly",
           "Backups should have been immutable or offline/air-gapped",
@@ -3192,7 +3193,7 @@
       },
       {
         domain: "Business Continuity",
-        question: "SCENARIO: During a business continuity test, you discover it would take 48 hours to restore critical systems, but your RTO is 4 hours. What should you do?",
+        question: "During a business continuity test, you discover it would take 48 hours to fully restore critical systems from backups. However, your organization's documented Recovery Time Objective (RTO) for these systems is 4 hours. What should you do?",
         choices: [
           "Update the RTO to 48 hours to match current capabilities",
           "Report the finding and work with management to improve recovery capabilities or accept additional risk",
@@ -3210,7 +3211,7 @@
       // ========== ADDITIONAL PRACTICAL SCENARIOS (10) ==========
       {
         domain: "Security Principles",
-        question: "SCENARIO: You find a USB drive labeled 'Q4 Salaries - Confidential' in the parking lot. What is the MOST appropriate action?",
+        question: "While walking through your company's parking lot, you find a USB drive on the ground. The drive is labeled 'Q4 Salaries - Confidential' in professional lettering. What is the MOST appropriate action?",
         choices: [
           "Plug it into your work computer to identify the owner",
           "Take it home to check on your personal computer",
@@ -3227,7 +3228,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: A software vendor requests emergency remote access to your production servers to fix a critical bug affecting operations. What should you do FIRST?",
+        question: "A software vendor contacts your organization requesting emergency remote access to your production servers. They claim they need to fix a critical bug that is currently affecting your operations. What should you do FIRST?",
         choices: [
           "Provide remote access immediately since it's an emergency",
           "Verify the request is legitimate, assess alternatives, and follow vendor access procedures",
@@ -3244,7 +3245,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: A vulnerability scan identifies a critical unpatched vulnerability in a production server running a business-critical application. The vendor patch won't be available for 2 weeks. What's the BEST approach?",
+        question: "A vulnerability scan identifies a critical unpatched vulnerability in a production server running a business-critical application. You contact the vendor and learn that an official patch won't be available for at least 2 weeks. What's the BEST approach to manage this risk?",
         choices: [
           "Wait for the official patch since unofficial fixes might break the system",
           "Implement compensating controls while waiting for the official patch",
@@ -3261,7 +3262,7 @@
       },
       {
         domain: "Security Principles",
-        question: "SCENARIO: You must classify a new dataset containing customer names, email addresses, and purchase history. What classification level is MOST appropriate?",
+        question: "Your organization has created a new dataset for business analytics that contains customer names, email addresses, and complete purchase history. You are responsible for assigning the appropriate data classification level. What classification level is MOST appropriate for this dataset?",
         choices: [
           "Public - customers know we have this information",
           "Internal - it's just business data",
@@ -3278,7 +3279,7 @@
       },
       {
         domain: "Network Security",
-        question: "SCENARIO: You discover your company's cloud storage bucket containing customer data is publicly accessible on the internet. What should you do FIRST?",
+        question: "While conducting a security review, you discover that your company's cloud storage bucket containing customer data is configured to be publicly accessible on the internet. Anyone with the URL can view and download the data. What should you do FIRST?",
         choices: [
           "Investigate how long it's been public before taking action",
           "Immediately restrict access to the bucket to stop ongoing exposure",
@@ -3295,7 +3296,7 @@
       },
       {
         domain: "Access Controls",
-        question: "SCENARIO: You notice a coworker often works late and has started accessing systems and files outside their normal job responsibilities. What's the appropriate action?",
+        question: "Over the past few weeks, you notice that a coworker has been staying late at the office frequently. You also observe through shared system logs that they have started accessing systems and files that are outside their normal job responsibilities. What's the appropriate action?",
         choices: [
           "Confront them directly about the suspicious behavior",
           "Report the concerning behavior to your supervisor or security team through proper channels",
@@ -3312,7 +3313,7 @@
       },
       {
         domain: "Business Continuity",
-        question: "SCENARIO: Your software vendor notifies you of a data breach exposing your organization's data in their system. What's your FIRST step?",
+        question: "Your organization receives notification from a third-party software vendor that they have experienced a data breach. The breach exposed your organization's data that was stored in their system for business operations. What's your FIRST step?",
         choices: [
           "Immediately terminate the vendor relationship",
           "Assess the breach scope and impact, determine notification requirements",
@@ -3329,7 +3330,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: A developer has hardcoded database credentials in source code uploaded to a public GitHub repository. What should you do?",
+        question: "During a code review, you discover that a developer has hardcoded database credentials (username and password) directly in source code. This code has already been uploaded to a public GitHub repository that is accessible to anyone on the internet. What should you do?",
         choices: [
           "Delete the GitHub repository immediately",
           "Rotate the exposed credentials immediately, remove them from code, report the incident",
@@ -3346,7 +3347,7 @@
       },
       {
         domain: "Security Principles",
-        question: "SCENARIO: Company security policy requires changing passwords every 90 days, but NIST now recommends against periodic password changes unless compromise is suspected. What should you do?",
+        question: "Your company's current security policy requires all users to change their passwords every 90 days. However, you've learned that NIST's updated guidance now recommends against mandatory periodic password changes unless compromise is suspected. What should you do?",
         choices: [
           "Follow the company policy regardless of NIST recommendations",
           "Propose updating the policy based on current best practices with business justification",
@@ -3363,7 +3364,7 @@
       },
       {
         domain: "Security Operations",
-        question: "SCENARIO: You receive an automated alert that an employee downloaded an unusually large amount of data (100 GB) late at night. The employee is scheduled to leave the company in 2 weeks. What should you do?",
+        question: "Your security monitoring system generates an automated alert showing that an employee downloaded an unusually large amount of data (100 GB) late at night at 11:45 PM. Upon checking HR records, you learn this employee has given notice and is scheduled to leave the company in 2 weeks. What should you do?",
         choices: [
           "Ignore it since the employee still has authorized access",
           "Immediately disable the employee's account without investigation",
