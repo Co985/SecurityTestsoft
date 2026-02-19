@@ -339,7 +339,7 @@
       <h2 style="margin-bottom: 16px;">Welcome!</h2>
       <p style="margin-bottom: 20px; line-height: 1.6;">
         This practice test covers the five domains of the ISC2 Certified in Cybersecurity certification. 
-        Each test randomly selects 25 questions from a pool of 75+ questions, giving you a different experience every time!
+        Each test randomly selects 25 questions from a pool of 125 questions, giving you a different experience every time!
       </p>
       <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
         <li><strong>Security Principles</strong> - CIA Triad, Risk Management, Security Controls</li>
@@ -1608,6 +1608,862 @@
           0: "Lessons learned focuses on process improvement, not punishment. The goal is organizational learning and prevention.",
           2: "Records must be retained for analysis and compliance. Lessons learned requires reviewing documentation, not deleting it.",
           3: "Ignoring incidents wastes learning opportunities. Lessons learned captures knowledge to improve future response and prevention."
+        }
+      },
+      // ========== ADDITIONAL QUESTIONS - Expanding to 125 total ==========
+      // Additional Security Principles (10 more)
+      {
+        domain: "Security Principles",
+        question: "What is the primary goal of information security governance?",
+        choices: [
+          "To eliminate all security threats",
+          "To align security strategy with business objectives",
+          "To deploy the latest security technology",
+          "To increase IT department budget"
+        ],
+        correct: 1,
+        explanation: "Information security governance ensures that security strategy supports and aligns with business objectives, managing risk while enabling business operations.",
+        wrongExplanations: {
+          0: "It's impossible to eliminate all threats. Governance focuses on managing risks to acceptable levels while supporting business goals.",
+          2: "Technology is a tool, not the goal. Governance focuses on strategy, processes, and alignment with business needs.",
+          3: "Budget is a means to an end. Governance ensures security investments align with business priorities and risk appetite."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "Which security principle ensures individuals are held responsible for their actions?",
+        choices: [
+          "Accountability",
+          "Authorization",
+          "Authentication",
+          "Availability"
+        ],
+        correct: 0,
+        explanation: "Accountability ensures that actions can be traced to individuals, making them responsible for their activities. This requires logging, monitoring, and audit trails.",
+        wrongExplanations: {
+          1: "Authorization determines what resources a user can access, not whether they're held responsible for their actions.",
+          2: "Authentication verifies identity but doesn't track or record actions for responsibility purposes.",
+          3: "Availability ensures systems are accessible when needed but doesn't relate to individual responsibility."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What type of security control is encryption?",
+        choices: [
+          "Administrative control",
+          "Physical control",
+          "Technical control",
+          "Managerial control"
+        ],
+        correct: 2,
+        explanation: "Encryption is a technical (or logical) control that uses technology like software or hardware to protect data confidentiality and integrity.",
+        wrongExplanations: {
+          0: "Administrative controls are policies and procedures. Encryption is implemented through technology, not documentation.",
+          1: "Physical controls protect physical assets like buildings. Encryption protects data through mathematical algorithms.",
+          3: "Managerial is another term for administrative controls. Encryption is a technical implementation, not a policy or procedure."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What does the term 'asset' mean in information security?",
+        choices: [
+          "Only computer hardware",
+          "Only financial resources",
+          "Anything of value to the organization",
+          "Only intellectual property"
+        ],
+        correct: 2,
+        explanation: "In security, an asset is anything of value to the organization, including data, systems, facilities, people, and reputation. All require protection.",
+        wrongExplanations: {
+          0: "Assets include far more than hardware - data, software, people, facilities, and intangible items like reputation are all assets.",
+          1: "While important, financial resources are just one type of asset. Information, systems, and people are equally valuable assets.",
+          3: "Intellectual property is important but assets also include systems, data, hardware, facilities, and human resources."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "Which risk response strategy involves purchasing insurance?",
+        choices: [
+          "Risk avoidance",
+          "Risk mitigation",
+          "Risk transfer",
+          "Risk acceptance"
+        ],
+        correct: 2,
+        explanation: "Risk transfer shifts the financial burden of risk to another party. Insurance is the most common example, where you pay premiums to transfer potential losses.",
+        wrongExplanations: {
+          0: "Risk avoidance means not engaging in the risky activity at all. Insurance doesn't avoid risk, it transfers the financial impact.",
+          1: "Risk mitigation reduces the likelihood or impact. Insurance doesn't reduce the risk itself, it transfers the financial consequences.",
+          3: "Risk acceptance means bearing the risk yourself. Insurance is the opposite - paying someone else to bear the financial risk."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the purpose of data classification?",
+        choices: [
+          "To organize files alphabetically",
+          "To determine appropriate security controls based on sensitivity",
+          "To compress data for storage",
+          "To encrypt all data automatically"
+        ],
+        correct: 1,
+        explanation: "Data classification categorizes data by sensitivity and importance, enabling organizations to apply appropriate security controls, handling procedures, and access restrictions.",
+        wrongExplanations: {
+          0: "Classification is about security sensitivity, not alphabetical organization. It determines protection levels, not filing methods.",
+          2: "Compression is for storage efficiency, not security. Classification determines sensitivity and required protection levels.",
+          3: "Classification identifies what needs protection and at what level. Encryption is one possible control, not an automatic result."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What does 'due diligence' mean in information security?",
+        choices: [
+          "Conducting security audits after incidents occur",
+          "Taking reasonable care to protect assets and comply with requirements",
+          "Hiring external security consultants",
+          "Implementing the most expensive security controls"
+        ],
+        correct: 1,
+        explanation: "Due diligence means taking reasonable care and effort to identify risks, implement appropriate controls, and comply with legal and regulatory requirements.",
+        wrongExplanations: {
+          0: "Due diligence is proactive and ongoing, not reactive after incidents. It means continuously exercising reasonable care.",
+          2: "While consultants may help, due diligence is about the organization's ongoing reasonable efforts, not outsourcing responsibility.",
+          3: "Due diligence means reasonable and appropriate measures, not necessarily the most expensive. Cost-effectiveness matters."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is a privacy impact assessment (PIA)?",
+        choices: [
+          "A tool to measure network performance",
+          "An evaluation of how personal data is collected, used, and protected",
+          "A financial audit of security spending",
+          "A penetration test of privacy controls"
+        ],
+        correct: 1,
+        explanation: "A PIA evaluates how personal information is handled throughout its lifecycle, identifying privacy risks and ensuring compliance with privacy regulations and best practices.",
+        wrongExplanations: {
+          0: "PIAs focus on personal data handling and privacy risks, not network performance metrics or technical operations.",
+          2: "PIAs assess privacy and data protection practices, not financial aspects. They ensure compliance with privacy requirements.",
+          3: "PIAs are assessments of data handling processes and risks, not technical penetration tests. They focus on policy and procedure compliance."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "Which principle requires that critical operations need more than one person to complete?",
+        choices: [
+          "Least privilege",
+          "Job rotation",
+          "Dual control",
+          "Need to know"
+        ],
+        correct: 2,
+        explanation: "Dual control (or two-person integrity) requires two authorized individuals to be present to complete sensitive transactions, preventing solo fraud or errors.",
+        wrongExplanations: {
+          0: "Least privilege limits access rights to the minimum needed. It doesn't require multiple people for operations.",
+          1: "Job rotation moves people between roles over time. Dual control requires simultaneous presence of two people for specific operations.",
+          3: "Need to know restricts information access to those who require it. Dual control is about requiring two people for critical actions."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the primary difference between qualitative and quantitative risk assessment?",
+        choices: [
+          "Qualitative uses numbers; quantitative uses descriptions",
+          "Qualitative uses descriptions; quantitative uses numerical values",
+          "They are the same thing",
+          "Qualitative is always more accurate"
+        ],
+        correct: 1,
+        explanation: "Qualitative risk assessment uses descriptive scales (high/medium/low), while quantitative uses numerical values and calculations (dollar amounts, probabilities) to measure risk.",
+        wrongExplanations: {
+          0: "This is backwards. Qualitative uses descriptive terms (high, medium, low), while quantitative uses numerical measurements and calculations.",
+          2: "They are different approaches. Qualitative is subjective and descriptive; quantitative is objective and uses mathematical calculations.",
+          3: "Neither is inherently more accurate. Quantitative appears more precise but requires accurate data. Qualitative is faster and works with limited data."
+        }
+      },
+      // Additional Access Controls (10 more)
+      {
+        domain: "Access Controls",
+        question: "What is identity proofing?",
+        choices: [
+          "Testing user passwords for strength",
+          "Verifying a person's identity before granting access",
+          "Monitoring user activities",
+          "Encrypting identity data"
+        ],
+        correct: 1,
+        explanation: "Identity proofing is the process of verifying that a person is who they claim to be before establishing their digital identity and granting access credentials.",
+        wrongExplanations: {
+          0: "Password testing validates credential strength, not identity. Identity proofing happens before credentials are issued.",
+          2: "Monitoring tracks what users do after authentication. Identity proofing verifies who they are before granting any access.",
+          3: "Encryption protects identity data but doesn't verify it. Identity proofing validates that a claimed identity is legitimate."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of account lockout policies?",
+        choices: [
+          "To prevent brute-force password attacks",
+          "To save system resources",
+          "To force password changes",
+          "To reduce network traffic"
+        ],
+        correct: 0,
+        explanation: "Account lockout temporarily disables accounts after multiple failed login attempts, preventing automated brute-force attacks that try many password combinations.",
+        wrongExplanations: {
+          1: "Resource savings are not the goal. Lockout policies protect against unauthorized access attempts, not system efficiency.",
+          2: "Lockout policies respond to failed attempts, they don't force password changes. Password expiration policies handle that.",
+          3: "Network traffic reduction is not the purpose. Lockout prevents security breaches by stopping repeated password guessing attacks."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What does 'federated identity' mean?",
+        choices: [
+          "Using different passwords for each system",
+          "Sharing identity information across different organizations or systems",
+          "Government-issued identification only",
+          "Biometric authentication systems"
+        ],
+        correct: 1,
+        explanation: "Federated identity allows users to use the same identification to access systems across different organizations, enabling Single Sign-On across organizational boundaries.",
+        wrongExplanations: {
+          0: "Federated identity does the opposite - it allows using one identity across multiple systems, reducing password proliferation.",
+          2: "Federated identity is about digital identities across organizations, not specifically about government-issued physical IDs.",
+          3: "While biometrics can be part of authentication, federated identity is about sharing identity across organizations, not the authentication method."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is attribute-based access control (ABAC)?",
+        choices: [
+          "Access based on user job roles",
+          "Access based on multiple attributes like user properties, resource properties, and environment",
+          "Access based on security clearance only",
+          "Access based on time of day only"
+        ],
+        correct: 1,
+        explanation: "ABAC makes access decisions based on multiple attributes including user characteristics, resource properties, environmental conditions, and requested actions, providing fine-grained control.",
+        wrongExplanations: {
+          0: "That describes Role-Based Access Control (RBAC). ABAC uses multiple attributes beyond just roles for more granular decisions.",
+          2: "ABAC considers many factors, not just clearance. It evaluates user attributes, resource attributes, environmental context, and more.",
+          3: "Time can be one attribute in ABAC, but it uses many attributes together. ABAC is more sophisticated than single-factor decisions."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the principle of 'implicit deny'?",
+        choices: [
+          "Granting access by default unless explicitly denied",
+          "Denying access by default unless explicitly granted",
+          "Allowing access only during business hours",
+          "Requiring approval for all access requests"
+        ],
+        correct: 1,
+        explanation: "Implicit deny means access is denied by default unless there's an explicit rule granting it. This 'fail-secure' approach minimizes unauthorized access risks.",
+        wrongExplanations: {
+          0: "This is 'implicit allow' and is insecure. Implicit deny is safer - access is blocked unless specifically permitted.",
+          2: "Time restrictions are separate access controls. Implicit deny is about default access decisions regardless of time.",
+          3: "While approval processes are good practice, implicit deny is specifically about defaulting to denial without explicit permission grants."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is a password salt in cryptography?",
+        choices: [
+          "A random value added to passwords before hashing",
+          "The minimum password length requirement",
+          "The password expiration period",
+          "A list of commonly used passwords"
+        ],
+        correct: 0,
+        explanation: "A salt is random data added to passwords before hashing, ensuring identical passwords produce different hashes. This prevents rainbow table attacks and makes password cracking harder.",
+        wrongExplanations: {
+          1: "Length requirements relate to password complexity policies. Salt is a cryptographic technique that adds random data before hashing.",
+          2: "Expiration periods determine how often passwords change. Salt is random data added to passwords to strengthen hash security.",
+          3: "That describes a password blacklist. Salt is random data added to each password to make each hash unique and more secure."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of access recertification?",
+        choices: [
+          "To test system performance",
+          "To periodically review and validate user access rights are still appropriate",
+          "To reset all passwords",
+          "To update software licenses"
+        ],
+        correct: 1,
+        explanation: "Access recertification periodically reviews user permissions to ensure they're still appropriate for current job duties, preventing privilege creep and removing unnecessary access.",
+        wrongExplanations: {
+          0: "Recertification reviews user permissions, not system performance. It ensures access rights remain appropriate and necessary.",
+          2: "Password resets are separate security measures. Recertification validates whether users should still have their current access levels.",
+          3: "Software licensing is separate from access control. Recertification validates that user permissions match current business needs."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is a security token in authentication?",
+        choices: [
+          "A username and password combination",
+          "A physical or digital device that generates time-based codes",
+          "A security policy document",
+          "An encryption key stored on a server"
+        ],
+        correct: 1,
+        explanation: "A security token is a device (hardware or software) that generates time-based one-time passwords (TOTP) or holds cryptographic keys, providing 'something you have' authentication.",
+        wrongExplanations: {
+          0: "Username and password are 'something you know', not tokens. Tokens are physical or digital devices that generate codes or hold keys.",
+          2: "Tokens are authentication devices, not documents. They generate or store credentials for verifying identity.",
+          3: "While tokens may contain keys, they're user-held devices, not server-stored. Tokens provide portable authentication factors users possess."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is just-in-time (JIT) access?",
+        choices: [
+          "Permanent elevated access for administrators",
+          "Temporary elevated access granted only when needed, then automatically revoked",
+          "Access granted during business hours only",
+          "Access controlled by biometric authentication"
+        ],
+        correct: 1,
+        explanation: "JIT access provides temporary elevated privileges only when needed for specific tasks, then automatically removes them. This minimizes standing privileges and reduces attack surface.",
+        wrongExplanations: {
+          0: "JIT is the opposite of permanent access. It grants temporary elevation on-demand, then revokes it to minimize risk exposure.",
+          2: "Time-of-day restrictions are separate. JIT provides temporary elevation for specific tasks regardless of time, then removes it.",
+          3: "Authentication method is separate from JIT. JIT is about temporary, on-demand privilege elevation that's automatically removed."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of a privileged access management (PAM) system?",
+        choices: [
+          "To manage regular user accounts",
+          "To control and monitor highly privileged accounts like administrators",
+          "To encrypt all passwords",
+          "To create user access reports"
+        ],
+        correct: 1,
+        explanation: "PAM systems secure, control, and monitor privileged accounts (admins, root, etc.) through password vaulting, session recording, and access controls for high-risk accounts.",
+        wrongExplanations: {
+          0: "PAM focuses on privileged accounts (admins, service accounts) not regular users. Standard identity management handles regular accounts.",
+          2: "While PAM secures credentials, its purpose is broader - controlling, monitoring, and auditing privileged account usage and access.",
+          3: "Reporting is one feature, but PAM's core purpose is securing and controlling access to privileged accounts to prevent misuse."
+        }
+      },
+      // Additional Network Security (10 more)
+      {
+        domain: "Network Security",
+        question: "What is the purpose of network access control (NAC)?",
+        choices: [
+          "To encrypt all network traffic",
+          "To enforce security policies on devices before allowing network access",
+          "To increase network speed",
+          "To replace firewalls"
+        ],
+        correct: 1,
+        explanation: "NAC verifies devices meet security requirements (patches, antivirus, configuration) before granting network access, ensuring only compliant devices connect to the network.",
+        wrongExplanations: {
+          0: "NAC verifies device compliance, it doesn't encrypt traffic. Encryption is handled by protocols like TLS/VPN separately.",
+          2: "NAC is about security compliance, not performance. It may slow access slightly while verifying device security posture.",
+          3: "NAC complements firewalls but doesn't replace them. NAC controls device admission; firewalls control traffic flow."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is the difference between stateful and stateless firewalls?",
+        choices: [
+          "Stateful tracks connection state; stateless examines packets individually",
+          "Stateless is more secure than stateful",
+          "Stateful only works on wireless networks",
+          "They are the same thing"
+        ],
+        correct: 0,
+        explanation: "Stateful firewalls track connection state and context, remembering previous packets. Stateless firewalls evaluate each packet independently without connection history.",
+        wrongExplanations: {
+          1: "Stateful firewalls are generally more secure because they understand connection context and can detect anomalies stateless firewalls miss.",
+          2: "Both work on wired and wireless networks. The difference is whether they maintain connection state information, not the network type.",
+          3: "They're fundamentally different. Stateful maintains connection tables and context; stateless treats each packet as independent."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What does TLS (Transport Layer Security) provide?",
+        choices: [
+          "Physical network security",
+          "Encryption and integrity for data in transit",
+          "User authentication only",
+          "Network speed optimization"
+        ],
+        correct: 1,
+        explanation: "TLS encrypts data in transit between systems and verifies data integrity, protecting against eavesdropping and tampering. HTTPS uses TLS to secure web traffic.",
+        wrongExplanations: {
+          0: "TLS is a protocol that secures data transmission, not physical infrastructure. Physical security involves locks, guards, and facility protection.",
+          2: "While TLS can authenticate endpoints, its primary purpose is encrypting and protecting data integrity during transmission across networks.",
+          3: "TLS adds encryption overhead that may reduce speed. Its purpose is security (confidentiality and integrity), not performance."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is ARP spoofing?",
+        choices: [
+          "Encrypting network traffic",
+          "Sending false ARP messages to associate attacker's MAC with legitimate IP",
+          "Scanning for open ports",
+          "Blocking network access"
+        ],
+        correct: 1,
+        explanation: "ARP spoofing sends fake ARP messages associating the attacker's MAC address with a legitimate IP, allowing man-in-the-middle attacks by redirecting traffic through the attacker.",
+        wrongExplanations: {
+          0: "ARP spoofing is an attack technique, not a protection mechanism. It manipulates address resolution to intercept traffic, not encrypt it.",
+          2: "Port scanning discovers open services. ARP spoofing manipulates MAC-to-IP mappings to redirect network traffic for interception.",
+          3: "ARP spoofing redirects traffic to the attacker, not blocks it. The goal is interception and manipulation, not denial of service."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is a honeynet?",
+        choices: [
+          "A fast network connection",
+          "A network of decoy systems to attract and study attackers",
+          "A wireless mesh network",
+          "A backup network connection"
+        ],
+        correct: 1,
+        explanation: "A honeynet is a network of honeypots (decoy systems) designed to attract attackers, allowing security teams to study attack methods and gather threat intelligence safely.",
+        wrongExplanations: {
+          0: "Honeynets are deliberate decoys with no production use, not high-speed connections. They exist to attract and analyze attackers.",
+          2: "Mesh networks distribute connectivity. Honeynets are security research tools with fake vulnerable systems to attract and study attacks.",
+          3: "Backup networks ensure availability. Honeynets are sacrificial decoy environments for studying attacker behavior and techniques."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is DNS poisoning?",
+        choices: [
+          "Overloading DNS servers with traffic",
+          "Corrupting DNS records to redirect users to malicious sites",
+          "Encrypting DNS queries",
+          "Blocking all DNS requests"
+        ],
+        correct: 1,
+        explanation: "DNS poisoning (or DNS cache poisoning) corrupts DNS records with false information, redirecting users to malicious sites when they try to access legitimate domains.",
+        wrongExplanations: {
+          0: "That describes DNS flooding/DDoS. DNS poisoning corrupts resolution records to misdirect traffic, not overwhelm servers.",
+          2: "DNS encryption (DoH, DoT) protects queries. DNS poisoning attacks the resolution process by inserting false records.",
+          3: "Blocking DNS prevents resolution entirely. Poisoning is more insidious - it provides wrong answers that redirect to attacker-controlled sites."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is the purpose of a web application firewall (WAF)?",
+        choices: [
+          "To protect web applications from attacks like SQL injection and XSS",
+          "To speed up website loading",
+          "To create website backups",
+          "To design web pages"
+        ],
+        correct: 0,
+        explanation: "A WAF monitors, filters, and blocks HTTP/HTTPS traffic to web applications, protecting against application-layer attacks like SQL injection, XSS, and CSRF.",
+        wrongExplanations: {
+          1: "WAFs inspect traffic for security threats, which may add latency. Their purpose is protection, not performance optimization.",
+          2: "Backups preserve data copies. WAFs provide real-time protection by filtering malicious requests to web applications.",
+          3: "WAFs are security devices, not development tools. They protect running applications by filtering malicious traffic."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is network microsegmentation?",
+        choices: [
+          "Creating very small network cables",
+          "Dividing networks into very small, isolated zones for granular security",
+          "Reducing network bandwidth",
+          "Combining multiple networks into one"
+        ],
+        correct: 1,
+        explanation: "Microsegmentation divides networks into small isolated segments with independent security controls, limiting lateral movement and containing breaches to minimal areas.",
+        wrongExplanations: {
+          0: "Microsegmentation is a logical security architecture, not physical cable sizing. It creates isolated security zones for protection.",
+          2: "Bandwidth management is separate. Microsegmentation is about security isolation, creating small protected zones to limit breach spread.",
+          3: "Microsegmentation does the opposite - it divides networks into smaller isolated parts for better security control and breach containment."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is the purpose of DNSSEC?",
+        choices: [
+          "To speed up DNS queries",
+          "To authenticate DNS responses and prevent tampering",
+          "To block all DNS traffic",
+          "To compress DNS data"
+        ],
+        correct: 1,
+        explanation: "DNSSEC adds cryptographic signatures to DNS data, allowing clients to verify responses are authentic and haven't been tampered with, preventing DNS spoofing attacks.",
+        wrongExplanations: {
+          0: "DNSSEC adds cryptographic verification which increases overhead. Its purpose is security through authentication, not performance.",
+          2: "DNSSEC secures DNS traffic through authentication, it doesn't block it. It ensures DNS responses are legitimate and unmodified.",
+          3: "DNSSEC adds cryptographic signatures for authenticity, actually increasing data size. It provides security verification, not compression."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is a zero-trust network?",
+        choices: [
+          "A network with no security controls",
+          "A network that never verifies users",
+          "A network that requires verification for every access request regardless of location",
+          "A wireless-only network"
+        ],
+        correct: 2,
+        explanation: "Zero-trust networks never trust by default and always verify. Every access request is authenticated, authorized, and encrypted regardless of whether it comes from inside or outside the network.",
+        wrongExplanations: {
+          0: "Zero-trust has extensive security - it trusts nothing by default. Every request is verified regardless of source or location.",
+          1: "Zero-trust verifies everything constantly. It assumes breach and validates every access request, user, device, and connection.",
+          3: "Zero-trust is a security model applicable to any network type. It requires continuous verification regardless of wired, wireless, cloud, or on-premises."
+        }
+      },
+      // Additional Business Continuity (10 more)
+      {
+        domain: "Business Continuity",
+        question: "What is the difference between a disaster and an incident?",
+        choices: [
+          "There is no difference",
+          "Disasters cause longer disruptions to business operations than incidents",
+          "Incidents are always natural; disasters are man-made",
+          "Disasters only affect IT systems"
+        ],
+        correct: 1,
+        explanation: "Disasters cause significant, prolonged disruptions requiring disaster recovery plans. Incidents are events that can be resolved through normal procedures with minimal disruption.",
+        wrongExplanations: {
+          0: "They differ in scope and impact. Incidents are manageable through normal operations; disasters require DR plans and cause major disruptions.",
+          2: "Both can be natural or man-made. The distinction is impact severity and duration, not the cause of the event.",
+          3: "Disasters affect entire business operations, not just IT. They disrupt facilities, staff, processes, and business functions comprehensively."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is MTBF (Mean Time Between Failures)?",
+        choices: [
+          "The average time a system operates before failing",
+          "The time required to repair a failed system",
+          "The maximum acceptable downtime",
+          "The cost of system failures"
+        ],
+        correct: 0,
+        explanation: "MTBF measures the average time a system operates successfully between failures. Higher MTBF indicates more reliable systems with longer periods of operation.",
+        wrongExplanations: {
+          1: "That's MTTR (Mean Time To Repair). MTBF measures operational time between failures, not repair time after failures.",
+          2: "That's RTO (Recovery Time Objective). MTBF is a reliability metric showing how long systems typically run before failing.",
+          3: "MTBF measures time, not cost. It indicates reliability by showing average operational periods between failures."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a maximum tolerable downtime (MTD)?",
+        choices: [
+          "To define when backup jobs should run",
+          "To specify the longest period a business can survive without a critical function",
+          "To set password expiration times",
+          "To determine network bandwidth requirements"
+        ],
+        correct: 1,
+        explanation: "MTD is the maximum time a business can be without a critical function before facing irreparable harm, severe financial loss, or business failure. RTO must be less than MTD.",
+        wrongExplanations: {
+          0: "Backup schedules are based on RPO (how much data loss is acceptable), not MTD. MTD defines survival limits for business operations.",
+          2: "Password policies are security controls unrelated to business continuity. MTD defines how long operations can be down before critical damage occurs.",
+          3: "Bandwidth is a network capacity metric. MTD defines the maximum tolerable outage duration before business viability is threatened."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is a single point of failure (SPOF)?",
+        choices: [
+          "The first component to fail in a system",
+          "A component whose failure stops the entire system",
+          "The weakest security control",
+          "A backup that only runs once"
+        ],
+        correct: 1,
+        explanation: "A SPOF is a component that, if it fails, will cause the entire system to fail. Eliminating SPOFs through redundancy improves availability and resilience.",
+        wrongExplanations: {
+          0: "SPOF isn't about timing. It's a component whose failure alone causes complete system failure, regardless of when it fails.",
+          2: "While possibly weak, SPOF specifically refers to availability and redundancy. It's a component whose failure stops everything.",
+          3: "SPOF relates to system architecture and redundancy, not backup scheduling. It's a component without redundancy whose failure stops operations."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of redundancy in business continuity?",
+        choices: [
+          "To waste resources unnecessarily",
+          "To provide backup components that can take over if primary components fail",
+          "To slow down system performance",
+          "To increase security complexity"
+        ],
+        correct: 1,
+        explanation: "Redundancy provides backup components (systems, power, connections, data) that enable continued operation if primary components fail, eliminating single points of failure.",
+        wrongExplanations: {
+          0: "Redundancy is strategic investment in availability, not waste. It prevents costly downtime by ensuring continuity when components fail.",
+          2: "While standby systems exist, modern redundancy often enables load balancing and can improve performance, not slow it down.",
+          3: "Redundancy focuses on availability, not security. It ensures continuity through backup components, separate from security architecture."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is a Business Impact Analysis (BIA) used for?",
+        choices: [
+          "To calculate employee salaries",
+          "To identify critical functions and the impact of their disruption",
+          "To measure network bandwidth",
+          "To track project budgets"
+        ],
+        correct: 1,
+        explanation: "A BIA identifies and prioritizes critical business functions, determines the impact of disruptions, and establishes RTO/RPO requirements to guide continuity planning.",
+        wrongExplanations: {
+          0: "BIA focuses on operational continuity, not compensation. It identifies critical functions and disruption impacts to guide BC/DR planning.",
+          2: "Network capacity is a technical metric. BIA analyzes business function criticality and disruption impacts to prioritize recovery efforts.",
+          3: "Project finances are separate from continuity planning. BIA assesses operational criticality and downtime costs to inform recovery strategies."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a disaster declaration?",
+        choices: [
+          "To inform the media about issues",
+          "To formally activate disaster recovery procedures and resources",
+          "To blame responsible parties",
+          "To request government assistance only"
+        ],
+        correct: 1,
+        explanation: "Disaster declaration is a formal decision by management to activate DR plans, commit resources, and invoke special authorities and procedures to recover from a disaster.",
+        wrongExplanations: {
+          0: "Communications may follow, but declaration's purpose is internal - to activate DR plans, mobilize teams, and authorize resource use.",
+          2: "Declaration focuses on recovery activation, not fault-finding. It's about marshaling resources and executing recovery plans quickly.",
+          3: "While government aid may be sought, declaration primarily activates internal DR procedures, recovery teams, and commits organizational resources."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the recovery point objective (RPO)?",
+        choices: [
+          "The time needed to restore operations",
+          "The maximum acceptable amount of data loss measured in time",
+          "The physical location for recovery",
+          "The number of backups to maintain"
+        ],
+        correct: 1,
+        explanation: "RPO defines the maximum acceptable age of data that can be lost. If RPO is 4 hours, backups must occur at least every 4 hours to meet requirements.",
+        wrongExplanations: {
+          0: "That's RTO (Recovery Time Objective). RPO specifies how much data loss is tolerable, not how long recovery takes.",
+          2: "Recovery site location is separate. RPO is a time-based measure determining backup frequency based on acceptable data loss.",
+          3: "RPO determines backup frequency, but isn't a count. It specifies maximum data loss time, which then drives how often to backup."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is failover in high availability systems?",
+        choices: [
+          "Intentionally shutting down systems",
+          "Automatic switching to a redundant system when the primary fails",
+          "Manual backup procedures",
+          "Deleting old data"
+        ],
+        correct: 1,
+        explanation: "Failover automatically switches operations to redundant standby systems when primary systems fail, minimizing downtime and enabling continuous service availability.",
+        wrongExplanations: {
+          0: "Failover maintains operation by switching to backups, not stopping systems. It prevents downtime by activating redundant components.",
+          2: "Failover is typically automatic, not manual. Systems detect failures and automatically switch to standby systems without human intervention.",
+          3: "Data management is unrelated. Failover reroutes operations to redundant systems to maintain availability during primary system failures."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a continuity of operations plan (COOP)?",
+        choices: [
+          "To document IT security controls",
+          "To ensure essential functions continue during disruptions",
+          "To train new employees",
+          "To manage software licenses"
+        ],
+        correct: 1,
+        explanation: "COOP ensures an organization can continue performing essential functions during a wide range of disruptions, maintaining mission-critical operations under adverse conditions.",
+        wrongExplanations: {
+          0: "Security documentation is separate. COOP focuses on maintaining essential operations during emergencies, not cataloging security controls.",
+          2: "Training is ongoing operations. COOP specifically addresses maintaining critical functions during major disruptions or emergencies.",
+          3: "License management is operational administration. COOP ensures mission-critical functions continue during disasters and disruptions."
+        }
+      },
+      // Additional Security Operations (10 more)
+      {
+        domain: "Security Operations",
+        question: "What is threat hunting?",
+        choices: [
+          "Waiting for alerts from security tools",
+          "Proactively searching for threats that evaded detection",
+          "Installing antivirus software",
+          "Blocking all incoming traffic"
+        ],
+        correct: 1,
+        explanation: "Threat hunting is proactively searching networks and systems for threats that bypassed automated defenses, using hypotheses and investigation to find hidden attackers.",
+        wrongExplanations: {
+          0: "Hunting is proactive, not reactive. It assumes defenses were bypassed and actively searches for hidden threats rather than waiting for alerts.",
+          2: "Antivirus is preventive control deployment. Threat hunting actively investigates to find sophisticated threats that evaded existing tools.",
+          3: "Blocking traffic is prevention. Hunting assumes something got through and proactively searches for indicators of compromise and suspicious activity."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is security orchestration?",
+        choices: [
+          "Playing security awareness videos",
+          "Automating and coordinating security tools and processes",
+          "Organizing security documentation",
+          "Scheduling security meetings"
+        ],
+        correct: 1,
+        explanation: "Security orchestration automates and integrates security tools and processes, enabling coordinated response workflows across multiple systems to improve efficiency and response speed.",
+        wrongExplanations: {
+          0: "Orchestration is technical automation of security processes and tools, not training content delivery or awareness activities.",
+          2: "While documentation may result, orchestration is about automating tool integration and response workflows, not file organization.",
+          3: "Orchestration automates security tool coordination and response actions, not administrative activities like meeting scheduling."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of security metrics?",
+        choices: [
+          "To punish security staff",
+          "To measure and demonstrate security program effectiveness",
+          "To increase security budgets automatically",
+          "To replace security controls"
+        ],
+        correct: 1,
+        explanation: "Security metrics quantify security program performance, identify trends, demonstrate effectiveness to management, and guide improvement decisions based on measurable data.",
+        wrongExplanations: {
+          0: "Metrics drive improvement, not punishment. They objectively measure program performance to identify strengths and areas needing enhancement.",
+          2: "Metrics inform budget decisions but don't automatically increase funding. They demonstrate value and justify investment through measurable results.",
+          3: "Metrics measure control effectiveness, they don't replace controls. They help assess whether controls work as intended and guide optimization."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is endpoint detection and response (EDR)?",
+        choices: [
+          "A type of firewall",
+          "Software that monitors and responds to threats on endpoints like workstations",
+          "A network switch",
+          "An email filter"
+        ],
+        correct: 1,
+        explanation: "EDR continuously monitors endpoint devices (workstations, servers) for threats, provides detailed visibility into endpoint activity, and enables rapid threat response and investigation.",
+        wrongExplanations: {
+          0: "Firewalls protect network boundaries. EDR focuses on endpoint devices, providing deep visibility and response capabilities on individual systems.",
+          2: "Network switches route traffic. EDR is security software on endpoints that detects and responds to threats at the device level.",
+          3: "Email filters protect messaging. EDR monitors endpoint behavior comprehensively for threats, not just email-based attacks."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is security information sharing?",
+        choices: [
+          "Posting security details on social media",
+          "Exchanging threat intelligence with trusted organizations",
+          "Sharing passwords between users",
+          "Publishing all security incidents publicly"
+        ],
+        correct: 1,
+        explanation: "Security information sharing involves exchanging threat intelligence, indicators of compromise, and attack information with trusted partners to improve collective defense.",
+        wrongExplanations: {
+          0: "Information sharing is controlled and with trusted partners, not public social media. It helps collective defense, not public disclosure.",
+          2: "Password sharing violates security principles. Information sharing means exchanging threat intelligence and IOCs, not credentials.",
+          3: "Sharing is selective with trusted parties, not public disclosure. It involves threat intelligence, not broadcasting sensitive incident details."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of a Security Operations Center (SOC)?",
+        choices: [
+          "To develop new security products",
+          "To centrally monitor, detect, and respond to security events",
+          "To install security cameras only",
+          "To conduct employee interviews"
+        ],
+        correct: 1,
+        explanation: "A SOC is a centralized team and facility that continuously monitors security events, analyzes threats, coordinates incident response, and maintains security posture 24/7.",
+        wrongExplanations: {
+          0: "SOCs operate security defenses, they don't develop products. They monitor, detect, investigate, and respond to threats in real-time.",
+          2: "SOCs are cyber security operations centers, not physical security only. They monitor digital systems, networks, and applications comprehensively.",
+          3: "SOCs handle technical security operations and monitoring, not HR functions. They detect cyber threats and coordinate responses."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is threat intelligence?",
+        choices: [
+          "Any security-related data",
+          "Analyzed information about threats, including tactics, indicators, and context",
+          "Antivirus signatures only",
+          "Network traffic logs"
+        ],
+        correct: 1,
+        explanation: "Threat intelligence is analyzed, contextualized information about threats, attackers, their tactics and indicators, enabling informed security decisions and proactive defense.",
+        wrongExplanations: {
+          0: "Intelligence is refined analysis, not raw data. It provides context, patterns, and actionable insights about threats and adversaries.",
+          2: "Signatures are one component. Threat intelligence includes TTPs, IOCs, attacker motivations, campaigns, and strategic context for decision-making.",
+          3: "Raw logs are data. Intelligence is analysis of threats, adding context about attackers, methods, and indicators for actionable insights."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the difference between vulnerability scanning and penetration testing?",
+        choices: [
+          "They are the same thing",
+          "Scanning identifies vulnerabilities; penetration testing attempts to exploit them",
+          "Scanning is illegal; penetration testing is legal",
+          "Scanning is manual; penetration testing is automated"
+        ],
+        correct: 1,
+        explanation: "Vulnerability scanning identifies and reports potential vulnerabilities. Penetration testing actively exploits vulnerabilities to demonstrate real-world impact and risk.",
+        wrongExplanations: {
+          0: "They're different activities. Scanning finds vulnerabilities automatically; penetration testing manually exploits them to demonstrate impact.",
+          2: "Both are legal when authorized. Scanning discovers vulnerabilities; penetration testing exploits them, both requiring permission to perform.",
+          3: "This is backwards. Scanning is typically automated; penetration testing involves manual exploitation and investigation by security experts."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is security automation?",
+        choices: [
+          "Replacing all security staff with computers",
+          "Using technology to perform repetitive security tasks without human intervention",
+          "Automatically granting all access requests",
+          "Disabling all security controls"
+        ],
+        correct: 1,
+        explanation: "Security automation uses technology to perform repetitive tasks like log analysis, ticket creation, and response actions, freeing analysts for complex investigations and improving speed.",
+        wrongExplanations: {
+          0: "Automation augments human analysts by handling repetitive tasks, not replacing them. Humans still make key decisions and handle complex issues.",
+          2: "Automation enforces security consistently, it doesn't bypass controls. It executes approved responses faster, not grant unauthorized access.",
+          3: "Automation strengthens security by executing controls consistently and rapidly. It doesn't disable protections, it operates them efficiently."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is a false positive in security monitoring?",
+        choices: [
+          "A real threat that was correctly detected",
+          "An alert triggered by benign activity mistakenly identified as malicious",
+          "A threat that escaped detection",
+          "A correctly dismissed alert"
+        ],
+        correct: 1,
+        explanation: "A false positive is an alert triggered by legitimate activity incorrectly flagged as malicious. High false positive rates waste analyst time and can cause alert fatigue.",
+        wrongExplanations: {
+          0: "That's a true positive - correctly identifying actual threats. False positives are benign activities incorrectly flagged as threats.",
+          2: "That's a false negative - missed threat. False positives are the opposite: harmless activities incorrectly identified as threats.",
+          3: "Correctly dismissed alerts may have been false positives. A false positive is specifically a security alert on benign activity."
         }
       }
     ];
