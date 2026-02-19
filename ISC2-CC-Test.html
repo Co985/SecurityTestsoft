@@ -408,7 +408,12 @@
           "Authentication"
         ],
         correct: 2,
-        explanation: "Availability ensures that information and resources are accessible to authorized users when needed. Confidentiality protects against unauthorized disclosure, while Integrity ensures data accuracy."
+        explanation: "Availability ensures that information and resources are accessible to authorized users when needed. It's one of the three core principles of the CIA Triad.",
+        wrongExplanations: {
+          0: "Confidentiality protects information from unauthorized disclosure, but doesn't address accessibility for authorized users.",
+          1: "Integrity ensures data accuracy and hasn't been tampered with, but doesn't guarantee access when needed.",
+          3: "Authentication is about verifying identity, not about ensuring information is accessible. It's not part of the CIA Triad."
+        }
       },
       {
         domain: "Security Principles",
@@ -420,7 +425,12 @@
           "To comply with regulations only"
         ],
         correct: 1,
-        explanation: "Security controls are implemented to reduce risk to an acceptable level. It's impossible to eliminate all risks, so controls help manage and mitigate risks to acceptable levels."
+        explanation: "Security controls are implemented to reduce risk to an acceptable level. It's impossible to eliminate all risks, so controls help manage and mitigate risks to acceptable levels.",
+        wrongExplanations: {
+          0: "It's impossible to eliminate all security risks. Some residual risk always remains, which is why we aim for acceptable levels.",
+          2: "Security controls should simplify security management, not increase complexity. Complexity is often the enemy of security.",
+          3: "While compliance is important, it's not the primary purpose. Controls protect assets whether or not regulations require them."
+        }
       },
       {
         domain: "Security Principles",
@@ -432,7 +442,12 @@
           "Compensating controls"
         ],
         correct: 2,
-        explanation: "Deterrent controls attempt to discourage potential attackers from attempting violations. Examples include warning signs, security guards, and cameras that are visible to deter malicious activity."
+        explanation: "Deterrent controls attempt to discourage potential attackers from attempting violations. Examples include warning signs, security guards, and visible cameras that discourage malicious activity.",
+        wrongExplanations: {
+          0: "Detective controls identify security events after they occur, not before. They detect violations rather than prevent them.",
+          1: "Corrective controls restore systems after an incident has occurred. They respond to violations rather than prevent them.",
+          3: "Compensating controls provide alternative security when primary controls can't be implemented, but they don't focus on discouragement."
+        }
       },
       {
         domain: "Security Principles",
@@ -444,7 +459,12 @@
           "Likelihood"
         ],
         correct: 2,
-        explanation: "Impact refers to the potential damage or consequence that could result if a threat exploits a vulnerability. It's a key component of risk assessment along with likelihood."
+        explanation: "Impact refers to the potential damage or consequence that could result if a threat exploits a vulnerability. It's a key component of risk assessment along with likelihood.",
+        wrongExplanations: {
+          0: "A vulnerability is a weakness that can be exploited, not the damage itself. It's what allows the threat to cause impact.",
+          1: "A threat is the potential cause of an unwanted incident, not the damage itself. Threats exploit vulnerabilities to create impact.",
+          3: "Likelihood is the probability that a threat will occur, not the damage it causes. Together with impact, it determines risk level."
+        }
       },
       {
         domain: "Security Principles",
@@ -456,7 +476,12 @@
           "Encrypting all data at rest"
         ],
         correct: 1,
-        explanation: "Defense in depth is a security strategy that uses multiple layers of security controls throughout an IT system. If one layer fails, other layers continue to provide protection."
+        explanation: "Defense in depth is a security strategy that uses multiple layers of security controls throughout an IT system. If one layer fails, other layers continue to provide protection.",
+        wrongExplanations: {
+          0: "Relying on a single control, no matter how strong, creates a single point of failure. Defense in depth requires multiple layers.",
+          2: "Perimeter-only security is insufficient. Defense in depth protects at network, host, application, and data layers.",
+          3: "Encryption is just one security control. Defense in depth uses many different types of controls working together."
+        }
       },
       {
         domain: "Security Principles",
@@ -468,7 +493,12 @@
           "Job rotation"
         ],
         correct: 2,
-        explanation: "The principle of least privilege states that users should be granted only the minimum levels of access needed to perform their job duties, reducing the potential impact of compromised accounts."
+        explanation: "The principle of least privilege states that users should be granted only the minimum levels of access needed to perform their job duties, reducing the potential impact of compromised accounts.",
+        wrongExplanations: {
+          0: "Need to know is related but focuses on access to classified information, not on minimum access rights in general.",
+          1: "Separation of duties divides critical tasks among multiple people to prevent fraud, not about minimum access levels.",
+          3: "Job rotation moves employees between roles to reduce fraud opportunities and cross-train, not about limiting access levels."
+        }
       },
       {
         domain: "Access Controls",
@@ -480,7 +510,12 @@
           "Somewhere you are"
         ],
         correct: 2,
-        explanation: "A fingerprint scanner is a biometric authentication factor, classified as 'something you are'. It verifies identity based on unique physical characteristics."
+        explanation: "A fingerprint scanner is a biometric authentication factor, classified as 'something you are'. It verifies identity based on unique physical characteristics.",
+        wrongExplanations: {
+          0: "'Something you know' refers to knowledge factors like passwords or PINs, not physical characteristics like fingerprints.",
+          1: "'Something you have' refers to possession factors like security tokens or smart cards, not inherent biometric traits.",
+          3: "'Somewhere you are' refers to location-based authentication like geofencing, not biometric characteristics."
+        }
       },
       {
         domain: "Access Controls",
@@ -492,7 +527,12 @@
           "To track user locations"
         ],
         correct: 1,
-        explanation: "MFA provides additional security by requiring two or more authentication factors. This significantly reduces the risk of unauthorized access even if one factor (like a password) is compromised."
+        explanation: "MFA provides additional security by requiring two or more authentication factors. This significantly reduces the risk of unauthorized access even if one factor (like a password) is compromised.",
+        wrongExplanations: {
+          0: "While MFA adds an extra step, its purpose is security enhancement, not simply making logins more difficult for users.",
+          2: "MFA enhances passwords with additional factors rather than replacing them. It's about combining multiple authentication methods.",
+          3: "Location tracking can be part of authentication, but it's not the primary purpose of MFA, which focuses on multiple authentication factors."
+        }
       },
       {
         domain: "Access Controls",
@@ -504,7 +544,12 @@
           "Rule-Based Access Control"
         ],
         correct: 1,
-        explanation: "Mandatory Access Control (MAC) uses security labels and clearances. Access is granted based on comparing the security clearance of users with the classification labels of resources."
+        explanation: "Mandatory Access Control (MAC) uses security labels and clearances. Access is granted based on comparing the security clearance of users with the classification labels of resources.",
+        wrongExplanations: {
+          0: "DAC allows owners to control access to their resources, not based on labels and clearances but on discretionary permissions.",
+          2: "RBAC grants access based on organizational roles and job functions, not security labels and clearances.",
+          3: "Rule-Based Access Control uses specific rules or conditions for access, not the label and clearance system."
+        }
       },
       {
         domain: "Access Controls",
@@ -516,7 +561,12 @@
           "To improve employee satisfaction"
         ],
         correct: 1,
-        explanation: "Separation of duties divides critical functions among different people to prevent any single individual from committing fraud or error. It requires collusion between multiple people to commit wrongdoing."
+        explanation: "Separation of duties divides critical functions among different people to prevent any single individual from committing fraud or error. It requires collusion between multiple people to commit wrongdoing.",
+        wrongExplanations: {
+          0: "While separation of duties involves division of tasks, its purpose is fraud prevention, not simply ensuring independent work.",
+          2: "Separation of duties is a security control, not a cost reduction strategy. It may actually increase costs by requiring multiple people.",
+          3: "Employee satisfaction is not the goal. This is a security control designed to prevent fraud and errors through checks and balances."
+        }
       },
       {
         domain: "Access Controls",
@@ -528,7 +578,12 @@
           "Fence"
         ],
         correct: 1,
-        explanation: "A mantrap (or access control vestibule) uses two doors where only one can be open at a time, preventing tailgating and providing an additional layer of physical access control."
+        explanation: "A mantrap (or access control vestibule) uses two doors where only one can be open at a time, preventing tailgating and providing an additional layer of physical access control.",
+        wrongExplanations: {
+          0: "A turnstile controls one-way pedestrian traffic but doesn't use the two-door interlock system described.",
+          2: "Bollards are physical barriers (posts) used to control vehicle access, not the two-door entry system described.",
+          3: "A fence is a perimeter security control that creates a boundary but doesn't involve the two-door mechanism."
+        }
       },
       {
         domain: "Network Security",
@@ -540,7 +595,12 @@
           "To backup network data"
         ],
         correct: 1,
-        explanation: "A firewall's primary purpose is to filter network traffic based on predefined rules, controlling what traffic is allowed to pass between network segments while blocking unauthorized access."
+        explanation: "A firewall's primary purpose is to filter network traffic based on predefined rules, controlling what traffic is allowed to pass between network segments while blocking unauthorized access.",
+        wrongExplanations: {
+          0: "Firewalls filter traffic but don't encrypt it. Encryption is provided by protocols like TLS/SSL or VPNs.",
+          2: "Virus detection is the job of antivirus software, not firewalls. Firewalls control network traffic flow based on rules.",
+          3: "Backup systems handle data backup, not firewalls. Firewalls focus on controlling network access and traffic."
+        }
       },
       {
         domain: "Network Security",
@@ -552,7 +612,12 @@
           "Web Application Firewall (WAF)"
         ],
         correct: 1,
-        explanation: "An Intrusion Detection System (IDS) monitors network traffic for suspicious activity and generates alerts. Unlike an IPS, it doesn't actively block traffic, only detects and alerts."
+        explanation: "An Intrusion Detection System (IDS) monitors network traffic for suspicious activity and generates alerts. Unlike an IPS, it doesn't actively block traffic, only detects and alerts.",
+        wrongExplanations: {
+          0: "An IPS not only detects threats but also actively prevents them by blocking malicious traffic, unlike an IDS which only alerts.",
+          2: "A VPN creates encrypted tunnels for secure communication, not for monitoring and alerting on suspicious activity.",
+          3: "A WAF protects web applications from specific attacks but doesn't monitor general network traffic for suspicious activity."
+        }
       },
       {
         domain: "Network Security",
@@ -564,7 +629,12 @@
           "SMTP"
         ],
         correct: 2,
-        explanation: "SSH (Secure Shell) should be used instead of Telnet for remote access. SSH encrypts all communication, including authentication credentials, while Telnet transmits everything in cleartext."
+        explanation: "SSH (Secure Shell) should be used instead of Telnet for remote access. SSH encrypts all communication, including authentication credentials, while Telnet transmits everything in cleartext.",
+        wrongExplanations: {
+          0: "FTP is for file transfer and also transmits in cleartext like Telnet, making it insecure. SFTP or FTPS should be used instead.",
+          1: "HTTP is for web traffic, not remote terminal access, and also transmits in cleartext unless HTTPS is used.",
+          3: "SMTP is for email transmission, not remote access. It doesn't provide terminal access capabilities."
+        }
       },
       {
         domain: "Network Security",
@@ -576,7 +646,12 @@
           "Email filtering"
         ],
         correct: 1,
-        explanation: "A VPN (Virtual Private Network) creates an encrypted tunnel over public networks like the internet, allowing secure remote access and protecting data in transit from eavesdropping."
+        explanation: "A VPN (Virtual Private Network) creates an encrypted tunnel over public networks like the internet, allowing secure remote access and protecting data in transit from eavesdropping.",
+        wrongExplanations: {
+          0: "VPNs typically slow down connections due to encryption overhead, not speed them up. Their purpose is security, not performance.",
+          2: "Website hosting is provided by web servers, not VPNs. VPNs secure network connections.",
+          3: "Email filtering is handled by email security gateways and spam filters, not VPNs which focus on network encryption."
+        }
       },
       {
         domain: "Network Security",
@@ -588,7 +663,12 @@
           "Layer 7 - Application"
         ],
         correct: 1,
-        explanation: "Routers primarily operate at Layer 3 (Network layer) of the OSI model, making routing decisions based on IP addresses and forwarding packets between different networks."
+        explanation: "Routers primarily operate at Layer 3 (Network layer) of the OSI model, making routing decisions based on IP addresses and forwarding packets between different networks.",
+        wrongExplanations: {
+          0: "Layer 2 is where switches operate, using MAC addresses for forwarding. Routers use IP addresses at Layer 3.",
+          2: "Layer 4 handles end-to-end connections and port numbers. Routers work below this at the network addressing layer.",
+          3: "Layer 7 is where applications like web browsers and email clients operate, far above the routing function."
+        }
       },
       {
         domain: "Business Continuity",
@@ -600,7 +680,12 @@
           "There is no difference"
         ],
         correct: 0,
-        explanation: "Business Continuity focuses on maintaining critical business operations during and after a disruption, while Disaster Recovery focuses specifically on restoring IT systems and data after a disaster."
+        explanation: "Business Continuity focuses on maintaining critical business operations during and after a disruption, while Disaster Recovery focuses specifically on restoring IT systems and data after a disaster.",
+        wrongExplanations: {
+          1: "Both BC and DR apply to various incident sizes. The distinction is about operational continuity versus IT restoration, not incident severity.",
+          2: "This is backwards. BC is broader and business-focused while DR is specifically IT-focused on system restoration.",
+          3: "BC and DR are related but distinct concepts. BC is broader, covering all business operations, while DR focuses on IT recovery."
+        }
       },
       {
         domain: "Business Continuity",
@@ -612,7 +697,12 @@
           "The cost of recovery"
         ],
         correct: 1,
-        explanation: "RTO (Recovery Time Objective) is the maximum acceptable length of time that a system can be down after a failure or disaster occurs. It defines the target time for recovery."
+        explanation: "RTO (Recovery Time Objective) is the maximum acceptable length of time that a system can be down after a failure or disaster occurs. It defines the target time for recovery.",
+        wrongExplanations: {
+          0: "Maximum acceptable data loss is RPO (Recovery Point Objective), not RTO. RTO focuses on downtime duration.",
+          2: "Backup creation time is a separate metric. RTO measures acceptable downtime after an incident, not backup duration.",
+          3: "Recovery cost is a financial metric. RTO is a time-based metric measuring acceptable downtime."
+        }
       },
       {
         domain: "Business Continuity",
@@ -624,7 +714,12 @@
           "The recovery procedure steps"
         ],
         correct: 1,
-        explanation: "RPO (Recovery Point Objective) represents the maximum acceptable amount of data loss measured in time. It determines how frequently you need to backup data to avoid unacceptable loss."
+        explanation: "RPO (Recovery Point Objective) represents the maximum acceptable amount of data loss measured in time. It determines how frequently you need to backup data to avoid unacceptable loss.",
+        wrongExplanations: {
+          0: "Maximum acceptable downtime is RTO (Recovery Time Objective), not RPO. RPO focuses on data loss tolerance.",
+          2: "Physical recovery location refers to alternate sites like hot/warm/cold sites, not the data loss time metric.",
+          3: "Recovery procedures are documented in disaster recovery plans. RPO is a metric defining acceptable data loss."
+        }
       },
       {
         domain: "Business Continuity",
@@ -636,7 +731,12 @@
           "Snapshot backup"
         ],
         correct: 2,
-        explanation: "A differential backup backs up all data that has changed since the last full backup. It provides a middle ground between full and incremental backups in terms of backup time and restore complexity."
+        explanation: "A differential backup backs up all data that has changed since the last full backup. It provides a middle ground between full and incremental backups in terms of backup time and restore complexity.",
+        wrongExplanations: {
+          0: "A full backup copies all selected data regardless of changes, not just what changed since the last full backup.",
+          1: "Incremental backups only back up data changed since the last backup of any type (full or incremental), not specifically since the last full backup.",
+          3: "Snapshots capture the state at a point in time but use different technology than traditional differential backups."
+        }
       },
       {
         domain: "Business Continuity",
@@ -648,7 +748,12 @@
           "Mobile site"
         ],
         correct: 2,
-        explanation: "A hot site is fully equipped with hardware, software, and data, and can be operational within hours. It's the most expensive option but provides the fastest recovery."
+        explanation: "A hot site is fully equipped with hardware, software, and data, and can be operational within hours. It's the most expensive option but provides the fastest recovery.",
+        wrongExplanations: {
+          0: "A cold site only has basic infrastructure and requires equipment installation, taking weeks to become operational, not hours.",
+          1: "A warm site has some equipment but requires additional setup and data restoration, typically taking days, not hours.",
+          3: "A mobile site is a portable recovery facility but isn't necessarily fully equipped or ready within hours like a hot site."
+        }
       },
       {
         domain: "Security Operations",
@@ -660,7 +765,12 @@
           "Recovery"
         ],
         correct: 1,
-        explanation: "Preparation is the first phase of incident response. It involves establishing policies, procedures, tools, and training before an incident occurs to enable effective response."
+        explanation: "Preparation is the first phase of incident response. It involves establishing policies, procedures, tools, and training before an incident occurs to enable effective response.",
+        wrongExplanations: {
+          0: "Containment occurs after detection and analysis. You must be prepared and detect an incident before containment.",
+          2: "Detection and Analysis comes after Preparation. You need tools, procedures, and training in place before detecting incidents.",
+          3: "Recovery is one of the final phases, occurring after preparation, detection, containment, and eradication."
+        }
       },
       {
         domain: "Security Operations",
@@ -672,7 +782,12 @@
           "To immediately restore operations"
         ],
         correct: 1,
-        explanation: "Evidence preservation maintains the chain of custody and ensures evidence integrity for potential legal proceedings, forensic analysis, and lessons learned. Proper handling is critical for admissibility."
+        explanation: "Evidence preservation maintains the chain of custody and ensures evidence integrity for potential legal proceedings, forensic analysis, and lessons learned. Proper handling is critical for admissibility.",
+        wrongExplanations: {
+          0: "Deleting attack traces would destroy evidence. The goal is to preserve evidence for analysis and potential prosecution.",
+          2: "While backups are important, evidence preservation involves forensically sound imaging and maintaining chain of custody, not just backups.",
+          3: "Immediate restoration could destroy evidence. Evidence must be preserved before restoration, often requiring careful containment."
+        }
       },
       {
         domain: "Security Operations",
@@ -684,7 +799,12 @@
           "Network logs"
         ],
         correct: 2,
-        explanation: "Security logs (also called audit logs) record security-related events including authentication attempts, authorization decisions, and access to protected resources."
+        explanation: "Security logs (also called audit logs) record security-related events including authentication attempts, authorization decisions, and access to protected resources.",
+        wrongExplanations: {
+          0: "System logs track system-level events like services starting/stopping and hardware issues, not authentication and access.",
+          1: "Application logs record application-specific events and errors, not general authentication and authorization activities.",
+          3: "Network logs track network traffic and connections but not user authentication and resource access at the application level."
+        }
       },
       {
         domain: "Security Operations",
@@ -696,7 +816,12 @@
           "Managing user passwords"
         ],
         correct: 1,
-        explanation: "A SIEM system collects, aggregates, and analyzes log data from multiple sources across the organization to provide real-time analysis of security alerts and support incident detection and response."
+        explanation: "A SIEM system collects, aggregates, and analyzes log data from multiple sources across the organization to provide real-time analysis of security alerts and support incident detection and response.",
+        wrongExplanations: {
+          0: "Encryption is handled by cryptographic tools and protocols, not SIEM systems which focus on log analysis.",
+          2: "Blocking traffic is the function of firewalls and IPS devices. SIEMs analyze logs to detect threats but don't block traffic.",
+          3: "Password management is handled by identity management systems, not SIEMs which focus on security event correlation."
+        }
       },
       {
         domain: "Security Operations",
@@ -708,7 +833,12 @@
           "To monitor network traffic"
         ],
         correct: 1,
-        explanation: "A vulnerability assessment identifies, quantifies, and prioritizes security vulnerabilities in systems. It provides awareness of weaknesses so they can be remediated based on risk."
+        explanation: "A vulnerability assessment identifies, quantifies, and prioritizes security vulnerabilities in systems. It provides awareness of weaknesses so they can be remediated based on risk.",
+        wrongExplanations: {
+          0: "Vulnerability assessments identify weaknesses but don't exploit them. Exploitation is done in penetration testing with authorization.",
+          2: "Patch installation is part of remediation, not assessment. Vulnerability assessments identify what needs patching.",
+          3: "Network traffic monitoring is done by IDS/IPS and network monitoring tools, not vulnerability assessment tools."
+        }
       },
       // Additional Security Principles questions
       {
@@ -721,7 +851,12 @@
           "Non-repudiation"
         ],
         correct: 1,
-        explanation: "Integrity ensures that data remains accurate and unaltered. It protects against unauthorized modification and ensures data trustworthiness."
+        explanation: "Integrity ensures that data remains accurate and unaltered. It protects against unauthorized modification and ensures data trustworthiness.",
+        wrongExplanations: {
+          0: "Confidentiality protects against unauthorized disclosure, not modification. It ensures data privacy, not accuracy.",
+          2: "Availability ensures access to data when needed, not protection against tampering or modification.",
+          3: "Non-repudiation proves actions were performed, but doesn't directly protect against data modification like integrity does."
+        }
       },
       {
         domain: "Security Principles",
@@ -733,7 +868,12 @@
           "Compensating control"
         ],
         correct: 1,
-        explanation: "Antivirus software is primarily a detective control because it identifies malware after it has entered the system. While it can also prevent/correct, its main function is detection."
+        explanation: "Antivirus software is primarily a detective control because it identifies malware after it has entered the system. While it can also prevent/correct, its main function is detection.",
+        wrongExplanations: {
+          0: "While antivirus can prevent some threats, its primary function is detecting malware that has already entered the system.",
+          2: "Corrective controls restore systems after incidents. While antivirus can remove malware, its primary role is detection.",
+          3: "Compensating controls are alternatives when primary controls can't be used. Antivirus is a standard detection control."
+        }
       },
       {
         domain: "Security Principles",
@@ -745,7 +885,12 @@
           "Systems are always available"
         ],
         correct: 1,
-        explanation: "Non-repudiation ensures that a party cannot deny the authenticity of their signature on a document or a message they sent. Digital signatures provide non-repudiation."
+        explanation: "Non-repudiation ensures that a party cannot deny the authenticity of their signature on a document or a message they sent. Digital signatures provide non-repudiation.",
+        wrongExplanations: {
+          0: "Preventing unauthorized access is confidentiality, not non-repudiation. Non-repudiation proves who performed an action.",
+          2: "Protecting against modification is integrity. Non-repudiation proves authorship and prevents denial of actions.",
+          3: "System availability is a separate CIA Triad principle. Non-repudiation focuses on proof of action and accountability."
+        }
       },
       {
         domain: "Security Principles",
@@ -757,7 +902,12 @@
           "Antivirus software"
         ],
         correct: 2,
-        explanation: "Security badge readers are physical security controls that restrict physical access to facilities. Technical controls like firewalls and encryption protect digital assets."
+        explanation: "Security badge readers are physical security controls that restrict physical access to facilities. Technical controls like firewalls and encryption protect digital assets.",
+        wrongExplanations: {
+          0: "Firewall rules are technical/logical controls that protect networks, not physical security controls for facilities.",
+          1: "Encryption is a technical control that protects data confidentiality, not a physical access control.",
+          3: "Antivirus software is a technical control that detects malware, not a physical security control."
+        }
       },
       {
         domain: "Security Principles",
@@ -769,7 +919,12 @@
           "To test employee loyalty"
         ],
         correct: 1,
-        explanation: "Security awareness training reduces human-based security risks by educating users about threats, safe practices, and their role in protecting organizational assets."
+        explanation: "Security awareness training reduces human-based security risks by educating users about threats, safe practices, and their role in protecting organizational assets.",
+        wrongExplanations: {
+          0: "Training complements technical controls but cannot replace them. Both human and technical defenses are necessary.",
+          2: "While training helps with compliance, its primary purpose is reducing security risks by educating employees.",
+          3: "Training is not about testing loyalty but about education. It helps employees become part of the security solution."
+        }
       },
       {
         domain: "Security Principles",
@@ -781,7 +936,12 @@
           "Risk transfer"
         ],
         correct: 2,
-        explanation: "Risk acceptance means acknowledging a risk exists and deciding not to take action because the cost of mitigation is greater than the potential impact."
+        explanation: "Risk acceptance means acknowledging a risk exists and deciding not to take action because the cost of mitigation is greater than the potential impact.",
+        wrongExplanations: {
+          0: "Risk avoidance eliminates the risk entirely by not engaging in the risky activity, rather than accepting it.",
+          1: "Risk mitigation involves implementing controls to reduce risk, not accepting it as-is due to cost considerations.",
+          3: "Risk transfer shifts risk to another party, typically through insurance, rather than accepting it."
+        }
       },
       {
         domain: "Security Principles",
@@ -793,7 +953,12 @@
           "Accepting the risk as-is"
         ],
         correct: 2,
-        explanation: "Risk transfer shifts the financial impact of a risk to a third party, commonly through insurance or outsourcing certain services."
+        explanation: "Risk transfer shifts the financial impact of a risk to a third party, commonly through insurance or outsourcing certain services.",
+        wrongExplanations: {
+          0: "Eliminating risk entirely is risk avoidance, not transfer. Transfer moves the risk impact to another party.",
+          1: "Reducing risk likelihood is risk mitigation through controls. Transfer moves the financial impact to others.",
+          3: "Accepting risk as-is is risk acceptance. Transfer involves shifting the risk burden to a third party."
+        }
       },
       {
         domain: "Security Principles",
@@ -805,7 +970,12 @@
           "Non-Disclosure Agreement (NDA)"
         ],
         correct: 1,
-        explanation: "An Acceptable Use Policy (AUP) defines how employees may use organizational IT resources, including internet, email, and computing devices."
+        explanation: "An Acceptable Use Policy (AUP) defines how employees may use organizational IT resources, including internet, email, and computing devices.",
+        wrongExplanations: {
+          0: "A Privacy Policy explains how an organization collects and uses personal data, not how employees should use IT resources.",
+          2: "An SLA defines service expectations between providers and customers, not acceptable use of IT resources.",
+          3: "An NDA protects confidential information from disclosure, not defining proper IT resource usage."
+        }
       },
       {
         domain: "Security Principles",
@@ -817,7 +987,12 @@
           "Logical control"
         ],
         correct: 1,
-        explanation: "Background screening is an administrative (or procedural) control involving policies, procedures, and guidelines for managing personnel security risks."
+        explanation: "Background screening is an administrative (or procedural) control involving policies, procedures, and guidelines for managing personnel security risks.",
+        wrongExplanations: {
+          0: "Technical controls are technology-based like firewalls and encryption. Background screening is a procedural/administrative control.",
+          2: "Physical controls restrict physical access like locks and gates. Background screening is a personnel management process.",
+          3: "Logical controls are technical controls managing digital access. Background screening is an administrative personnel control."
+        }
       },
       // Additional Access Controls questions
       {
@@ -830,7 +1005,12 @@
           "Replaces the need for authorization"
         ],
         correct: 0,
-        explanation: "SSO's primary benefit is allowing users to authenticate once and access multiple systems, reducing password fatigue and improving user experience while maintaining security."
+        explanation: "SSO's primary benefit is allowing users to authenticate once and access multiple systems, reducing password fatigue and improving user experience while maintaining security.",
+        wrongExplanations: {
+          1: "SSO still requires authentication (usually a password), it just consolidates multiple authentications into one. Passwordless options are separate.",
+          2: "SSO doesn't grant blanket access to all systems. Authorization rules still determine what each user can access.",
+          3: "SSO handles authentication (who you are), but authorization (what you can access) is still required and separate."
+        }
       },
       {
         domain: "Access Controls",
@@ -842,7 +1022,12 @@
           "Time of day"
         ],
         correct: 2,
-        explanation: "RBAC grants access based on a user's role in the organization, which corresponds to their job functions and responsibilities."
+        explanation: "RBAC grants access based on a user's role in the organization, which corresponds to their job functions and responsibilities.",
+        wrongExplanations: {
+          0: "Individual user identity is used in DAC (Discretionary Access Control). RBAC uses roles based on job functions.",
+          1: "Security clearance levels are used in MAC (Mandatory Access Control), not RBAC which focuses on organizational roles.",
+          3: "Time-based access is a contextual control. RBAC primarily focuses on job roles and functions, not temporal factors."
+        }
       },
       {
         domain: "Access Controls",
@@ -854,7 +1039,12 @@
           "Grant access only to executives"
         ],
         correct: 1,
-        explanation: "Least privilege means granting users only the minimum access rights necessary to perform their job functions, reducing the potential attack surface."
+        explanation: "Least privilege means granting users only the minimum access rights necessary to perform their job functions, reducing the potential attack surface.",
+        wrongExplanations: {
+          0: "Maximum access violates least privilege and increases security risk. Convenience should not override security principles.",
+          2: "While starting with no access is good, least privilege means granting the minimum required access, not removing all access.",
+          3: "Least privilege applies to all users based on their job needs, not just executives or specific groups."
+        }
       },
       {
         domain: "Access Controls",
@@ -866,7 +1056,12 @@
           "Intercepting communications"
         ],
         correct: 1,
-        explanation: "Tailgating (or piggybacking) is when an unauthorized person gains physical access by following closely behind an authorized person through a secure entry point."
+        explanation: "Tailgating (or piggybacking) is when an unauthorized person gains physical access by following closely behind an authorized person through a secure entry point.",
+        wrongExplanations: {
+          0: "While the term comes from driving, in security it specifically refers to unauthorized physical access through secure entry points.",
+          2: "Monitoring someone's screen is called shoulder surfing, not tailgating, which is about physical entry.",
+          3: "Intercepting communications is eavesdropping or man-in-the-middle attacks, not tailgating which is physical access."
+        }
       },
       {
         domain: "Access Controls",
@@ -878,7 +1073,12 @@
           "Somewhere you are"
         ],
         correct: 1,
-        explanation: "A security token is classified as 'something you have' - a physical or digital object that the user possesses for authentication."
+        explanation: "A security token is classified as 'something you have' - a physical or digital object that the user possesses for authentication.",
+        wrongExplanations: {
+          0: "'Something you know' includes passwords and PINs, not physical tokens which are possession-based.",
+          2: "'Something you are' refers to biometrics like fingerprints, not tokens which are possessed objects.",
+          3: "'Somewhere you are' is location-based authentication. Tokens are possession factors, not location factors."
+        }
       },
       {
         domain: "Access Controls",
@@ -890,7 +1090,12 @@
           "To backup critical data"
         ],
         correct: 1,
-        explanation: "ACLs specify permissions that determine which users, groups, or systems are granted access to specific resources and what operations they can perform."
+        explanation: "ACLs specify permissions that determine which users, groups, or systems are granted access to specific resources and what operations they can perform.",
+        wrongExplanations: {
+          0: "Encryption is handled by cryptographic protocols, not ACLs which control access permissions.",
+          2: "Network monitoring is done by IDS/IPS and SIEM systems. ACLs define who can access what, not monitor traffic.",
+          3: "Backup systems handle data protection. ACLs manage access authorization to resources."
+        }
       },
       {
         domain: "Access Controls",
@@ -902,7 +1107,12 @@
           "Authorization happens before authentication"
         ],
         correct: 0,
-        explanation: "Authentication verifies who you are (identity), while authorization determines what you can access (permissions). Authentication must occur before authorization."
+        explanation: "Authentication verifies who you are (identity), while authorization determines what you can access (permissions). Authentication must occur before authorization.",
+        wrongExplanations: {
+          1: "Both authentication and authorization apply to users, systems, and processes. The difference is identity vs. permissions.",
+          2: "They are distinct concepts: authentication proves identity, authorization grants permissions based on that identity.",
+          3: "Authentication must happen first to establish identity before authorization can determine what that identity can access."
+        }
       },
       {
         domain: "Access Controls",
@@ -914,7 +1124,12 @@
           "When security controls degrade"
         ],
         correct: 1,
-        explanation: "Privilege creep occurs when employees accumulate access rights over time as they change roles but don't lose previous permissions, violating least privilege."
+        explanation: "Privilege creep occurs when employees accumulate access rights over time as they change roles but don't lose previous permissions, violating least privilege.",
+        wrongExplanations: {
+          0: "Gradual unauthorized access by attackers is privilege escalation, not privilege creep which applies to legitimate users.",
+          2: "Password degradation is a separate issue. Privilege creep is about accumulating excess permissions over time.",
+          3: "Control degradation is configuration drift. Privilege creep specifically refers to accumulated unnecessary user permissions."
+        }
       },
       {
         domain: "Access Controls",
@@ -926,7 +1141,12 @@
           "Job rotation"
         ],
         correct: 2,
-        explanation: "Dual control (or two-person integrity) requires two authorized individuals to be present and approve before critical actions can be executed, preventing solo malicious activity."
+        explanation: "Dual control (or two-person integrity) requires two authorized individuals to be present and approve before critical actions can be executed, preventing solo malicious activity.",
+        wrongExplanations: {
+          0: "Least privilege limits access rights to minimum necessary, not requiring multiple people for actions.",
+          1: "Need to know restricts information access to those who require it, not requiring dual approval for actions.",
+          3: "Job rotation moves employees between positions to reduce fraud and cross-train, not requiring dual approval."
+        }
       },
       // Additional Network Security questions
       {
@@ -939,7 +1159,12 @@
           "To simplify network management"
         ],
         correct: 1,
-        explanation: "Network segmentation divides a network into smaller segments to contain breaches, limit lateral movement, and apply different security policies to different segments."
+        explanation: "Network segmentation divides a network into smaller segments to contain breaches, limit lateral movement, and apply different security policies to different segments.",
+        wrongExplanations: {
+          0: "Network segmentation is a security measure, not a performance optimization. It may actually add overhead.",
+          2: "Segmentation typically increases costs due to additional hardware and complexity. Its purpose is security, not cost savings.",
+          3: "Segmentation often increases management complexity. Its goal is security through isolation, not simplification."
+        }
       },
       {
         domain: "Network Security",
@@ -951,7 +1176,12 @@
           "SMTP"
         ],
         correct: 2,
-        explanation: "HTTPS uses TLS (Transport Layer Security) to encrypt web traffic, protecting data in transit from eavesdropping and tampering."
+        explanation: "HTTPS uses TLS (Transport Layer Security) to encrypt web traffic, protecting data in transit from eavesdropping and tampering.",
+        wrongExplanations: {
+          0: "HTTP transmits data in cleartext without encryption, making it vulnerable to interception and eavesdropping.",
+          1: "FTP is for file transfer and transmits in cleartext. FTPS or SFTP provide encrypted file transfer.",
+          3: "SMTP is for email transmission, not web traffic, and doesn't inherently provide encryption without TLS."
+        }
       },
       {
         domain: "Network Security",
@@ -963,7 +1193,12 @@
           "An encrypted network tunnel"
         ],
         correct: 1,
-        explanation: "A DMZ is a network segment that sits between the internet and internal network, hosting public-facing services while protecting the internal network from direct exposure."
+        explanation: "A DMZ is a network segment that sits between the internet and internal network, hosting public-facing services while protecting the internal network from direct exposure.",
+        wrongExplanations: {
+          0: "A DMZ is not for backup but for isolating public-facing services to protect internal networks from internet threats.",
+          2: "A DMZ is not specific to wireless networks. It's a segmentation strategy for any network hosting public services.",
+          3: "An encrypted tunnel is a VPN. A DMZ is a physical or logical network segment for isolation purposes."
+        }
       },
       {
         domain: "Network Security",
@@ -975,7 +1210,12 @@
           "SQL injection"
         ],
         correct: 2,
-        explanation: "A DDoS attack overwhelms a network or service with massive amounts of traffic from multiple sources, making it unavailable to legitimate users."
+        explanation: "A DDoS attack overwhelms a network or service with massive amounts of traffic from multiple sources, making it unavailable to legitimate users.",
+        wrongExplanations: {
+          0: "Phishing is a social engineering attack using deceptive messages to steal credentials, not flooding networks with traffic.",
+          1: "Man-in-the-middle attacks intercept communications between parties, not overwhelm systems with traffic.",
+          3: "SQL injection exploits database vulnerabilities through malicious queries, not by flooding with traffic."
+        }
       },
       {
         domain: "Network Security",
@@ -987,7 +1227,12 @@
           "Logs security events"
         ],
         correct: 2,
-        explanation: "Unlike an IDS which only detects and alerts, an IPS can actively block or prevent detected threats from reaching their targets by dropping malicious packets."
+        explanation: "Unlike an IDS which only detects and alerts, an IPS can actively block or prevent detected threats from reaching their targets by dropping malicious packets.",
+        wrongExplanations: {
+          0: "Both IDS and IPS monitor network traffic. The key difference is that IPS can take action to block threats.",
+          1: "Both IDS and IPS generate alerts. IPS adds the capability to actively prevent threats, not just alert.",
+          3: "Both IDS and IPS log security events. IPS's distinguishing feature is active blocking capability."
+        }
       },
       {
         domain: "Network Security",
@@ -999,7 +1244,12 @@
           "Limited bandwidth"
         ],
         correct: 2,
-        explanation: "Public Wi-Fi networks often lack encryption, allowing attackers to intercept traffic, steal credentials, and perform man-in-the-middle attacks on unsuspecting users."
+        explanation: "Public Wi-Fi networks often lack encryption, allowing attackers to intercept traffic, steal credentials, and perform man-in-the-middle attacks on unsuspecting users.",
+        wrongExplanations: {
+          0: "Slow speeds are an inconvenience, not a security risk. The real danger is traffic interception and eavesdropping.",
+          1: "Data costs are a financial concern, not a security risk. Public Wi-Fi security issues involve data interception.",
+          3: "Limited bandwidth affects performance, not security. The security risk is unencrypted traffic that can be intercepted."
+        }
       },
       {
         domain: "Network Security",
@@ -1011,7 +1261,12 @@
           "Creating VPN tunnels"
         ],
         correct: 1,
-        explanation: "Port scanning is a reconnaissance technique used to identify which ports are open on a system and what services are running, often as part of vulnerability assessment or attack preparation."
+        explanation: "Port scanning is a reconnaissance technique used to identify which ports are open on a system and what services are running, often as part of vulnerability assessment or attack preparation.",
+        wrongExplanations: {
+          0: "Encryption is handled by protocols like TLS/SSL, not port scanning which is a reconnaissance technique.",
+          2: "Firewalls and IPS systems block traffic. Port scanning identifies open ports and services, not block them.",
+          3: "VPN protocols create encrypted tunnels. Port scanning is used to discover network services, not create connections."
+        }
       },
       {
         domain: "Network Security",
@@ -1023,7 +1278,12 @@
           "Creates virtual networks"
         ],
         correct: 1,
-        explanation: "NAT translates private internal IP addresses to public IP addresses, allowing multiple devices to share a single public IP and providing a basic level of security by hiding internal addressing."
+        explanation: "NAT translates private internal IP addresses to public IP addresses, allowing multiple devices to share a single public IP and providing a basic level of security by hiding internal addressing.",
+        wrongExplanations: {
+          0: "NAT doesn't encrypt traffic; it translates IP addresses. Encryption is provided by protocols like IPSec or TLS.",
+          2: "Intrusion monitoring is done by IDS/IPS systems. NAT focuses on IP address translation, not security monitoring.",
+          3: "VLANs or SDN create virtual networks. NAT translates IP addresses to enable internet connectivity with limited public IPs."
+        }
       },
       {
         domain: "Network Security",
@@ -1035,7 +1295,12 @@
           "WPA3"
         ],
         correct: 3,
-        explanation: "WPA3 is the most current and secure wireless security protocol, providing stronger encryption and protection against brute-force attacks compared to earlier protocols."
+        explanation: "WPA3 is the most current and secure wireless security protocol, providing stronger encryption and protection against brute-force attacks compared to earlier protocols.",
+        wrongExplanations: {
+          0: "WEP is obsolete and severely flawed with known vulnerabilities that make it easily crackable within minutes.",
+          1: "WPA improved on WEP but has vulnerabilities. It's been superseded by WPA2 and WPA3.",
+          2: "WPA2 is strong but has been superseded by WPA3, which offers improved security features and protection against attacks."
+        }
       },
       // Additional Business Continuity questions
       {
@@ -1048,7 +1313,12 @@
           "Train all employees"
         ],
         correct: 1,
-        explanation: "A Business Impact Analysis (BIA) identifies critical business functions, their dependencies, and the impact of disruptions. This information guides all other BCP decisions."
+        explanation: "A Business Impact Analysis (BIA) identifies critical business functions, their dependencies, and the impact of disruptions. This information guides all other BCP decisions.",
+        wrongExplanations: {
+          0: "Equipment purchases should be based on BIA findings. You need to identify critical functions before determining what equipment to buy.",
+          2: "Testing comes after plan creation. You need to conduct BIA and develop the plan before you can test it.",
+          3: "Training happens after plan development. You must first identify critical functions and create the plan to train on."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1060,7 +1330,12 @@
           "No backups needed"
         ],
         correct: 2,
-        explanation: "Full backups provide the fastest restore time because all data is in one backup set. Incremental and differential backups require restoring multiple backup sets."
+        explanation: "Full backups provide the fastest restore time because all data is in one backup set. Incremental and differential backups require restoring multiple backup sets.",
+        wrongExplanations: {
+          0: "Incremental backups require restoring the last full backup plus all incremental backups since then, making restoration slow.",
+          1: "Differential backups require restoring the last full backup plus the latest differential, slower than a single full backup.",
+          3: "Having no backups means no ability to restore data at all, making this the worst option for recovery."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1072,7 +1347,12 @@
           "A cloud-based backup"
         ],
         correct: 1,
-        explanation: "A cold site provides basic infrastructure (power, cooling, space) but no equipment. It's the least expensive option but takes longest to become operational."
+        explanation: "A cold site provides basic infrastructure (power, cooling, space) but no equipment. It's the least expensive option but takes longest to become operational.",
+        wrongExplanations: {
+          0: "A fully equipped facility ready immediately is a hot site, the most expensive but fastest recovery option.",
+          2: "A mobile recovery unit is a specialized portable facility, separate from the cold site concept.",
+          3: "Cloud-based backups are a technology approach, not a cold site which is a physical facility with infrastructure only."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1084,7 +1364,12 @@
           "Only during actual disasters"
         ],
         correct: 2,
-        explanation: "BCPs should be tested regularly (at least annually) to ensure they remain effective, staff know their roles, and the plan reflects current business needs and technology."
+        explanation: "BCPs should be tested regularly (at least annually) to ensure they remain effective, staff know their roles, and the plan reflects current business needs and technology.",
+        wrongExplanations: {
+          0: "Testing only after changes is insufficient. Regular testing identifies issues before they matter and keeps staff prepared.",
+          1: "One-time testing is inadequate. Staff changes, technology evolves, and business processes shift, requiring regular validation.",
+          3: "Waiting for actual disasters to test plans means discovering flaws when they'll cause the most damage. Regular testing is essential."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1096,7 +1381,12 @@
           "Mirror backup"
         ],
         correct: 1,
-        explanation: "Incremental backups only back up data that changed since the last backup (full or incremental), making them fast but requiring multiple sets for full restoration."
+        explanation: "Incremental backups only back up data that changed since the last backup (full or incremental), making them fast but requiring multiple sets for full restoration.",
+        wrongExplanations: {
+          0: "Full backups copy all selected data regardless of change status, not just what changed since the last backup.",
+          2: "Differential backups capture changes since the last full backup only, not since the last backup of any type.",
+          3: "Mirror backups create exact replicas of source data, not incremental changes since the last backup."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1108,7 +1398,12 @@
           "3 years retention, 2 formats, 1 encryption method"
         ],
         correct: 0,
-        explanation: "The 3-2-1 rule recommends keeping 3 copies of data on 2 different media types with 1 copy stored offsite for comprehensive data protection."
+        explanation: "The 3-2-1 rule recommends keeping 3 copies of data on 2 different media types with 1 copy stored offsite for comprehensive data protection.",
+        wrongExplanations: {
+          1: "This describes a backup frequency schedule, not the 3-2-1 rule which addresses copies, media diversity, and offsite storage.",
+          2: "While multiple locations and vendors are good practices, the 3-2-1 rule specifically addresses copies, media types, and offsite storage.",
+          3: "Retention, formats, and encryption are important but the 3-2-1 rule specifically covers data copies, media diversity, and offsite storage."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1120,7 +1415,12 @@
           "To test disaster recovery procedures"
         ],
         correct: 1,
-        explanation: "A warm site has some equipment and infrastructure pre-installed, providing a middle ground between hot sites (expensive/fast) and cold sites (cheap/slow)."
+        explanation: "A warm site has some equipment and infrastructure pre-installed, providing a middle ground between hot sites (expensive/fast) and cold sites (cheap/slow).",
+        wrongExplanations: {
+          0: "Immediate failover within minutes is provided by hot sites. Warm sites typically take hours to days to become operational.",
+          2: "Warm sites have equipment ready for installation and activation, not just backup tape storage.",
+          3: "While warm sites can be used for testing, their primary purpose is providing a cost-effective recovery location with moderate speed."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1132,7 +1432,12 @@
           "Maximum Threat Risk Tolerance"
         ],
         correct: 1,
-        explanation: "MTTR (Mean Time To Repair) is the average time needed to repair a system or component and restore it to operational status after a failure."
+        explanation: "MTTR (Mean Time To Repair) is the average time needed to repair a system or component and restore it to operational status after a failure.",
+        wrongExplanations: {
+          0: "Maximum Time To Recover is similar to RTO (Recovery Time Objective). MTTR is specifically the mean/average repair time.",
+          2: "This is not a standard business continuity acronym. MTTR focuses on the average time to repair systems.",
+          3: "This is not a standard business continuity term. MTTR measures average repair duration, not threat tolerance."
+        }
       },
       {
         domain: "Business Continuity",
@@ -1144,7 +1449,12 @@
           "Complete failover test"
         ],
         correct: 2,
-        explanation: "A tabletop exercise is a discussion-based review of the DR plan with no actual system changes, causing no operational disruption while validating the plan's logic."
+        explanation: "A tabletop exercise is a discussion-based review of the DR plan with no actual system changes, causing no operational disruption while validating the plan's logic.",
+        wrongExplanations: {
+          0: "Full interruption tests shut down production systems to test recovery, causing maximum disruption to operations.",
+          1: "Parallel tests activate recovery systems alongside production, requiring resources and some level of operational impact.",
+          3: "Complete failover tests switch operations to the recovery site, causing significant disruption and risk to operations."
+        }
       },
       // Additional Security Operations questions
       {
@@ -1157,7 +1467,12 @@
           "To eliminate the need for testing"
         ],
         correct: 1,
-        explanation: "Change management ensures that changes are properly planned, tested, documented, and approved to minimize security risks and operational disruptions."
+        explanation: "Change management ensures that changes are properly planned, tested, documented, and approved to minimize security risks and operational disruptions.",
+        wrongExplanations: {
+          0: "Change management doesn't prevent all changes; it manages them systematically to ensure they're safe and documented.",
+          2: "Change management may slow deployments to ensure safety and testing, prioritizing security over speed.",
+          3: "Testing is a critical part of change management. The goal is to ensure changes are tested, not to eliminate testing."
+        }
       },
       {
         domain: "Security Operations",
@@ -1169,7 +1484,12 @@
           "The organization's initial security budget"
         ],
         correct: 1,
-        explanation: "A security baseline defines the minimum set of security controls that must be implemented on systems to maintain an acceptable security posture."
+        explanation: "A security baseline defines the minimum set of security controls that must be implemented on systems to maintain an acceptable security posture.",
+        wrongExplanations: {
+          0: "Security baselines define required controls and configurations, not costs. Budget considerations are separate from baseline requirements.",
+          2: "The first incident is historical data, not a baseline. Baselines establish minimum required security configurations.",
+          3: "Initial budgets are financial matters. Security baselines define mandatory security control requirements for systems."
+        }
       },
       {
         domain: "Security Operations",
@@ -1181,7 +1501,12 @@
           "Managing user access rights"
         ],
         correct: 1,
-        explanation: "Patch management is the systematic process of identifying, acquiring, testing, and installing software updates (patches) to fix vulnerabilities and bugs."
+        explanation: "Patch management is the systematic process of identifying, acquiring, testing, and installing software updates (patches) to fix vulnerabilities and bugs.",
+        wrongExplanations: {
+          0: "Creating new software is development. Patch management focuses on updating existing software to fix issues and vulnerabilities.",
+          2: "Network monitoring tracks bandwidth and performance. Patch management deals with software updates and vulnerability remediation.",
+          3: "Access rights are managed through identity and access management. Patch management focuses on software updates."
+        }
       },
       {
         domain: "Security Operations",
@@ -1193,7 +1518,12 @@
           "Restoring from backups"
         ],
         correct: 1,
-        explanation: "Containment involves isolating affected systems to prevent an incident from spreading while maintaining evidence and allowing investigation to proceed."
+        explanation: "Containment involves isolating affected systems to prevent an incident from spreading while maintaining evidence and allowing investigation to proceed.",
+        wrongExplanations: {
+          0: "Deleting systems destroys evidence and is premature. Containment isolates threats while preserving evidence for analysis.",
+          2: "Law enforcement notification is part of incident response but not containment, which focuses on preventing incident spread.",
+          3: "Restoration happens during recovery, after containment. First, you must isolate the threat to prevent further damage."
+        }
       },
       {
         domain: "Security Operations",
@@ -1205,7 +1535,12 @@
           "To replace firewalls"
         ],
         correct: 1,
-        explanation: "Security monitoring continuously observes systems, networks, and applications to detect security events, anomalies, and potential incidents in real-time."
+        explanation: "Security monitoring continuously observes systems, networks, and applications to detect security events, anomalies, and potential incidents in real-time.",
+        wrongExplanations: {
+          0: "Security monitoring protects organizational assets, not spy on employees. It focuses on detecting threats and anomalies.",
+          2: "Monitoring may use bandwidth but doesn't reduce it. Its purpose is threat detection and security event identification.",
+          3: "Monitoring complements firewalls but doesn't replace them. Each serves different security functions (detection vs. prevention)."
+        }
       },
       {
         domain: "Security Operations",
@@ -1217,7 +1552,12 @@
           "Normal user activity"
         ],
         correct: 1,
-        explanation: "A security incident is an event that violates or threatens to violate security policies, procedures, or acceptable use policies, potentially compromising confidentiality, integrity, or availability."
+        explanation: "A security incident is an event that violates or threatens to violate security policies, procedures, or acceptable use policies, potentially compromising confidentiality, integrity, or availability.",
+        wrongExplanations: {
+          0: "Normal IT resource use is not an incident. Incidents involve policy violations or security compromises.",
+          2: "Scheduled maintenance is planned activity, not a security incident which involves unexpected security compromises.",
+          3: "Normal user activity is legitimate use. Incidents are abnormal events that threaten or violate security."
+        }
       },
       {
         domain: "Security Operations",
@@ -1229,7 +1569,12 @@
           "Adding more passwords"
         ],
         correct: 1,
-        explanation: "Security hardening involves reducing a system's attack surface by disabling unnecessary services, closing unused ports, removing default accounts, and implementing secure configurations."
+        explanation: "Security hardening involves reducing a system's attack surface by disabling unnecessary services, closing unused ports, removing default accounts, and implementing secure configurations.",
+        wrongExplanations: {
+          0: "Physical strength is not hardening. Security hardening focuses on reducing digital attack surfaces through configuration.",
+          2: "Encryption is one security control but hardening encompasses broader system configuration to minimize vulnerabilities.",
+          3: "More passwords don't equal hardening. Hardening systematically reduces attack surface through secure configurations."
+        }
       },
       {
         domain: "Security Operations",
@@ -1241,7 +1586,12 @@
           "Delete all logs"
         ],
         correct: 1,
-        explanation: "The recovery phase involves restoring affected systems to normal operation, verifying they're secure, monitoring for related activity, and ensuring business operations resume safely."
+        explanation: "The recovery phase involves restoring affected systems to normal operation, verifying they're secure, monitoring for related activity, and ensuring business operations resume safely.",
+        wrongExplanations: {
+          0: "Ignoring incidents leaves vulnerabilities unaddressed. Recovery requires deliberate restoration and verification efforts.",
+          2: "Recovery involves technical restoration work, not just management notification. Systems must be verified secure and operational.",
+          3: "Deleting logs destroys evidence needed for analysis and lessons learned. Logs should be preserved during recovery."
+        }
       },
       {
         domain: "Security Operations",
@@ -1253,7 +1603,12 @@
           "Ignoring the incident"
         ],
         correct: 1,
-        explanation: "Lessons learned involves post-incident review to understand what happened, what worked well, what didn't, and how to improve incident response and prevent similar incidents."
+        explanation: "Lessons learned involves post-incident review to understand what happened, what worked well, what didn't, and how to improve incident response and prevent similar incidents.",
+        wrongExplanations: {
+          0: "Lessons learned focuses on process improvement, not punishment. The goal is organizational learning and prevention.",
+          2: "Records must be retained for analysis and compliance. Lessons learned requires reviewing documentation, not deleting it.",
+          3: "Ignoring incidents wastes learning opportunities. Lessons learned captures knowledge to improve future response and prevention."
+        }
       }
     ];
 
@@ -1357,11 +1712,28 @@
       
       if (userAnswers[currentQuestion] !== undefined) {
         const isCorrect = userAnswers[currentQuestion] === q.correct;
+        const userChoice = userAnswers[currentQuestion];
         feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
-        feedback.innerHTML = `
-          <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
-          ${q.explanation}
+        
+        let feedbackHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>`;
+        
+        if (!isCorrect && q.wrongExplanations && q.wrongExplanations[userChoice]) {
+          feedbackHTML += `
+            <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
+              <strong style="color: var(--bad); display: inline;">Why "${q.choices[userChoice]}" is wrong:</strong><br/>
+              ${q.wrongExplanations[userChoice]}
+            </p>
+          `;
+        }
+        
+        feedbackHTML += `
+          <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
+            <strong style="color: var(--good); display: inline;">Why "${q.choices[q.correct]}" is correct:</strong><br/>
+            ${q.explanation}
+          </p>
         `;
+        
+        feedback.innerHTML = feedbackHTML;
       } else {
         feedback.className = 'feedback';
         feedback.innerHTML = '';
