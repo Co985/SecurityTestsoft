@@ -156,7 +156,7 @@
     .navBtn.answered{border-color: rgba(106,166,255,.55);}
     .navBtn.unanswered{opacity:.85;}
     .navBtn.flagged::after{
-      content:"ðŸš©";
+      content:"🚩";
       position:absolute;
       top:-4px;
       right:-4px;
@@ -281,7 +281,7 @@
         <div class="logo"></div>
         <div>
           <h1>D487 â€“ Certification-Style Software Security Exam</h1>
-          <p class="sub">Scenario-based â€¢ 100 Q/attempt â€¢ Autosave/Resume â€¢ Detailed teaching feedback (Practice)</p>
+          <p class="sub">Scenario-based â€¢ 50 Q/attempt â€¢ Autosave/Resume â€¢ Detailed teaching feedback (Practice)</p>
         </div>
       </div>
       <div class="row" style="gap:10px">
@@ -313,6 +313,21 @@
               </select>
             </div>
 
+            <div>
+              <div class="small muted" style="margin-bottom:6px;">Focus Area</div>
+              <select class="select" id="focusSelect">
+                <option value="all">All Topics (Comprehensive)</option>
+                <option value="threat-modeling">Threat Modeling</option>
+                <option value="testing">Testing & Verification</option>
+                <option value="scanning">Scanning & Tools</option>
+                <option value="governance">Governance & Measurement</option>
+                <option value="lifecycle">Lifecycle & Process</option>
+                <option value="methodologies">Methodologies</option>
+                <option value="roles">Roles & Responsibilities</option>
+                <option value="core">Core Concepts</option>
+              </select>
+            </div>
+
             <div class="toggleRow">
               <div>
                 <div style="font-weight:900;">Timed</div>
@@ -331,7 +346,7 @@
 
             <div class="hr"></div>
 
-            <button class="btn primary" id="btnStart">Start new attempt (100 questions)</button>
+            <button class="btn primary" id="btnStart">Start new attempt (50 questions)</button>
             <button class="btn good" id="btnResume" style="display:none;">Resume saved attempt</button>
 
             <div class="hr"></div>
@@ -339,7 +354,7 @@
             <div class="kpi">
               <div class="box">
                 <div class="t">Progress</div>
-                <div class="v" id="kpiProgress">0 / 100</div>
+                <div class="v" id="kpiProgress">0 / 50</div>
               </div>
               <div class="box">
                 <div class="t">Locked (Practice)</div>
@@ -366,11 +381,6 @@
 
             <div class="hr"></div>
 
-            <div class="row" style="justify-content:space-between">
-              <button class="btn" id="btnPrev">â—€ Prev</button>
-              <button class="btn" id="btnNext">Next â–¶</button>
-            </div>
-
             <div class="row" style="justify-content:space-between;margin-top:10px">
               <button class="btn danger" id="btnSubmit">Submit attempt</button>
               <button class="btn" id="btnSave">Save</button>
@@ -390,7 +400,7 @@
           <h2 id="qTitle">Question</h2>
           <div style="display:flex;gap:8px;align-items:center;">
             <span class="tag" id="qStatusTag">â€”</span>
-            <button class="btn" id="btnFlag" style="padding:6px 10px;font-size:11px;" title="Flag this question">ðŸš© Flag</button>
+            <button class="btn" id="btnFlag" style="padding:6px 10px;font-size:11px;" title="Flag this question">Flag</button>
           </div>
         </div>
         <div class="bd">
@@ -417,6 +427,10 @@
             <div class="row" style="gap:10px">
               <button class="btn" id="btnPause">Pause</button>
               <button class="btn good" id="btnResumeTimer" style="display:none;">Resume timer</button>
+            </div>
+            <div class="row" style="justify-content:space-between;margin-top:12px;">
+              <button class="btn" id="btnPrev">&lt; Previous</button>
+              <button class="btn" id="btnNext">Next &gt;</button>
             </div>
           </div>
 
@@ -448,7 +462,7 @@ const LS = {
   ACTIVE: "d487_active_attempt_cert_v1",
   ATTEMPTS: "d487_attempt_history_cert_v1"
 };
-const QUESTION_COUNT = 100;
+const QUESTION_COUNT = 50;
 const IDLE_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
 const AUTO_SAVE_MS = 10 * 1000;
 
@@ -1376,7 +1390,7 @@ function assignUniqueId(q, attemptSeed, idx){
   return q;
 }
 
-function generateAttemptQuestions(seed){
+function generateAttemptQuestions(seed, focusArea = 'all'){
   console.log("Starting question generation with TERMS length:", TERMS.length, "ROLES keys:", Object.keys(ROLES));
   
   // Track validation stats
@@ -1392,12 +1406,33 @@ function generateAttemptQuestions(seed){
   
   const rng = mulberry32(seed);
 
+  // Filter terms by focus area if specified
+  let availableTerms = TERMS;
+  if (focusArea !== 'all') {
+    const categoryMap = {
+      'threat-modeling': 'Threat Modeling',
+      'testing': 'Testing & Verification',
+      'scanning': 'Scanning & Tools',
+      'governance': 'Governance & Measurement',
+      'lifecycle': 'Lifecycle & Process',
+      'methodologies': 'Methodologies',
+      'roles': 'Roles & Response',
+      'core': 'Core Concepts'
+    };
+    const targetCategory = categoryMap[focusArea];
+    if (targetCategory) {
+      availableTerms = TERMS.filter(t => categorizeTerm(t) === targetCategory);
+      // If filtered list is too small, fall back to all terms
+      if (availableTerms.length < 20) availableTerms = TERMS;
+    }
+  }
+
   // Mix: mostly concept scenarios + some role scenarios
-  const termCount = 88;
-  const roleCount = 12;
+  const termCount = 44;
+  const roleCount = 6;
 
   // choose unique terms without replacement
-  const chosenTerms = shuffle(TERMS, rng).slice(0, Math.min(termCount, TERMS.length));
+  const chosenTerms = shuffle(availableTerms, rng).slice(0, Math.min(termCount, availableTerms.length));
   const questions = [];
 
   // build term questions
@@ -1411,19 +1446,19 @@ function generateAttemptQuestions(seed){
     questions.push(buildRoleQuestion(rng));
   }
 
-  // ensure >= 100, fill with additional term questions using next terms (still unique per attempt)
+  // ensure >= 50, fill with additional term questions using next terms (still unique per attempt)
   let cursor = termCount;
   while(questions.length < QUESTION_COUNT){
-    const t = TERMS[(cursor++) % TERMS.length];
+    const t = availableTerms[(cursor++) % availableTerms.length];
     const q = buildTermQuestion(t, rng, validationStats);
     // avoid duplicates in same attempt
     const sig = questionSignature(q);
     if(questions.some(x=>questionSignature(x)===sig)) continue;
     questions.push(q);
-    if(cursor > TERMS.length * 3) break; // safety
+    if(cursor > availableTerms.length * 3) break; // safety
   }
 
-  // shuffle + take exactly 100
+  // shuffle + take exactly 50
   const final = shuffle(questions, rng).slice(0, QUESTION_COUNT);
 
   // assign unique IDs
@@ -1493,9 +1528,9 @@ const state = {
 /* =========================================================
    ATTEMPT MODEL
    ========================================================= */
-function newAttempt({mode, timed, durationMinutes}){
+function newAttempt({mode, timed, durationMinutes, focusArea}){
   const seed = (Date.now() ^ Math.floor(Math.random()*1e9)) >>> 0;
-  const questions = generateAttemptQuestions(seed);
+  const questions = generateAttemptQuestions(seed, focusArea);
 
   const totalMs = timed ? clamp(durationMinutes, 1, 240) * 60 * 1000 : null;
 
@@ -1504,6 +1539,7 @@ function newAttempt({mode, timed, durationMinutes}){
     createdAt: nowISO(),
     mode,
     seed,
+    focusArea,
     timed,
     durationMs: totalMs,
     remainingMs: totalMs,
@@ -1763,11 +1799,11 @@ function renderQuestion(){
   // Update flag button
   const flagBtn = $("btnFlag");
   if(qState.flagged){
-    flagBtn.textContent = "ðŸš© Flagged";
+    flagBtn.textContent = "Flagged";
     flagBtn.style.background = "rgba(255,77,109,.18)";
     flagBtn.style.borderColor = "rgba(255,77,109,.45)";
   } else {
-    flagBtn.textContent = "ðŸš© Flag";
+    flagBtn.textContent = "Flag";
     flagBtn.style.background = "";
     flagBtn.style.borderColor = "";
   }
@@ -1850,7 +1886,7 @@ function renderNavGrid(){
     if(isFlagged) btn.classList.add("flagged");
 
     btn.textContent = String(i+1);
-    btn.title = (isFlagged ? "ðŸš© " : "") + (isLocked ? "Locked (Correct)"
+    btn.title = (isFlagged ? "🚩 " : "") + (isLocked ? "Locked (Correct)"
               : hasWrong ? "Tried (Not correct yet)"
               : hasAnswer ? "Answered"
               : "Unanswered");
@@ -2161,11 +2197,13 @@ function startNewAttempt(){
   const timed = isExam ? true : timedSwitchOn;
 
   const durationMin = isExam ? 90 : clamp(parseInt($("durationInput").value || "90", 10), 1, 240);
+  const focusArea = $("focusSelect").value;
 
   const attempt = newAttempt({
     mode,
     timed,
-    durationMinutes: durationMin
+    durationMinutes: durationMin,
+    focusArea
   });
 
   state.attempt = attempt;
