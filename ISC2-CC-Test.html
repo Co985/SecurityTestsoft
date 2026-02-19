@@ -322,7 +322,7 @@
   <div class="container">
     <header>
       <h1>🛡️ ISC2 Certified in Cybersecurity Practice Test</h1>
-      <p class="subtitle">Test your knowledge of core cybersecurity principles • 25 Questions • Instant Feedback</p>
+      <p class="subtitle">Test your knowledge of core cybersecurity principles • 25 Random Questions • Instant Feedback • New Test Each Time</p>
       
       <div class="progress-container" id="progressContainer" style="display: none;">
         <div class="progress-stats">
@@ -338,7 +338,8 @@
     <div class="card" id="startCard">
       <h2 style="margin-bottom: 16px;">Welcome!</h2>
       <p style="margin-bottom: 20px; line-height: 1.6;">
-        This practice test covers the five domains of the ISC2 Certified in Cybersecurity certification:
+        This practice test covers the five domains of the ISC2 Certified in Cybersecurity certification. 
+        Each test randomly selects 25 questions from a pool of 75+ questions, giving you a different experience every time!
       </p>
       <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
         <li><strong>Security Principles</strong> - CIA Triad, Risk Management, Security Controls</li>
@@ -394,7 +395,9 @@
   </div>
 
   <script>
-    const questions = [
+    // Full question pool - 25 questions will be randomly selected each time
+    const questionPool = [
+      // ========== SECURITY PRINCIPLES (15 questions) ==========
       {
         domain: "Security Principles",
         question: "Which principle of the CIA Triad ensures that information is accessible to authorized users when needed?",
@@ -706,14 +709,584 @@
         ],
         correct: 1,
         explanation: "A vulnerability assessment identifies, quantifies, and prioritizes security vulnerabilities in systems. It provides awareness of weaknesses so they can be remediated based on risk."
+      },
+      // Additional Security Principles questions
+      {
+        domain: "Security Principles",
+        question: "Which security principle ensures that data has not been modified or tampered with?",
+        choices: [
+          "Confidentiality",
+          "Integrity",
+          "Availability",
+          "Non-repudiation"
+        ],
+        correct: 1,
+        explanation: "Integrity ensures that data remains accurate and unaltered. It protects against unauthorized modification and ensures data trustworthiness."
+      },
+      {
+        domain: "Security Principles",
+        question: "What type of control is antivirus software?",
+        choices: [
+          "Preventive control",
+          "Detective control",
+          "Corrective control",
+          "Compensating control"
+        ],
+        correct: 1,
+        explanation: "Antivirus software is primarily a detective control because it identifies malware after it has entered the system. While it can also prevent/correct, its main function is detection."
+      },
+      {
+        domain: "Security Principles",
+        question: "What does non-repudiation ensure in information security?",
+        choices: [
+          "Data cannot be accessed by unauthorized users",
+          "Users cannot deny performing an action",
+          "Data cannot be modified",
+          "Systems are always available"
+        ],
+        correct: 1,
+        explanation: "Non-repudiation ensures that a party cannot deny the authenticity of their signature on a document or a message they sent. Digital signatures provide non-repudiation."
+      },
+      {
+        domain: "Security Principles",
+        question: "Which is an example of a physical security control?",
+        choices: [
+          "Firewall rules",
+          "Encryption",
+          "Security badge readers",
+          "Antivirus software"
+        ],
+        correct: 2,
+        explanation: "Security badge readers are physical security controls that restrict physical access to facilities. Technical controls like firewalls and encryption protect digital assets."
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the purpose of security awareness training?",
+        choices: [
+          "To replace technical security controls",
+          "To reduce human-based security risks",
+          "To fulfill compliance requirements only",
+          "To test employee loyalty"
+        ],
+        correct: 1,
+        explanation: "Security awareness training reduces human-based security risks by educating users about threats, safe practices, and their role in protecting organizational assets."
+      },
+      {
+        domain: "Security Principles",
+        question: "Which term describes accepting a risk because the cost of mitigation exceeds the benefit?",
+        choices: [
+          "Risk avoidance",
+          "Risk mitigation",
+          "Risk acceptance",
+          "Risk transfer"
+        ],
+        correct: 2,
+        explanation: "Risk acceptance means acknowledging a risk exists and deciding not to take action because the cost of mitigation is greater than the potential impact."
+      },
+      {
+        domain: "Security Principles",
+        question: "What is risk transfer in risk management?",
+        choices: [
+          "Eliminating the risk entirely",
+          "Reducing the likelihood of the risk",
+          "Shifting the risk to a third party",
+          "Accepting the risk as-is"
+        ],
+        correct: 2,
+        explanation: "Risk transfer shifts the financial impact of a risk to a third party, commonly through insurance or outsourcing certain services."
+      },
+      {
+        domain: "Security Principles",
+        question: "Which document defines the acceptable use of an organization's IT resources?",
+        choices: [
+          "Privacy Policy",
+          "Acceptable Use Policy (AUP)",
+          "Service Level Agreement (SLA)",
+          "Non-Disclosure Agreement (NDA)"
+        ],
+        correct: 1,
+        explanation: "An Acceptable Use Policy (AUP) defines how employees may use organizational IT resources, including internet, email, and computing devices."
+      },
+      {
+        domain: "Security Principles",
+        question: "What type of security control is employee background screening?",
+        choices: [
+          "Technical control",
+          "Administrative control",
+          "Physical control",
+          "Logical control"
+        ],
+        correct: 1,
+        explanation: "Background screening is an administrative (or procedural) control involving policies, procedures, and guidelines for managing personnel security risks."
+      },
+      // Additional Access Controls questions
+      {
+        domain: "Access Controls",
+        question: "What is the primary security benefit of implementing Single Sign-On (SSO)?",
+        choices: [
+          "Users only need to remember one password",
+          "Eliminates the need for passwords entirely",
+          "Automatically grants access to all systems",
+          "Replaces the need for authorization"
+        ],
+        correct: 0,
+        explanation: "SSO's primary benefit is allowing users to authenticate once and access multiple systems, reducing password fatigue and improving user experience while maintaining security."
+      },
+      {
+        domain: "Access Controls",
+        question: "In Role-Based Access Control (RBAC), access is granted based on what?",
+        choices: [
+          "User identity",
+          "Security clearance level",
+          "Job functions and responsibilities",
+          "Time of day"
+        ],
+        correct: 2,
+        explanation: "RBAC grants access based on a user's role in the organization, which corresponds to their job functions and responsibilities."
+      },
+      {
+        domain: "Access Controls",
+        question: "What does the term 'least privilege' mean?",
+        choices: [
+          "Give users maximum access for convenience",
+          "Grant minimum access needed to perform job duties",
+          "Remove all access permissions by default",
+          "Grant access only to executives"
+        ],
+        correct: 1,
+        explanation: "Least privilege means granting users only the minimum access rights necessary to perform their job functions, reducing the potential attack surface."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is tailgating in physical security?",
+        choices: [
+          "Following too closely while driving",
+          "An unauthorized person following an authorized person through a secure door",
+          "Monitoring someone's computer screen",
+          "Intercepting communications"
+        ],
+        correct: 1,
+        explanation: "Tailgating (or piggybacking) is when an unauthorized person gains physical access by following closely behind an authorized person through a secure entry point."
+      },
+      {
+        domain: "Access Controls",
+        question: "Which authentication factor is a security token?",
+        choices: [
+          "Something you know",
+          "Something you have",
+          "Something you are",
+          "Somewhere you are"
+        ],
+        correct: 1,
+        explanation: "A security token is classified as 'something you have' - a physical or digital object that the user possesses for authentication."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of access control lists (ACLs)?",
+        choices: [
+          "To encrypt data at rest",
+          "To specify which users or systems can access specific resources",
+          "To monitor network traffic",
+          "To backup critical data"
+        ],
+        correct: 1,
+        explanation: "ACLs specify permissions that determine which users, groups, or systems are granted access to specific resources and what operations they can perform."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the primary difference between authentication and authorization?",
+        choices: [
+          "Authentication verifies identity; authorization determines access rights",
+          "Authentication is for users; authorization is for systems",
+          "They are the same thing",
+          "Authorization happens before authentication"
+        ],
+        correct: 0,
+        explanation: "Authentication verifies who you are (identity), while authorization determines what you can access (permissions). Authentication must occur before authorization."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is privilege creep?",
+        choices: [
+          "When hackers gradually gain more access",
+          "When employees accumulate excessive permissions over time",
+          "When passwords become weaker over time",
+          "When security controls degrade"
+        ],
+        correct: 1,
+        explanation: "Privilege creep occurs when employees accumulate access rights over time as they change roles but don't lose previous permissions, violating least privilege."
+      },
+      {
+        domain: "Access Controls",
+        question: "What security concept requires approval from two people to perform critical actions?",
+        choices: [
+          "Least privilege",
+          "Need to know",
+          "Dual control",
+          "Job rotation"
+        ],
+        correct: 2,
+        explanation: "Dual control (or two-person integrity) requires two authorized individuals to be present and approve before critical actions can be executed, preventing solo malicious activity."
+      },
+      // Additional Network Security questions
+      {
+        domain: "Network Security",
+        question: "What is the purpose of network segmentation?",
+        choices: [
+          "To increase network speed",
+          "To isolate different parts of a network to limit breach impact",
+          "To reduce hardware costs",
+          "To simplify network management"
+        ],
+        correct: 1,
+        explanation: "Network segmentation divides a network into smaller segments to contain breaches, limit lateral movement, and apply different security policies to different segments."
+      },
+      {
+        domain: "Network Security",
+        question: "Which protocol encrypts web traffic between a browser and web server?",
+        choices: [
+          "HTTP",
+          "FTP",
+          "HTTPS/TLS",
+          "SMTP"
+        ],
+        correct: 2,
+        explanation: "HTTPS uses TLS (Transport Layer Security) to encrypt web traffic, protecting data in transit from eavesdropping and tampering."
+      },
+      {
+        domain: "Network Security",
+        question: "What is a DMZ (Demilitarized Zone) in network security?",
+        choices: [
+          "A backup network segment",
+          "A network segment that isolates public-facing services from internal network",
+          "A wireless network zone",
+          "An encrypted network tunnel"
+        ],
+        correct: 1,
+        explanation: "A DMZ is a network segment that sits between the internet and internal network, hosting public-facing services while protecting the internal network from direct exposure."
+      },
+      {
+        domain: "Network Security",
+        question: "What type of attack floods a network with traffic to make it unavailable?",
+        choices: [
+          "Phishing",
+          "Man-in-the-middle",
+          "Distributed Denial of Service (DDoS)",
+          "SQL injection"
+        ],
+        correct: 2,
+        explanation: "A DDoS attack overwhelms a network or service with massive amounts of traffic from multiple sources, making it unavailable to legitimate users."
+      },
+      {
+        domain: "Network Security",
+        question: "What does an Intrusion Prevention System (IPS) do that an IDS doesn't?",
+        choices: [
+          "Monitors network traffic",
+          "Generates alerts",
+          "Actively blocks malicious traffic",
+          "Logs security events"
+        ],
+        correct: 2,
+        explanation: "Unlike an IDS which only detects and alerts, an IPS can actively block or prevent detected threats from reaching their targets by dropping malicious packets."
+      },
+      {
+        domain: "Network Security",
+        question: "What is the primary security risk of using public Wi-Fi networks?",
+        choices: [
+          "Slower connection speeds",
+          "Higher data costs",
+          "Traffic can be intercepted by attackers",
+          "Limited bandwidth"
+        ],
+        correct: 2,
+        explanation: "Public Wi-Fi networks often lack encryption, allowing attackers to intercept traffic, steal credentials, and perform man-in-the-middle attacks on unsuspecting users."
+      },
+      {
+        domain: "Network Security",
+        question: "What is port scanning used for?",
+        choices: [
+          "Encrypting network traffic",
+          "Identifying open ports and services on a network",
+          "Blocking malicious traffic",
+          "Creating VPN tunnels"
+        ],
+        correct: 1,
+        explanation: "Port scanning is a reconnaissance technique used to identify which ports are open on a system and what services are running, often as part of vulnerability assessment or attack preparation."
+      },
+      {
+        domain: "Network Security",
+        question: "What does NAT (Network Address Translation) provide?",
+        choices: [
+          "Encrypts all network traffic",
+          "Translates private IP addresses to public IP addresses",
+          "Monitors for intrusions",
+          "Creates virtual networks"
+        ],
+        correct: 1,
+        explanation: "NAT translates private internal IP addresses to public IP addresses, allowing multiple devices to share a single public IP and providing a basic level of security by hiding internal addressing."
+      },
+      {
+        domain: "Network Security",
+        question: "Which wireless security protocol is most secure?",
+        choices: [
+          "WEP",
+          "WPA",
+          "WPA2",
+          "WPA3"
+        ],
+        correct: 3,
+        explanation: "WPA3 is the most current and secure wireless security protocol, providing stronger encryption and protection against brute-force attacks compared to earlier protocols."
+      },
+      // Additional Business Continuity questions
+      {
+        domain: "Business Continuity",
+        question: "What is the first step in creating a Business Continuity Plan (BCP)?",
+        choices: [
+          "Purchase backup equipment",
+          "Conduct a Business Impact Analysis (BIA)",
+          "Test the disaster recovery plan",
+          "Train all employees"
+        ],
+        correct: 1,
+        explanation: "A Business Impact Analysis (BIA) identifies critical business functions, their dependencies, and the impact of disruptions. This information guides all other BCP decisions."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What type of backup strategy provides the fastest restore time?",
+        choices: [
+          "Incremental backups only",
+          "Differential backups only",
+          "Full backups",
+          "No backups needed"
+        ],
+        correct: 2,
+        explanation: "Full backups provide the fastest restore time because all data is in one backup set. Incremental and differential backups require restoring multiple backup sets."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is a cold site?",
+        choices: [
+          "A fully equipped backup facility ready to operate immediately",
+          "A facility with power and cooling but no equipment",
+          "A mobile recovery unit",
+          "A cloud-based backup"
+        ],
+        correct: 1,
+        explanation: "A cold site provides basic infrastructure (power, cooling, space) but no equipment. It's the least expensive option but takes longest to become operational."
+      },
+      {
+        domain: "Business Continuity",
+        question: "How often should Business Continuity Plans be tested?",
+        choices: [
+          "Only after major changes",
+          "Once when created, then never again",
+          "Regularly (at least annually)",
+          "Only during actual disasters"
+        ],
+        correct: 2,
+        explanation: "BCPs should be tested regularly (at least annually) to ensure they remain effective, staff know their roles, and the plan reflects current business needs and technology."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What backup type only backs up data that changed since the last backup of any type?",
+        choices: [
+          "Full backup",
+          "Incremental backup",
+          "Differential backup",
+          "Mirror backup"
+        ],
+        correct: 1,
+        explanation: "Incremental backups only back up data that changed since the last backup (full or incremental), making them fast but requiring multiple sets for full restoration."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the 3-2-1 backup rule?",
+        choices: [
+          "3 copies of data, 2 different media types, 1 offsite",
+          "3 backups daily, 2 weekly, 1 monthly",
+          "3 backup locations, 2 vendors, 1 cloud",
+          "3 years retention, 2 formats, 1 encryption method"
+        ],
+        correct: 0,
+        explanation: "The 3-2-1 rule recommends keeping 3 copies of data on 2 different media types with 1 copy stored offsite for comprehensive data protection."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a warm site?",
+        choices: [
+          "To provide immediate failover within minutes",
+          "To provide a balance between cost and recovery speed",
+          "To store only backup tapes",
+          "To test disaster recovery procedures"
+        ],
+        correct: 1,
+        explanation: "A warm site has some equipment and infrastructure pre-installed, providing a middle ground between hot sites (expensive/fast) and cold sites (cheap/slow)."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What does MTTR stand for in business continuity?",
+        choices: [
+          "Maximum Time To Recover",
+          "Mean Time To Repair",
+          "Minimum Testing Time Required",
+          "Maximum Threat Risk Tolerance"
+        ],
+        correct: 1,
+        explanation: "MTTR (Mean Time To Repair) is the average time needed to repair a system or component and restore it to operational status after a failure."
+      },
+      {
+        domain: "Business Continuity",
+        question: "Which disaster recovery test causes the least disruption to operations?",
+        choices: [
+          "Full interruption test",
+          "Parallel test",
+          "Tabletop exercise",
+          "Complete failover test"
+        ],
+        correct: 2,
+        explanation: "A tabletop exercise is a discussion-based review of the DR plan with no actual system changes, causing no operational disruption while validating the plan's logic."
+      },
+      // Additional Security Operations questions
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of change management in security operations?",
+        choices: [
+          "To prevent all system changes",
+          "To control and document changes to reduce security risks",
+          "To speed up deployment processes",
+          "To eliminate the need for testing"
+        ],
+        correct: 1,
+        explanation: "Change management ensures that changes are properly planned, tested, documented, and approved to minimize security risks and operational disruptions."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is a security baseline?",
+        choices: [
+          "The minimum cost of security controls",
+          "A minimum set of security controls for systems",
+          "The first security incident recorded",
+          "The organization's initial security budget"
+        ],
+        correct: 1,
+        explanation: "A security baseline defines the minimum set of security controls that must be implemented on systems to maintain an acceptable security posture."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is patch management?",
+        choices: [
+          "Creating new software applications",
+          "The process of identifying, testing, and deploying software updates",
+          "Monitoring network bandwidth",
+          "Managing user access rights"
+        ],
+        correct: 1,
+        explanation: "Patch management is the systematic process of identifying, acquiring, testing, and installing software updates (patches) to fix vulnerabilities and bugs."
+      },
+      {
+        domain: "Security Operations",
+        question: "What does containment mean in incident response?",
+        choices: [
+          "Deleting all affected systems",
+          "Isolating affected systems to prevent spread of the incident",
+          "Notifying law enforcement immediately",
+          "Restoring from backups"
+        ],
+        correct: 1,
+        explanation: "Containment involves isolating affected systems to prevent an incident from spreading while maintaining evidence and allowing investigation to proceed."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of security monitoring?",
+        choices: [
+          "To spy on employees",
+          "To continuously observe systems for security events and anomalies",
+          "To reduce internet bandwidth",
+          "To replace firewalls"
+        ],
+        correct: 1,
+        explanation: "Security monitoring continuously observes systems, networks, and applications to detect security events, anomalies, and potential incidents in real-time."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is a security incident?",
+        choices: [
+          "Any use of IT resources",
+          "An event that violates security policies or compromises security",
+          "Scheduled system maintenance",
+          "Normal user activity"
+        ],
+        correct: 1,
+        explanation: "A security incident is an event that violates or threatens to violate security policies, procedures, or acceptable use policies, potentially compromising confidentiality, integrity, or availability."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of security hardening?",
+        choices: [
+          "Making systems physically stronger",
+          "Reducing attack surface by disabling unnecessary services and features",
+          "Encrypting all data",
+          "Adding more passwords"
+        ],
+        correct: 1,
+        explanation: "Security hardening involves reducing a system's attack surface by disabling unnecessary services, closing unused ports, removing default accounts, and implementing secure configurations."
+      },
+      {
+        domain: "Security Operations",
+        question: "What should be done during the recovery phase of incident response?",
+        choices: [
+          "Ignore the incident and move on",
+          "Restore systems to normal operation and verify security",
+          "Only notify management",
+          "Delete all logs"
+        ],
+        correct: 1,
+        explanation: "The recovery phase involves restoring affected systems to normal operation, verifying they're secure, monitoring for related activity, and ensuring business operations resume safely."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the lessons learned phase in incident response?",
+        choices: [
+          "Punishing responsible parties",
+          "Reviewing what happened and improving processes",
+          "Deleting incident records",
+          "Ignoring the incident"
+        ],
+        correct: 1,
+        explanation: "Lessons learned involves post-incident review to understand what happened, what worked well, what didn't, and how to improve incident response and prevent similar incidents."
       }
     ];
 
     let currentQuestion = 0;
     let userAnswers = [];
     let score = 0;
+    let questions = []; // Will hold the randomly selected 25 questions
+
+    // Shuffle array using Fisher-Yates algorithm
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    // Select 25 random questions from the pool
+    function selectRandomQuestions() {
+      const shuffled = shuffleArray(questionPool);
+      questions = shuffled.slice(0, 25);
+    }
 
     function startTest() {
+      // Reset state
+      currentQuestion = 0;
+      userAnswers = [];
+      score = 0;
+      
+      // Select new random questions
+      selectRandomQuestions();
+      
       document.getElementById('startCard').style.display = 'none';
       document.getElementById('questionCard').style.display = 'block';
       document.getElementById('progressContainer').style.display = 'block';
