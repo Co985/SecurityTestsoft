@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ISC2 Certified in Cybersecurity (CC) Practice Test</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #111a2e;
+      --text: #e9eefc;
+      --muted: #a7b3d8;
+      --border: rgba(255,255,255,.12);
+      --good: #25c46a;
+      --warn: #ffb020;
+      --bad: #ff4d6d;
+      --accent: #6aa6ff;
+      --shadow: 0 8px 24px rgba(0,0,0,.3);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: linear-gradient(135deg, #0b1220 0%, #070b16 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    header {
+      background: rgba(17,26,46,.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--good));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    .progress-container {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .progress-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--good));
+      transition: width 0.3s ease;
+    }
+    
+    .card {
+      background: rgba(17,26,46,.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+    
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .question-number {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    
+    .domain-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(106,166,255,.18);
+      border: 1px solid rgba(106,166,255,.35);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .question-text {
+      font-size: 17px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .choice:hover:not(.disabled) {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.2);
+      transform: translateY(-1px);
+    }
+    
+    .choice.selected {
+      background: rgba(106,166,255,.12);
+      border-color: rgba(106,166,255,.5);
+    }
+    
+    .choice.correct {
+      background: rgba(37,196,106,.12);
+      border-color: rgba(37,196,106,.6);
+    }
+    
+    .choice.incorrect {
+      background: rgba(255,77,109,.12);
+      border-color: rgba(255,77,109,.6);
+    }
+    
+    .choice.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .choice-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(106,166,255,.18);
+      border: 1px solid rgba(106,166,255,.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .choice-text {
+      flex: 1;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+    
+    .feedback {
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .feedback.show {
+      display: block;
+    }
+    
+    .feedback.correct {
+      background: rgba(37,196,106,.12);
+      border: 1px solid rgba(37,196,106,.5);
+      color: var(--text);
+    }
+    
+    .feedback.incorrect {
+      background: rgba(255,77,109,.12);
+      border: 1px solid rgba(255,77,109,.5);
+      color: var(--text);
+    }
+    
+    .feedback strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .btn:hover:not(:disabled) {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.25);
+      transform: translateY(-1px);
+    }
+    
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    
+    .btn.primary {
+      background: rgba(106,166,255,.2);
+      border-color: rgba(106,166,255,.5);
+    }
+    
+    .btn.primary:hover:not(:disabled) {
+      background: rgba(106,166,255,.3);
+    }
+    
+    .results {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .results h2 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    
+    .score-display {
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--good));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 20px 0;
+    }
+    
+    .results-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin: 30px 0;
+    }
+    
+    .stat-box {
+      padding: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: 900;
+    }
+    
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .card { padding: 20px; }
+      .question-text { font-size: 16px; }
+      .choice-text { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🛡️ ISC2 Certified in Cybersecurity Practice Test</h1>
+      <p class="subtitle">Test your knowledge of core cybersecurity principles • 25 Questions • Instant Feedback</p>
+      
+      <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-stats">
+          <span id="progressText">Question 1 of 25</span>
+          <span id="scoreText">Score: 0/0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="card" id="startCard">
+      <h2 style="margin-bottom: 16px;">Welcome!</h2>
+      <p style="margin-bottom: 20px; line-height: 1.6;">
+        This practice test covers the five domains of the ISC2 Certified in Cybersecurity certification:
+      </p>
+      <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
+        <li><strong>Security Principles</strong> - CIA Triad, Risk Management, Security Controls</li>
+        <li><strong>Business Continuity</strong> - BC, DR, and Resilience</li>
+        <li><strong>Access Controls</strong> - Physical and Logical Access</li>
+        <li><strong>Network Security</strong> - Infrastructure and Communications Security</li>
+        <li><strong>Security Operations</strong> - Incident Response and Investigation</li>
+      </ul>
+      <button class="btn primary" onclick="startTest()">Start Practice Test</button>
+    </div>
+    
+    <div class="card" id="questionCard" style="display: none;">
+      <div class="question-header">
+        <span class="question-number" id="questionNumber"></span>
+        <span class="domain-badge" id="domainBadge"></span>
+      </div>
+      
+      <div class="question-text" id="questionText"></div>
+      
+      <div class="choices" id="choicesContainer"></div>
+      
+      <div class="feedback" id="feedback"></div>
+      
+      <div class="controls">
+        <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
+        <button class="btn primary" id="nextBtn" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+    
+    <div class="card" id="resultsCard" style="display: none;">
+      <div class="results">
+        <h2>Test Complete! 🎉</h2>
+        <div class="score-display" id="finalScore"></div>
+        
+        <div class="results-stats">
+          <div class="stat-box">
+            <div class="stat-label">Correct</div>
+            <div class="stat-value" style="color: var(--good);" id="correctCount">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Incorrect</div>
+            <div class="stat-value" style="color: var(--bad);" id="incorrectCount">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Percentage</div>
+            <div class="stat-value" style="color: var(--accent);" id="percentage">0%</div>
+          </div>
+        </div>
+        
+        <button class="btn primary" onclick="location.reload()">Take Test Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        domain: "Security Principles",
+        question: "Which principle of the CIA Triad ensures that information is accessible to authorized users when needed?",
+        choices: [
+          "Confidentiality",
+          "Integrity",
+          "Availability",
+          "Authentication"
+        ],
+        correct: 2,
+        explanation: "Availability ensures that information and resources are accessible to authorized users when needed. Confidentiality protects against unauthorized disclosure, while Integrity ensures data accuracy."
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the primary purpose of a security control?",
+        choices: [
+          "To eliminate all security risks",
+          "To reduce risk to an acceptable level",
+          "To increase system complexity",
+          "To comply with regulations only"
+        ],
+        correct: 1,
+        explanation: "Security controls are implemented to reduce risk to an acceptable level. It's impossible to eliminate all risks, so controls help manage and mitigate risks to acceptable levels."
+      },
+      {
+        domain: "Security Principles",
+        question: "Which type of security control attempts to discourage security violations before they occur?",
+        choices: [
+          "Detective controls",
+          "Corrective controls",
+          "Deterrent controls",
+          "Compensating controls"
+        ],
+        correct: 2,
+        explanation: "Deterrent controls attempt to discourage potential attackers from attempting violations. Examples include warning signs, security guards, and cameras that are visible to deter malicious activity."
+      },
+      {
+        domain: "Security Principles",
+        question: "In risk management, what is the term for the potential damage that a threat could cause?",
+        choices: [
+          "Vulnerability",
+          "Threat",
+          "Impact",
+          "Likelihood"
+        ],
+        correct: 2,
+        explanation: "Impact refers to the potential damage or consequence that could result if a threat exploits a vulnerability. It's a key component of risk assessment along with likelihood."
+      },
+      {
+        domain: "Security Principles",
+        question: "What does 'defense in depth' mean in information security?",
+        choices: [
+          "Implementing the strongest possible single security control",
+          "Using multiple layers of security controls",
+          "Focusing only on perimeter security",
+          "Encrypting all data at rest"
+        ],
+        correct: 1,
+        explanation: "Defense in depth is a security strategy that uses multiple layers of security controls throughout an IT system. If one layer fails, other layers continue to provide protection."
+      },
+      {
+        domain: "Security Principles",
+        question: "Which principle states that users should only have the minimum access necessary to perform their job functions?",
+        choices: [
+          "Need to know",
+          "Separation of duties",
+          "Least privilege",
+          "Job rotation"
+        ],
+        correct: 2,
+        explanation: "The principle of least privilege states that users should be granted only the minimum levels of access needed to perform their job duties, reducing the potential impact of compromised accounts."
+      },
+      {
+        domain: "Access Controls",
+        question: "What type of authentication factor is a fingerprint scanner?",
+        choices: [
+          "Something you know",
+          "Something you have",
+          "Something you are",
+          "Somewhere you are"
+        ],
+        correct: 2,
+        explanation: "A fingerprint scanner is a biometric authentication factor, classified as 'something you are'. It verifies identity based on unique physical characteristics."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of Multi-Factor Authentication (MFA)?",
+        choices: [
+          "To make logins more difficult",
+          "To provide additional layers of security beyond passwords",
+          "To replace passwords entirely",
+          "To track user locations"
+        ],
+        correct: 1,
+        explanation: "MFA provides additional security by requiring two or more authentication factors. This significantly reduces the risk of unauthorized access even if one factor (like a password) is compromised."
+      },
+      {
+        domain: "Access Controls",
+        question: "Which access control model uses labels and clearances to determine access?",
+        choices: [
+          "Discretionary Access Control (DAC)",
+          "Mandatory Access Control (MAC)",
+          "Role-Based Access Control (RBAC)",
+          "Rule-Based Access Control"
+        ],
+        correct: 1,
+        explanation: "Mandatory Access Control (MAC) uses security labels and clearances. Access is granted based on comparing the security clearance of users with the classification labels of resources."
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of the principle of separation of duties?",
+        choices: [
+          "To ensure employees work independently",
+          "To prevent fraud by requiring collusion to commit wrongdoing",
+          "To reduce workforce costs",
+          "To improve employee satisfaction"
+        ],
+        correct: 1,
+        explanation: "Separation of duties divides critical functions among different people to prevent any single individual from committing fraud or error. It requires collusion between multiple people to commit wrongdoing."
+      },
+      {
+        domain: "Access Controls",
+        question: "Which physical security control prevents unauthorized entry by requiring two doors with only one able to be open at a time?",
+        choices: [
+          "Turnstile",
+          "Mantrap",
+          "Bollard",
+          "Fence"
+        ],
+        correct: 1,
+        explanation: "A mantrap (or access control vestibule) uses two doors where only one can be open at a time, preventing tailgating and providing an additional layer of physical access control."
+      },
+      {
+        domain: "Network Security",
+        question: "What is the primary purpose of a firewall?",
+        choices: [
+          "To encrypt network traffic",
+          "To filter network traffic based on rules",
+          "To detect viruses",
+          "To backup network data"
+        ],
+        correct: 1,
+        explanation: "A firewall's primary purpose is to filter network traffic based on predefined rules, controlling what traffic is allowed to pass between network segments while blocking unauthorized access."
+      },
+      {
+        domain: "Network Security",
+        question: "Which security device monitors network traffic for suspicious activity and sends alerts?",
+        choices: [
+          "Intrusion Prevention System (IPS)",
+          "Intrusion Detection System (IDS)",
+          "Virtual Private Network (VPN)",
+          "Web Application Firewall (WAF)"
+        ],
+        correct: 1,
+        explanation: "An Intrusion Detection System (IDS) monitors network traffic for suspicious activity and generates alerts. Unlike an IPS, it doesn't actively block traffic, only detects and alerts."
+      },
+      {
+        domain: "Network Security",
+        question: "What protocol should be used instead of Telnet for secure remote access?",
+        choices: [
+          "FTP",
+          "HTTP",
+          "SSH",
+          "SMTP"
+        ],
+        correct: 2,
+        explanation: "SSH (Secure Shell) should be used instead of Telnet for remote access. SSH encrypts all communication, including authentication credentials, while Telnet transmits everything in cleartext."
+      },
+      {
+        domain: "Network Security",
+        question: "What does a VPN primarily provide?",
+        choices: [
+          "Faster internet connection",
+          "Encrypted tunnel over public networks",
+          "Website hosting",
+          "Email filtering"
+        ],
+        correct: 1,
+        explanation: "A VPN (Virtual Private Network) creates an encrypted tunnel over public networks like the internet, allowing secure remote access and protecting data in transit from eavesdropping."
+      },
+      {
+        domain: "Network Security",
+        question: "Which layer of the OSI model do routers primarily operate at?",
+        choices: [
+          "Layer 2 - Data Link",
+          "Layer 3 - Network",
+          "Layer 4 - Transport",
+          "Layer 7 - Application"
+        ],
+        correct: 1,
+        explanation: "Routers primarily operate at Layer 3 (Network layer) of the OSI model, making routing decisions based on IP addresses and forwarding packets between different networks."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the primary difference between Business Continuity (BC) and Disaster Recovery (DR)?",
+        choices: [
+          "BC focuses on maintaining operations during disruption; DR focuses on restoring after disaster",
+          "BC is for small incidents; DR is for major disasters only",
+          "BC is IT-focused; DR is business-focused",
+          "There is no difference"
+        ],
+        correct: 0,
+        explanation: "Business Continuity focuses on maintaining critical business operations during and after a disruption, while Disaster Recovery focuses specifically on restoring IT systems and data after a disaster."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What does RTO (Recovery Time Objective) represent?",
+        choices: [
+          "The maximum acceptable amount of data loss",
+          "The maximum acceptable downtime",
+          "The time to create backups",
+          "The cost of recovery"
+        ],
+        correct: 1,
+        explanation: "RTO (Recovery Time Objective) is the maximum acceptable length of time that a system can be down after a failure or disaster occurs. It defines the target time for recovery."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What does RPO (Recovery Point Objective) represent?",
+        choices: [
+          "The maximum acceptable downtime",
+          "The maximum acceptable amount of data loss measured in time",
+          "The physical recovery location",
+          "The recovery procedure steps"
+        ],
+        correct: 1,
+        explanation: "RPO (Recovery Point Objective) represents the maximum acceptable amount of data loss measured in time. It determines how frequently you need to backup data to avoid unacceptable loss."
+      },
+      {
+        domain: "Business Continuity",
+        question: "Which backup type only backs up data that has changed since the last full backup?",
+        choices: [
+          "Full backup",
+          "Incremental backup",
+          "Differential backup",
+          "Snapshot backup"
+        ],
+        correct: 2,
+        explanation: "A differential backup backs up all data that has changed since the last full backup. It provides a middle ground between full and incremental backups in terms of backup time and restore complexity."
+      },
+      {
+        domain: "Business Continuity",
+        question: "What type of alternate site is fully equipped and can be operational within hours?",
+        choices: [
+          "Cold site",
+          "Warm site",
+          "Hot site",
+          "Mobile site"
+        ],
+        correct: 2,
+        explanation: "A hot site is fully equipped with hardware, software, and data, and can be operational within hours. It's the most expensive option but provides the fastest recovery."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the first phase of the incident response process?",
+        choices: [
+          "Containment",
+          "Preparation",
+          "Detection and Analysis",
+          "Recovery"
+        ],
+        correct: 1,
+        explanation: "Preparation is the first phase of incident response. It involves establishing policies, procedures, tools, and training before an incident occurs to enable effective response."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of evidence preservation in incident response?",
+        choices: [
+          "To delete all traces of the attack",
+          "To maintain chain of custody for potential legal proceedings",
+          "To backup affected systems only",
+          "To immediately restore operations"
+        ],
+        correct: 1,
+        explanation: "Evidence preservation maintains the chain of custody and ensures evidence integrity for potential legal proceedings, forensic analysis, and lessons learned. Proper handling is critical for admissibility."
+      },
+      {
+        domain: "Security Operations",
+        question: "Which log type records user authentication attempts and access to resources?",
+        choices: [
+          "System logs",
+          "Application logs",
+          "Security logs",
+          "Network logs"
+        ],
+        correct: 2,
+        explanation: "Security logs (also called audit logs) record security-related events including authentication attempts, authorization decisions, and access to protected resources."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is a Security Information and Event Management (SIEM) system used for?",
+        choices: [
+          "Encrypting sensitive data",
+          "Aggregating and analyzing log data from multiple sources",
+          "Blocking malicious network traffic",
+          "Managing user passwords"
+        ],
+        correct: 1,
+        explanation: "A SIEM system collects, aggregates, and analyzes log data from multiple sources across the organization to provide real-time analysis of security alerts and support incident detection and response."
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of a vulnerability assessment?",
+        choices: [
+          "To exploit identified vulnerabilities",
+          "To identify and prioritize security weaknesses",
+          "To install security patches automatically",
+          "To monitor network traffic"
+        ],
+        correct: 1,
+        explanation: "A vulnerability assessment identifies, quantifies, and prioritizes security vulnerabilities in systems. It provides awareness of weaknesses so they can be remediated based on risk."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let userAnswers = [];
+    let score = 0;
+
+    function startTest() {
+      document.getElementById('startCard').style.display = 'none';
+      document.getElementById('questionCard').style.display = 'block';
+      document.getElementById('progressContainer').style.display = 'block';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      document.getElementById('domainBadge').textContent = q.domain;
+      document.getElementById('questionText').textContent = q.question;
+      
+      const choicesContainer = document.getElementById('choicesContainer');
+      choicesContainer.innerHTML = '';
+      
+      const letters = ['A', 'B', 'C', 'D'];
+      q.choices.forEach((choice, index) => {
+        const choiceDiv = document.createElement('div');
+        choiceDiv.className = 'choice';
+        choiceDiv.onclick = () => selectAnswer(index);
+        
+        choiceDiv.innerHTML = `
+          <div class="choice-letter">${letters[index]}</div>
+          <div class="choice-text">${choice}</div>
+        `;
+        
+        if (userAnswers[currentQuestion] !== undefined) {
+          if (index === userAnswers[currentQuestion]) {
+            choiceDiv.classList.add('selected');
+            if (index === q.correct) {
+              choiceDiv.classList.add('correct');
+            } else {
+              choiceDiv.classList.add('incorrect');
+            }
+          }
+          if (index === q.correct) {
+            choiceDiv.classList.add('correct');
+          }
+          choiceDiv.classList.add('disabled');
+          choiceDiv.onclick = null;
+        }
+        
+        choicesContainer.appendChild(choiceDiv);
+      });
+      
+      updateFeedback();
+      updateProgress();
+      updateButtons();
+    }
+
+    function selectAnswer(answerIndex) {
+      if (userAnswers[currentQuestion] !== undefined) return;
+      
+      userAnswers[currentQuestion] = answerIndex;
+      const q = questions[currentQuestion];
+      
+      if (answerIndex === q.correct) {
+        score++;
+      }
+      
+      loadQuestion();
+    }
+
+    function updateFeedback() {
+      const feedback = document.getElementById('feedback');
+      const q = questions[currentQuestion];
+      
+      if (userAnswers[currentQuestion] !== undefined) {
+        const isCorrect = userAnswers[currentQuestion] === q.correct;
+        feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+        feedback.innerHTML = `
+          <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>
+          ${q.explanation}
+        `;
+      } else {
+        feedback.className = 'feedback';
+        feedback.innerHTML = '';
+      }
+    }
+
+    function updateProgress() {
+      const answered = userAnswers.filter(a => a !== undefined).length;
+      document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+      document.getElementById('scoreText').textContent = `Score: ${score}/${answered}`;
+      
+      const progress = (answered / questions.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+    }
+
+    function updateButtons() {
+      document.getElementById('prevBtn').disabled = currentQuestion === 0;
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = 'View Results →';
+        nextBtn.disabled = userAnswers[currentQuestion] === undefined;
+      } else {
+        nextBtn.textContent = 'Next →';
+        nextBtn.disabled = false;
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('questionCard').style.display = 'none';
+      document.getElementById('resultsCard').style.display = 'block';
+      
+      const percentage = Math.round((score / questions.length) * 100);
+      
+      document.getElementById('finalScore').textContent = `${score} / ${questions.length}`;
+      document.getElementById('correctCount').textContent = score;
+      document.getElementById('incorrectCount').textContent = questions.length - score;
+      document.getElementById('percentage').textContent = percentage + '%';
+    }
+  </script>
+</body>
+</html>
