@@ -1754,12 +1754,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What is the purpose of data classification?",
+        question: "Your organization handles diverse types of data: press releases intended for public distribution, internal HR policies meant only for employees, customer purchase histories protected by privacy regulations, employee salary data restricted to HR and specific managers, and proprietary product design documents critical to competitive advantage. The security team currently applies the same security controls to all data—everything gets the same access restrictions, encryption, and monitoring. However, this approach either over-protects public data (wasting resources), or under-protects sensitive data (creating risks). The CISO proposes creating categories: 'Public' data with minimal controls, 'Internal' data with employee-only access, 'Confidential' data with role-based restrictions and encryption, and 'Restricted' data with the strictest controls including detailed activity logs and senior approval for access. What is the primary purpose of creating these data sensitivity categories?",
         choices: [
-          "To organize files alphabetically",
-          "To determine appropriate security controls based on sensitivity",
-          "To compress data for storage",
-          "To encrypt all data automatically"
+          "To organize files alphabetically in the file system",
+          "To determine appropriate security controls proportionate to data sensitivity",
+          "To compress all data for efficient storage",
+          "To automatically encrypt all organizational data"
         ],
         correct: 1,
         explanation: "Data classification is the systematic process of categorizing organizational data and information assets based on their sensitivity, value, criticality to business operations, and legal or regulatory requirements, enabling organizations to apply appropriate security controls, handling procedures, access restrictions, and protection measures proportionate to each classification level. Common classification schemes include public (freely shareable), internal (for internal use), confidential (restricted to specific roles), and highly confidential or restricted (extreme sensitivity), though specific labels vary by organization. Classification drives security decisions: public data needs only integrity protection, confidential data requires access controls and encryption, and highly sensitive data demands comprehensive protection including strict access controls, encryption, activity monitoring, and special handling. Data owners assign classifications based on impact if compromised (affecting confidentiality, integrity, availability), legal and regulatory requirements (GDPR, HIPAA, PCI DSS), business value and competitive advantage, and organizational policy. Classification must address data throughout its lifecycle from creation through archival or destruction, with labels following data as it moves, ensuring consistent appropriate protection regardless of location or format.",
@@ -1771,12 +1771,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What does 'due diligence' mean in information security?",
+        question: "A major data breach occurs at a competing company in your industry, exposing millions of customer records. The breached company faces massive lawsuits claiming they failed to implement reasonable security measures. Their lawyers argue the company had no security budget, no IT staff, and no way to know they needed protection. Courts reject this defense, ruling that any reasonable business in their industry should have understood the need for basic security like firewalls, access controls, and encrypted data storage. Your CEO, wanting to avoid similar legal liability, asks what your organization must demonstrate to show it takes reasonable care in security. Your CISO explains you must: conduct regular risk assessments identifying threats, implement security controls appropriate to identified risks, maintain compliance with applicable regulations, train employees on security responsibilities, monitor for security events, document security decisions and programs, and respond appropriately to incidents. What security concept does this reasonable, prudent care and documented effort represent?",
         choices: [
-          "Conducting security audits after incidents occur",
-          "Taking reasonable care to protect assets and comply with requirements",
-          "Hiring external security consultants",
-          "Implementing the most expensive security controls"
+          "Waiting to conduct security audits only after incidents occur",
+          "Exercising reasonable care to protect assets and comply with legal/regulatory requirements",
+          "Hiring the most expensive external security consultants available",
+          "Implementing every possible security control regardless of cost"
         ],
         correct: 1,
         explanation: "Due diligence in information security means exercising reasonable care, caution, and prudence that a responsible organization would undertake to identify risks, understand legal and regulatory obligations, implement appropriate security controls, and comply with applicable laws, regulations, industry standards, and contractual requirements. It demonstrates that an organization took sensible, prudent steps to protect assets and meet obligations, acting as a reasonable, responsible party would in similar circumstances. Due diligence includes conducting risk assessments to identify threats and vulnerabilities, implementing security controls proportionate to identified risks, maintaining compliance with regulations like GDPR, HIPAA, or PCI DSS, performing vendor due diligence before sharing data with third parties, documenting security decisions and programs, training employees on security responsibilities, monitoring and updating security as threats evolve, and responding appropriately to incidents. Demonstrating due diligence is important legally because it shows good faith efforts that may reduce liability if breaches occur despite reasonable efforts, provides evidence of reasonable care in litigation, satisfies regulatory expectations for responsible organizational behavior, and supports cyber insurance claims. Due diligence balances security with business practicality, requiring reasonable efforts appropriate to risks and resources, not perfect protection or unlimited spending.",
@@ -1788,12 +1788,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What is a privacy impact assessment (PIA)?",
+        question: "Your company plans to launch a new mobile app that will collect customer data including: names, email addresses, phone numbers, location data while the app is in use, photos users upload, purchase history, and payment information. Before development begins, the compliance team insists on conducting a formal assessment that investigates: What personal data will the app collect and why is each type necessary? How will data be collected and with what user consent? Who internally will have access to this data? Will data be shared with third parties like advertising networks or analytics providers? How long will data be retained and how will it eventually be deleted? What security measures will protect the data from breaches? Are users adequately informed about data practices? What risks to personal privacy does the app create? How can those privacy risks be reduced? What is this systematic evaluation examining how personal information will be handled throughout the app's lifecycle?",
         choices: [
-          "A tool to measure network performance",
-          "An evaluation of how personal data is collected, used, and protected",
-          "A financial audit of security spending",
-          "A penetration test of privacy controls"
+          "A network performance measurement test",
+          "An evaluation of how personal data is collected, used, shared, and protected",
+          "A financial audit of security budget spending",
+          "A penetration test of security vulnerabilities"
         ],
         correct: 1,
         explanation: "A Privacy Impact Assessment (PIA) is a systematic process for evaluating how personal information and personally identifiable information (PII) is collected, used, shared, stored, and protected throughout its lifecycle within organizational systems, processes, or projects, identifying potential privacy risks to individuals and ensuring compliance with privacy laws, regulations, and best practices like GDPR, CCPA, HIPAA, and organizational privacy policies. PIAs typically occur  before implementing new systems, processes, or technologies that collect or process personal data, examining what personal data is collected and why, how it's collected and from whom, who has access internally and whether it's shared externally, how long it's retained and how it's eventually disposed, what security controls protect it, whether individuals are informed and provide consent, what risks exist to personal privacy, and what mitigation measures reduce those risks. Conducting PIAs demonstrates accountability and due diligence in privacy protection, helps identify and fix privacy problems before implementation when changes are less costly, builds public trust by showing privacy is taken seriously, ensures regulatory compliance avoiding fines and legal issues, and protects individuals' privacy rights. PIAs are increasingly required by privacy regulations and represent best practice for responsible data stewardship.",
@@ -1822,12 +1822,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What is the primary difference between qualitative and quantitative risk assessment?",
+        question: "Your organization conducts two parallel risk assessments: In Conference Room A, the team uses a risk matrix with axes labeled 'Likelihood' (Rare, Unlikely, Possible, Likely, Almost Certain) and 'Impact' (Insignificant, Minor, Moderate, Major, Catastrophic), plotting risks into colored boxes (green/yellow/orange/red) based on expert judgment and experience. They complete assessment of 50 risks in two days producing a heat map showing 5 'red' critical risks, 15 'orange' high risks, 20 'yellow' medium risks, and 10 'green' low risks—enabling rapid prioritization. In Conference Room B, the team spends two weeks gathering historical incident data, calculating: ransomware has 15% annual probability with estimated $2.3M impact = $345,000 Annual Loss Expectancy; hardware failure has 40% annual probability with $50,000 impact = $20,000 ALE; data breach has 8% probability with $5M impact = $400,000 ALE. These precise dollar figures support cost-benefit analysis showing a $200,000 security control investment prevents $745,000 in expected annual losses. What represents the primary difference between these two assessment approaches?",
         choices: [
-          "Qualitative uses numbers; quantitative uses descriptions",
-          "Qualitative uses descriptions; quantitative uses numerical values",
-          "They are the same thing",
-          "Qualitative is always more accurate"
+          "Room A uses numerical calculations; Room B uses descriptive categories",
+          "Room A uses descriptive categories based on judgment; Room B uses numerical values and statistical calculations",
+          "Both methods are identical approaches with different names",
+          "Room A's approach is always more accurate than Room B's"
         ],
         correct: 1,
         explanation: "Qualitative risk assessment uses subjective, descriptive, non-numerical categories and scales (such as high/medium/low risk, or ratings like critical/severe/moderate/minor) to evaluate and communicate risks based on expert judgment, experience, and general understanding rather than precise mathematical calculations, making it faster, less resource-intensive, and practical when quantitative data is unavailable or cost-prohibitive to gather. Quantitative risk assessment, conversely, uses objective numerical values, probabilities, and mathematical calculations to measure risk in concrete financial terms, typically calculating metrics like Annual Loss Expectancy (ALE = SLE × ARO, where SLE is Single Loss Expectancy and ARO is Annualized Rate of Occurrence), attempting to assign dollar amounts to potential losses and statistical probabilities to threat events. Qualitative approaches work well for initial risk prioritization, situations with limited historical data, complex risks difficult to quantify, and communicating with non-technical stakeholders who understand 'high risk' better than '23.7% probability of $847,000 loss'. Quantitative approaches provide the precision needed for cost-benefit analysis of security controls ('spending $50,000 on control X reduces ALE by $200,000, clear ROI'), insurance decisions requiring actuarial loss estimates, and regulatory compliance requiring monetary risk reporting. Organizations often combine both: qualitative for rapid initial assessment and prioritization, quantitative for highest-priority risks justifying detailed analysis.",
@@ -1840,12 +1840,12 @@
       // Additional Access Controls (10 more)
       {
         domain: "Access Controls",
-        question: "What is identity proofing?",
+        question: "Your bank is implementing a new online account opening process. To comply with regulations and prevent fraud, they must verify that people creating accounts are who they claim to be before granting online banking access. The bank implements a verification process requiring: applicants must provide full name, date of birth, Social Security number, and home address matching credit bureau records; upload a photo of government-issued ID (driver's license or passport); take a selfie showing their face matching the ID photo; answer knowledge-based authentication questions from their credit history ('Which street did you live on in 2015?'); and for high-value accounts, visit a branch for in-person verification with original documents. Only after completing this verification process does the bank create online banking credentials and grant system access. This thorough process ensuring applicants are legitimate individuals before granting accounts represents what security control?",
         choices: [
-          "Testing user passwords for strength",
-          "Verifying a person's identity before granting access",
-          "Monitoring user activities",
-          "Encrypting identity data"
+          "Testing password strength to ensure secure credentials",
+          "Verifying a person's claimed identity before granting access and credentials",
+          "Monitoring user activities after access is granted",
+          "Encrypting identity data for confidentiality protection"
         ],
         correct: 1,
         explanation: "Identity proofing is the process of collecting, validating, and verifying evidence about a person's claimed identity before establishing digital credentials and granting access to organizational systems and resources, ensuring that individuals are actually who they claim to be before entrusting them with authentication factors and system access. This critical initial step in identity and access management prevents impersonation, fraud, and unauthorized access that would undermine all subsequent security controls. Identity proofing rigor scales with risk: low-assurance applications might accept self-asserted information with minimal verification (email confirmation), medium-assurance might require document verification (driver's license or passport), while high-assurance applications demand in-person verification with original documents, biometric capture, and background checks. The process typically involves collecting identity evidence (documents, biometric data), validating documents are legitimate (not forged), verifying the person possesses the claimed identity (matching documents to individual), and recording the proofing process for accountability. Strong identity proofing establishes trust in digital identities throughout their lifecycle, enabling confident authorization decisions and creating accountability for actions performed using those identities.",
