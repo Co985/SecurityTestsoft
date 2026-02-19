@@ -322,7 +322,7 @@
   <div class="container">
     <header>
       <h1>🛡️ ISC2 Certified in Cybersecurity Practice Test</h1>
-      <p class="subtitle">Test your knowledge of core cybersecurity principles • 25 Random Questions • Instant Feedback • New Test Each Time</p>
+      <p class="subtitle">Test your knowledge of core cybersecurity principles • 25 Random Questions • Multiple Attempts Allowed • Instant Feedback • New Test Each Time</p>
       
       <div class="progress-container" id="progressContainer" style="display: none;">
         <div class="progress-stats">
@@ -3006,7 +3006,8 @@
     ];
 
     let currentQuestion = 0;
-    let userAnswers = [];
+    let userAnswers = []; // Stores final answer (when correct) for each question
+    let questionAttempts = []; // Tracks all wrong attempts for each question
     let score = 0;
     let questions = []; // Will hold the randomly selected 25 questions
 
@@ -3064,6 +3065,7 @@
       // Reset state
       currentQuestion = 0;
       userAnswers = [];
+      questionAttempts = [];
       score = 0;
       
       // Select new random questions
@@ -3087,31 +3089,37 @@
       const choicesContainer = document.getElementById('choicesContainer');
       choicesContainer.innerHTML = '';
       
+      // Get attempts for this question
+      const attempts = questionAttempts[currentQuestion] || [];
+      const isAnswered = userAnswers[currentQuestion] !== undefined;
+      
       const letters = ['A', 'B', 'C', 'D'];
       q.choices.forEach((choice, index) => {
         const choiceDiv = document.createElement('div');
         choiceDiv.className = 'choice';
-        choiceDiv.onclick = () => selectAnswer(index);
+        
+        // Only disable if correct answer has been found
+        if (!isAnswered) {
+          choiceDiv.onclick = () => selectAnswer(index);
+        } else {
+          choiceDiv.classList.add('disabled');
+          choiceDiv.onclick = null;
+        }
         
         choiceDiv.innerHTML = `
           <div class="choice-letter">${letters[index]}</div>
           <div class="choice-text">${choice}</div>
         `;
         
-        if (userAnswers[currentQuestion] !== undefined) {
-          if (index === userAnswers[currentQuestion]) {
-            choiceDiv.classList.add('selected');
-            if (index === q.correct) {
-              choiceDiv.classList.add('correct');
-            } else {
-              choiceDiv.classList.add('incorrect');
-            }
-          }
-          if (index === q.correct) {
-            choiceDiv.classList.add('correct');
-          }
-          choiceDiv.classList.add('disabled');
-          choiceDiv.onclick = null;
+        // Show correct answer when found
+        if (isAnswered && index === q.correct) {
+          choiceDiv.classList.add('correct');
+          choiceDiv.classList.add('selected');
+        }
+        
+        // Show previously attempted wrong answers
+        if (attempts.includes(index) && index !== q.correct) {
+          choiceDiv.classList.add('incorrect');
         }
         
         choicesContainer.appendChild(choiceDiv);
@@ -3123,13 +3131,26 @@
     }
 
     function selectAnswer(answerIndex) {
-      if (userAnswers[currentQuestion] !== undefined) return;
-      
-      userAnswers[currentQuestion] = answerIndex;
       const q = questions[currentQuestion];
       
+      // If correct answer already found, don't allow more attempts
+      if (userAnswers[currentQuestion] !== undefined) return;
+      
+      // Initialize attempts array for this question if needed
+      if (!questionAttempts[currentQuestion]) {
+        questionAttempts[currentQuestion] = [];
+      }
+      
+      // Check if this is the correct answer
       if (answerIndex === q.correct) {
+        // Correct! Lock the question and increment score
+        userAnswers[currentQuestion] = answerIndex;
         score++;
+      } else {
+        // Wrong answer - track it but allow retry
+        if (!questionAttempts[currentQuestion].includes(answerIndex)) {
+          questionAttempts[currentQuestion].push(answerIndex);
+        }
       }
       
       loadQuestion();
@@ -3138,29 +3159,62 @@
     function updateFeedback() {
       const feedback = document.getElementById('feedback');
       const q = questions[currentQuestion];
+      const attempts = questionAttempts[currentQuestion] || [];
+      const isAnswered = userAnswers[currentQuestion] !== undefined;
       
-      if (userAnswers[currentQuestion] !== undefined) {
-        const isCorrect = userAnswers[currentQuestion] === q.correct;
-        const userChoice = userAnswers[currentQuestion];
-        feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      // Show feedback if there are attempts or question is answered
+      if (attempts.length > 0 || isAnswered) {
+        feedback.className = 'feedback show ' + (isAnswered ? 'correct' : 'incorrect');
         
-        let feedbackHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong>`;
+        let feedbackHTML = '';
         
-        if (!isCorrect && q.wrongExplanations && q.wrongExplanations[userChoice]) {
+        if (isAnswered) {
+          // Correct answer found
+          feedbackHTML = `<strong>✓ Correct!</strong>`;
+          
+          // Show all wrong attempts that were made
+          if (attempts.length > 0) {
+            feedbackHTML += `<p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Previous attempts: ${attempts.length}</p>`;
+            attempts.forEach(attemptIndex => {
+              if (q.wrongExplanations && q.wrongExplanations[attemptIndex]) {
+                feedbackHTML += `
+                  <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
+                    <strong style="color: var(--bad); display: inline;">Why "${q.choices[attemptIndex]}" is wrong:</strong><br/>
+                    ${q.wrongExplanations[attemptIndex]}
+                  </p>
+                `;
+              }
+            });
+          }
+          
+          // Show correct explanation
           feedbackHTML += `
             <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
-              <strong style="color: var(--bad); display: inline;">Why "${q.choices[userChoice]}" is wrong:</strong><br/>
-              ${q.wrongExplanations[userChoice]}
+              <strong style="color: var(--good); display: inline;">Why "${q.choices[q.correct]}" is correct:</strong><br/>
+              ${q.explanation}
             </p>
           `;
+        } else {
+          // Still attempting - show wrong attempts
+          feedbackHTML = `<strong>✗ Try Again!</strong>`;
+          if (attempts.length > 1) {
+            feedbackHTML += `<p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Attempts: ${attempts.length}</p>`;
+          }
+          
+          // Show explanations for all wrong attempts
+          attempts.forEach(attemptIndex => {
+            if (q.wrongExplanations && q.wrongExplanations[attemptIndex]) {
+              feedbackHTML += `
+                <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
+                  <strong style="color: var(--bad); display: inline;">Why "${q.choices[attemptIndex]}" is wrong:</strong><br/>
+                  ${q.wrongExplanations[attemptIndex]}
+                </p>
+              `;
+            }
+          });
+          
+          feedbackHTML += `<p style="margin: 8px 0 0 0; font-size: 13px; color: var(--accent);">💡 Select another answer to try again.</p>`;
         }
-        
-        feedbackHTML += `
-          <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
-            <strong style="color: var(--good); display: inline;">Why "${q.choices[q.correct]}" is correct:</strong><br/>
-            ${q.explanation}
-          </p>
-        `;
         
         feedback.innerHTML = feedbackHTML;
       } else {
