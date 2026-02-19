@@ -744,7 +744,7 @@
       },
       {
         domain: "Business Continuity",
-        question: "Which backup type only backs up data that has changed since the last full backup?",
+        question: "Which backup type backs up all data that has changed since the last full backup, regardless of any other backups performed in between?",
         choices: [
           "Full backup",
           "Incremental backup",
@@ -3010,6 +3010,7 @@
     let questionAttempts = []; // Tracks all wrong attempts for each question
     let score = 0;
     let questions = []; // Will hold the randomly selected 25 questions
+    let choiceShuffleMap = []; // Maps displayed choice index to original choice index for each question
 
     // Shuffle array using Fisher-Yates algorithm
     function shuffleArray(array) {
@@ -3066,6 +3067,7 @@
       currentQuestion = 0;
       userAnswers = [];
       questionAttempts = [];
+      choiceShuffleMap = []; // Reset shuffle mappings for new test
       score = 0;
       
       // Select new random questions
@@ -3089,36 +3091,46 @@
       const choicesContainer = document.getElementById('choicesContainer');
       choicesContainer.innerHTML = '';
       
+      // Create or retrieve shuffle mapping for this question
+      if (!choiceShuffleMap[currentQuestion]) {
+        // Create array of indices [0,1,2,3] and shuffle them
+        const indices = [0, 1, 2, 3];
+        choiceShuffleMap[currentQuestion] = shuffleArray(indices);
+      }
+      const shuffleMap = choiceShuffleMap[currentQuestion];
+      
       // Get attempts for this question
       const attempts = questionAttempts[currentQuestion] || [];
       const isAnswered = userAnswers[currentQuestion] !== undefined;
       
       const letters = ['A', 'B', 'C', 'D'];
-      q.choices.forEach((choice, index) => {
+      shuffleMap.forEach((originalIndex, displayIndex) => {
+        const choice = q.choices[originalIndex];
         const choiceDiv = document.createElement('div');
         choiceDiv.className = 'choice';
         
         // Only disable if correct answer has been found
         if (!isAnswered) {
-          choiceDiv.onclick = () => selectAnswer(index);
+          choiceDiv.onclick = () => selectAnswer(displayIndex);
         } else {
           choiceDiv.classList.add('disabled');
           choiceDiv.onclick = null;
         }
         
         choiceDiv.innerHTML = `
-          <div class="choice-letter">${letters[index]}</div>
+          <div class="choice-letter">${letters[displayIndex]}</div>
           <div class="choice-text">${choice}</div>
         `;
         
-        // Show correct answer when found
-        if (isAnswered && index === q.correct) {
+        // Show correct answer when found (compare original indices)
+        if (isAnswered && originalIndex === q.correct) {
           choiceDiv.classList.add('correct');
           choiceDiv.classList.add('selected');
         }
         
-        // Show previously attempted wrong answers
-        if (attempts.includes(index) && index !== q.correct) {
+        // Show previously attempted wrong answers (convert display attempts to original indices)
+        const attemptedOriginalIndices = attempts.map(displayIdx => shuffleMap[displayIdx]);
+        if (attemptedOriginalIndices.includes(originalIndex) && originalIndex !== q.correct) {
           choiceDiv.classList.add('incorrect');
         }
         
@@ -3130,8 +3142,10 @@
       updateButtons();
     }
 
-    function selectAnswer(answerIndex) {
+    function selectAnswer(displayIndex) {
       const q = questions[currentQuestion];
+      const shuffleMap = choiceShuffleMap[currentQuestion];
+      const originalIndex = shuffleMap[displayIndex]; // Convert displayed position to original choice index
       
       // If correct answer already found, don't allow more attempts
       if (userAnswers[currentQuestion] !== undefined) return;
@@ -3141,15 +3155,15 @@
         questionAttempts[currentQuestion] = [];
       }
       
-      // Check if this is the correct answer
-      if (answerIndex === q.correct) {
+      // Check if this is the correct answer (compare original indices)
+      if (originalIndex === q.correct) {
         // Correct! Lock the question and increment score
-        userAnswers[currentQuestion] = answerIndex;
+        userAnswers[currentQuestion] = displayIndex; // Store the displayed position they clicked
         score++;
       } else {
-        // Wrong answer - track it but allow retry
-        if (!questionAttempts[currentQuestion].includes(answerIndex)) {
-          questionAttempts[currentQuestion].push(answerIndex);
+        // Wrong answer - track the displayed position but allow retry
+        if (!questionAttempts[currentQuestion].includes(displayIndex)) {
+          questionAttempts[currentQuestion].push(displayIndex);
         }
       }
       
@@ -3159,8 +3173,12 @@
     function updateFeedback() {
       const feedback = document.getElementById('feedback');
       const q = questions[currentQuestion];
+      const shuffleMap = choiceShuffleMap[currentQuestion] || [0,1,2,3]; // Fallback if not shuffled yet
       const attempts = questionAttempts[currentQuestion] || [];
       const isAnswered = userAnswers[currentQuestion] !== undefined;
+      
+      // Convert displayed attempt indices to original indices for lookups
+      const attemptedOriginalIndices = attempts.map(displayIdx => shuffleMap[displayIdx]);
       
       // Show feedback if there are attempts or question is answered
       if (attempts.length > 0 || isAnswered) {
@@ -3187,13 +3205,13 @@
           // Show ALL wrong answer explanations for comprehensive learning
           feedbackHTML += `<div style="margin: 12px 0 8px 0; font-weight: 700; font-size: 14px; color: var(--muted);">Understanding Why Other Options Are Wrong:</div>`;
           
-          q.choices.forEach((choice, index) => {
-            if (index !== q.correct && q.wrongExplanations && q.wrongExplanations[index]) {
-              const wasTried = attempts.includes(index);
+          q.choices.forEach((choice, originalIndex) => {
+            if (originalIndex !== q.correct && q.wrongExplanations && q.wrongExplanations[originalIndex]) {
+              const wasTried = attemptedOriginalIndices.includes(originalIndex);
               feedbackHTML += `
                 <div style="margin: 8px 0; padding: 12px; background: rgba(255,77,109,.10); border: 1px solid rgba(255,77,109,.25); border-radius: 10px;">
                   <strong style="color: var(--bad); display: block; margin-bottom: 8px; font-size: 14px;">✗ ${wasTried ? '(You tried this) ' : ''}"${choice}"</strong>
-                  <div style="line-height: 1.6;">${q.wrongExplanations[index]}</div>
+                  <div style="line-height: 1.6;">${q.wrongExplanations[originalIndex]}</div>
                 </div>
               `;
             }
@@ -3205,13 +3223,14 @@
             feedbackHTML += `<p style="margin: 8px 0 0 0; font-size: 13px; color: var(--muted);">Attempts: ${attempts.length}</p>`;
           }
           
-          // Show explanations for all wrong attempts
-          attempts.forEach(attemptIndex => {
-            if (q.wrongExplanations && q.wrongExplanations[attemptIndex]) {
+          // Show explanations for all wrong attempts (convert display to original indices)
+          attempts.forEach(displayIndex => {
+            const originalIndex = shuffleMap[displayIndex];
+            if (q.wrongExplanations && q.wrongExplanations[originalIndex]) {
               feedbackHTML += `
                 <p style="margin: 8px 0; padding: 10px; background: rgba(0,0,0,.2); border-radius: 8px;">
-                  <strong style="color: var(--bad); display: inline;">Why "${q.choices[attemptIndex]}" is wrong:</strong><br/>
-                  ${q.wrongExplanations[attemptIndex]}
+                  <strong style="color: var(--bad); display: inline;">Why "${q.choices[originalIndex]}" is wrong:</strong><br/>
+                  ${q.wrongExplanations[originalIndex]}
                 </p>
               `;
             }
