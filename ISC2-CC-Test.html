@@ -339,15 +339,36 @@
       <h2 style="margin-bottom: 16px;">Welcome!</h2>
       <p style="margin-bottom: 20px; line-height: 1.6;">
         This practice test covers the five domains of the ISC2 Certified in Cybersecurity certification. 
-        Each test randomly selects 25 questions from a pool of 125 questions, giving you a different experience every time!
+        Each test randomly selects 25 questions from a pool of 155 questions, giving you a different experience every time!
       </p>
-      <ul style="margin-left: 20px; margin-bottom: 24px; line-height: 1.8;">
-        <li><strong>Security Principles</strong> - CIA Triad, Risk Management, Security Controls</li>
-        <li><strong>Business Continuity</strong> - BC, DR, and Resilience</li>
-        <li><strong>Access Controls</strong> - Physical and Logical Access</li>
-        <li><strong>Network Security</strong> - Infrastructure and Communications Security</li>
-        <li><strong>Security Operations</strong> - Incident Response and Investigation</li>
-      </ul>
+      
+      <div style="margin-bottom: 24px;">
+        <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--accent);">Select Domains to Test:</h3>
+        <div style="display: grid; gap: 10px;">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;">
+            <input type="checkbox" id="domainSecPrinciples" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <span><strong>Security Principles</strong> - CIA Triad, Risk Management, Security Controls</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;">
+            <input type="checkbox" id="domainAccessControls" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <span><strong>Access Controls</strong> - Physical and Logical Access</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;">
+            <input type="checkbox" id="domainNetworkSec" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <span><strong>Network Security</strong> - Infrastructure and Communications Security</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;">
+            <input type="checkbox" id="domainBusinessContinuity" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <span><strong>Business Continuity</strong> - BC, DR, and Resilience</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px;">
+            <input type="checkbox" id="domainSecOps" checked style="width: 18px; height: 18px; cursor: pointer;">
+            <span><strong>Security Operations</strong> - Incident Response and Investigation</span>
+          </label>
+        </div>
+        <p style="margin-top: 12px; font-size: 13px; color: var(--muted);">💡 Tip: Uncheck domains to focus on specific areas. At least one domain must be selected.</p>
+      </div>
+      
       <button class="btn primary" onclick="startTest()">Start Practice Test</button>
     </div>
     
@@ -2465,6 +2486,522 @@
           2: "That's a false negative - missed threat. False positives are the opposite: harmless activities incorrectly identified as threats.",
           3: "Correctly dismissed alerts may have been false positives. A false positive is specifically a security alert on benign activity."
         }
+      },
+      // ========== FINAL EXPANSION - Adding 30 more questions (6 per domain) ==========
+      // Additional Security Principles (6 more)
+      {
+        domain: "Security Principles",
+        question: "What is the primary purpose of security awareness training?",
+        choices: [
+          "To teach users how to hack systems",
+          "To educate users about security threats and safe practices",
+          "To replace technical security controls",
+          "To monitor employee behavior"
+        ],
+        correct: 1,
+        explanation: "Security awareness training educates users about threats, policies, and safe practices to reduce human-caused security incidents and create a security-conscious culture.",
+        wrongExplanations: {
+          0: "Training teaches defensive practices and threat recognition, not attack techniques. The goal is protection, not offensive capabilities.",
+          2: "Training complements technical controls by addressing the human element. People remain critical, and training reduces human-related risks.",
+          3: "Training educates, not monitors. While it may cover acceptable behavior, its purpose is education not surveillance."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What does the term 'security posture' mean?",
+        choices: [
+          "The physical stance of security guards",
+          "An organization's overall security status and readiness",
+          "The placement of security cameras",
+          "Employee seating arrangements"
+        ],
+        correct: 1,
+        explanation: "Security posture describes an organization's overall security strength, including controls, policies, procedures, and readiness to prevent and respond to threats.",
+        wrongExplanations: {
+          0: "Posture is a cybersecurity term for organizational readiness, not physical positioning. It assesses comprehensive security capabilities.",
+          2: "Camera placement is one physical control. Security posture encompasses all security measures, policies, and organizational readiness.",
+          3: "Posture refers to security status and capabilities, not physical arrangements. It evaluates comprehensive security effectiveness."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the principle of 'fail-safe' in security design?",
+        choices: [
+          "Systems never fail",
+          "When failures occur, systems default to a secure state",
+          "Failures are ignored",
+          "Systems bypass security during failures"
+        ],
+        correct: 1,
+        explanation: "Fail-safe means when systems fail, they default to a secure state. For example, if authentication fails, access is denied (not granted). This prevents failures from creating security vulnerabilities.",
+        wrongExplanations: {
+          0: "All systems can fail. Fail-safe ensures that when failures occur, the system defaults to a secure state, not that failures never happen.",
+          2: "Fail-safe specifically addresses failures by defaulting to security. Ignoring failures creates vulnerabilities rather than protection.",
+          3: "Fail-safe does the opposite - it ensures security during failures. Bypassing security during failures would create critical vulnerabilities."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the difference between a threat and a threat actor?",
+        choices: [
+          "There is no difference",
+          "A threat is a potential danger; a threat actor is the person or entity carrying it out",
+          "Threats are external; threat actors are internal",
+          "Threats are technical; threat actors are physical"
+        ],
+        correct: 1,
+        explanation: "A threat is any potential danger or adverse event. A threat actor is the entity (person, group, nation-state) that might carry out the threat. The actor executes the threat.",
+        wrongExplanations: {
+          0: "They're distinct concepts. Threats are potential dangers; threat actors are entities that may execute those threats against assets.",
+          2: "Both can be internal or external. The distinction is that threats are potential dangers while threat actors are the entities that execute them.",
+          3: "Threats can be any type of danger. Threat actors can use technical or physical means. The difference is potential danger vs. the agent causing it."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is the purpose of security policies?",
+        choices: [
+          "To provide detailed technical implementation instructions",
+          "To establish high-level security objectives and requirements",
+          "To replace laws and regulations",
+          "To monitor employee activities"
+        ],
+        correct: 1,
+        explanation: "Security policies are high-level documents that establish an organization's security objectives, requirements, and management's commitment. They guide standards, procedures, and implementation.",
+        wrongExplanations: {
+          0: "Policies are high-level. Standards and procedures provide detailed technical implementation. Policies set direction, not technical specifications.",
+          2: "Policies must comply with laws and regulations, not replace them. Policies establish organizational requirements within legal frameworks.",
+          3: "Policies define what security must achieve, not how to monitor. Monitoring procedures implement policy requirements."
+        }
+      },
+      {
+        domain: "Security Principles",
+        question: "What is residual risk?",
+        choices: [
+          "Risk that has been completely eliminated",
+          "Risk that remains after security controls are applied",
+          "Risk from insider threats only",
+          "Risk that is transferred to insurance"
+        ],
+        correct: 1,
+        explanation: "Residual risk is the risk that remains after security controls are implemented. Since no control is 100% effective, some risk always remains and must be accepted.",
+        wrongExplanations: {
+          0: "Risk can never be completely eliminated. Residual risk is specifically what remains after controls are applied - some risk always persists.",
+          2: "Residual risk applies to all risk types after controls. It's not limited to insider threats but refers to all remaining risk.",
+          3: "Transferred risk is shifted to others (like insurance). Residual risk remains with the organization after treatment efforts."
+        }
+      },
+      // Additional Access Controls (6 more)
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of credential rotation?",
+        choices: [
+          "To make passwords longer",
+          "To periodically change credentials to limit exposure from compromises",
+          "To encrypt passwords",
+          "To share credentials among users"
+        ],
+        correct: 1,
+        explanation: "Credential rotation regularly changes passwords, API keys, and other credentials to limit the window of opportunity if credentials are compromised and reduce long-term exposure.",
+        wrongExplanations: {
+          0: "Rotation changes credentials periodically, not their length. Length requirements are separate password complexity policies.",
+          2: "Encryption protects stored credentials. Rotation changes credentials periodically to limit compromise exposure time.",
+          3: "Rotation enhances security by changing credentials regularly. Sharing credentials violates security principles and accountability."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is biometric authentication's primary security advantage?",
+        choices: [
+          "It can be easily shared between users",
+          "It's based on unique physical characteristics that are difficult to replicate",
+          "It never requires updates",
+          "It works without any technology"
+        ],
+        correct: 1,
+        explanation: "Biometric authentication uses unique physical characteristics (fingerprints, iris, face) that are difficult to forge or steal, providing strong 'something you are' authentication.",
+        wrongExplanations: {
+          0: "Biometrics cannot be shared - they're unique to individuals. This unshareability is an advantage, ensuring personal accountability.",
+          2: "Biometric templates may need updating due to injuries, aging, or improved technology. They're not permanent and unchanging.",
+          3: "Biometric authentication requires specialized hardware (scanners, cameras) and software to capture and verify characteristics."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of session timeout?",
+        choices: [
+          "To force users to work faster",
+          "To automatically log out inactive users, reducing risk from unattended sessions",
+          "To save server resources only",
+          "To annoy users"
+        ],
+        correct: 1,
+        explanation: "Session timeout automatically logs out users after inactivity, preventing unauthorized access to unattended authenticated sessions. This is critical for shared or public computers.",
+        wrongExplanations: {
+          0: "Timeout protects against unauthorized access to unattended sessions. It's a security control, not a productivity tool.",
+          2: "While resource management is a benefit, the primary purpose is security - preventing access to abandoned authenticated sessions.",
+          3: "Timeout is a security control that protects against session hijacking and unauthorized access, not a user inconvenience measure."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is cross-site request forgery (CSRF) in access control?",
+        choices: [
+          "A type of encryption",
+          "An attack where unauthorized commands are transmitted from a user the application trusts",
+          "A password cracking technique",
+          "A network routing protocol"
+        ],
+        correct: 1,
+        explanation: "CSRF tricks authenticated users into executing unwanted actions by exploiting their authenticated session. The application trusts the user's browser, so it processes the malicious request.",
+        wrongExplanations: {
+          0: "CSRF is an attack exploiting authentication sessions, not an encryption method. It abuses trust relationships, not cryptographic protections.",
+          2: "CSRF doesn't crack passwords. It exploits existing authenticated sessions to perform unauthorized actions using the victim's credentials.",
+          3: "CSRF is a web application attack, not a network protocol. It exploits authentication trust to execute unauthorized commands."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the principle of 'need to know'?",
+        choices: [
+          "Everyone should know all security policies",
+          "Access to information should be limited to those who require it for their duties",
+          "Security incidents should be widely publicized",
+          "All passwords should be documented"
+        ],
+        correct: 1,
+        explanation: "Need to know restricts access to sensitive information only to individuals who require it for legitimate job functions, minimizing exposure and limiting insider threat risks.",
+        wrongExplanations: {
+          0: "Need to know limits information access to those requiring it. While policies should be known, sensitive data access is restricted.",
+          2: "Need to know restricts information sharing. Security incidents are shared selectively with those who need the information, not widely publicized.",
+          3: "Need to know protects sensitive information. Documenting passwords violates security principles and increases compromise risk."
+        }
+      },
+      {
+        domain: "Access Controls",
+        question: "What is the purpose of access control vestibules (mantraps)?",
+        choices: [
+          "To store security equipment",
+          "To prevent tailgating by requiring individuals to authenticate in a secure area between two doors",
+          "To provide employee break areas",
+          "To hold security meetings"
+        ],
+        correct: 1,
+        explanation: "Access control vestibules require authentication between two interlocked doors where only one can open at a time, preventing tailgating and ensuring individual authentication.",
+        wrongExplanations: {
+          0: "Vestibules are physical access controls, not storage. They prevent unauthorized entry by requiring individual authentication between two doors.",
+          2: "Vestibules are security checkpoints with interlocked doors, not amenities. They control facility access, not provide break spaces.",
+          3: "Vestibules are physical access control points, not meeting rooms. They prevent tailgating through controlled two-door authentication."
+        }
+      },
+      // Additional Network Security (6 more)
+      {
+        domain: "Network Security",
+        question: "What is the purpose of subnetting?",
+        choices: [
+          "To encrypt network traffic",
+          "To divide networks into smaller segments for better management and security",
+          "To increase internet speed",
+          "To eliminate the need for routers"
+        ],
+        correct: 1,
+        explanation: "Subnetting divides large networks into smaller logical segments, improving performance, simplifying management, and enhancing security through network isolation and access control.",
+        wrongExplanations: {
+          0: "Subnetting divides networks logically, it doesn't encrypt traffic. Encryption protocols like TLS/IPsec handle traffic protection.",
+          2: "Subnetting can improve performance through traffic isolation but isn't primarily for speed. Its main purposes are organization and security.",
+          3: "Subnets typically require routers to communicate with each other. Subnetting creates logical divisions that routers interconnect."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is a man-in-the-middle (MITM) attack?",
+        choices: [
+          "Overloading a server with requests",
+          "Intercepting and potentially altering communications between two parties",
+          "Guessing passwords repeatedly",
+          "Scanning for open ports"
+        ],
+        correct: 1,
+        explanation: "MITM attacks intercept communications between two parties, allowing the attacker to eavesdrop or alter messages while both parties believe they're communicating directly and securely.",
+        wrongExplanations: {
+          0: "That describes a denial-of-service attack. MITM attackers position themselves between communicating parties to intercept or modify traffic.",
+          2: "Password guessing is brute-force attack. MITM intercepts communications between parties to eavesdrop or manipulate messages in transit.",
+          3: "Port scanning is reconnaissance. MITM attacks intercept communications by positioning the attacker between two communicating parties."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is the purpose of IPsec?",
+        choices: [
+          "To scan for viruses",
+          "To provide secure IP communications through authentication and encryption",
+          "To assign IP addresses automatically",
+          "To compress network traffic"
+        ],
+        correct: 1,
+        explanation: "IPsec secures IP communications by authenticating and encrypting each IP packet in a communication session, commonly used for VPNs and secure site-to-site connections.",
+        wrongExplanations: {
+          0: "IPsec secures network communications, not scans for malware. Antivirus software and security scanners detect viruses.",
+          2: "DHCP assigns IP addresses automatically. IPsec provides authentication and encryption for secure IP communications.",
+          3: "IPsec adds encryption and authentication overhead. Its purpose is security through encryption and integrity, not compression."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is network address translation (NAT) primarily used for?",
+        choices: [
+          "Encrypting all network traffic",
+          "Allowing multiple devices to share a single public IP address",
+          "Preventing all cyber attacks",
+          "Increasing network speed"
+        ],
+        correct: 1,
+        explanation: "NAT translates private internal IP addresses to public IP addresses, allowing multiple devices to share one public IP. It also provides basic security by hiding internal addressing.",
+        wrongExplanations: {
+          0: "NAT translates addresses, not encrypts traffic. VPNs and protocols like TLS/IPsec handle encryption, not NAT.",
+          2: "NAT provides address translation and some obscurity, but isn't a comprehensive security solution. It doesn't prevent all attacks.",
+          3: "NAT is about address translation and conservation, not performance. It may add slight processing overhead for translation."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is SSL/TLS stripping?",
+        choices: [
+          "A data compression technique",
+          "An attack that downgrades HTTPS connections to HTTP to intercept traffic",
+          "A network optimization method",
+          "A legitimate security protocol"
+        ],
+        correct: 1,
+        explanation: "SSL/TLS stripping is an attack where attackers intercept connections and downgrade secure HTTPS to unencrypted HTTP, allowing them to read or modify traffic in a MITM attack.",
+        wrongExplanations: {
+          0: "Stripping is an attack that removes encryption, not compression. It downgrades secure connections to expose traffic to interception.",
+          2: "Stripping is a malicious attack, not optimization. It removes encryption to enable eavesdropping, degrading security not improving performance.",
+          3: "Stripping is an attack technique, not a protocol. It exploits connections by removing encryption to enable traffic interception."
+        }
+      },
+      {
+        domain: "Network Security",
+        question: "What is the purpose of content filtering?",
+        choices: [
+          "To increase bandwidth",
+          "To block access to inappropriate or malicious websites and content",
+          "To encrypt emails",
+          "To assign IP addresses"
+        ],
+        correct: 1,
+        explanation: "Content filtering blocks access to inappropriate, malicious, or policy-violating websites and content, protecting users and enforcing acceptable use policies.",
+        wrongExplanations: {
+          0: "Content filtering inspects and blocks traffic which may reduce bandwidth. Its purpose is security and policy enforcement, not performance.",
+          2: "Email encryption protects message confidentiality. Content filtering blocks access to prohibited websites and malicious content.",
+          3: "DHCP assigns IP addresses. Content filtering examines and blocks access to websites and content based on security and policy rules."
+        }
+      },
+      // Additional Business Continuity (6 more)
+      {
+        domain: "Business Continuity",
+        question: "What is the primary difference between high availability and disaster recovery?",
+        choices: [
+          "They are the same thing",
+          "High availability prevents downtime; disaster recovery restores after major incidents",
+          "High availability is cheaper than disaster recovery",
+          "Disaster recovery is only for natural disasters"
+        ],
+        correct: 1,
+        explanation: "High availability uses redundancy and failover to prevent downtime (proactive). Disaster recovery restores operations after significant outages or disasters (reactive).",
+        wrongExplanations: {
+          0: "They're complementary but different. HA prevents downtime through redundancy; DR restores operations after major incidents.",
+          2: "Cost varies by implementation. The distinction is that HA prevents downtime proactively while DR recovers from disasters reactively.",
+          3: "DR addresses any major disruption (technical failures, cyber attacks, natural disasters). It's not limited to natural disasters."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a jump bag (or go-bag) in business continuity?",
+        choices: [
+          "To store employee lunches",
+          "To contain essential supplies and information needed for immediate disaster response",
+          "To hold backup tapes only",
+          "To transport computer equipment"
+        ],
+        correct: 1,
+        explanation: "A jump bag contains essential items for immediate disaster response: contact lists, procedures, credentials, basic supplies. It enables quick action when facilities are inaccessible.",
+        wrongExplanations: {
+          0: "Jump bags are emergency response kits, not meal storage. They contain critical information and supplies for disaster response.",
+          2: "While they may include backup media, jump bags contain diverse emergency response items: procedures, contacts, credentials, and supplies.",
+          3: "Jump bags are portable emergency kits, not shipping containers. They hold critical information and supplies for immediate response, not bulk equipment."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is data replication in business continuity?",
+        choices: [
+          "Deleting old data",
+          "Copying data to multiple locations for redundancy and availability",
+          "Compressing data for storage",
+          "Analyzing data for patterns"
+        ],
+        correct: 1,
+        explanation: "Data replication copies data to multiple locations (often in real-time or near-real-time) to ensure availability, support disaster recovery, and minimize data loss.",
+        wrongExplanations: {
+          0: "Replication creates copies for redundancy, not deletes data. It ensures data availability across multiple locations for continuity.",
+          2: "Compression reduces storage space. Replication creates redundant copies across locations to ensure availability and support recovery.",
+          3: "Analytics examines data for insights. Replication copies data to multiple sites for redundancy, availability, and disaster recovery."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the recovery time actual (RTA)?",
+        choices: [
+          "The time management wants for recovery",
+          "The actual time it took to recover from a disruption",
+          "The theoretical best-case recovery time",
+          "The maximum tolerable downtime"
+        ],
+        correct: 1,
+        explanation: "RTA is the actual measured time it took to recover operations after an incident. Comparing RTA to RTO shows whether recovery objectives were met.",
+        wrongExplanations: {
+          0: "That's RTO (Recovery Time Objective). RTA measures actual recovery time after incidents occur, not management targets.",
+          2: "RTA is actual measured recovery time from real events, not theoretical. It reflects real-world performance, not estimated capabilities.",
+          3: "That's MTD (Maximum Tolerable Downtime). RTA measures actual recovery time after incidents, not maximum survival thresholds."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What is the purpose of a communication plan in business continuity?",
+        choices: [
+          "To advertise products during disasters",
+          "To ensure stakeholders receive timely, accurate information during disruptions",
+          "To monitor employee communications",
+          "To reduce phone bills"
+        ],
+        correct: 1,
+        explanation: "Communication plans ensure employees, customers, partners, and other stakeholders receive timely, accurate updates during disruptions, maintaining trust and coordinating response efforts.",
+        wrongExplanations: {
+          0: "Communication plans address crisis communications about operational status and recovery, not marketing activities during emergencies.",
+          2: "Plans facilitate information sharing during crises, not surveillance. They ensure stakeholders receive accurate updates for coordination and trust.",
+          3: "Communication plans ensure effective crisis communications and coordination, not cost reduction. Their purpose is information management during disruptions."
+        }
+      },
+      {
+        domain: "Business Continuity",
+        question: "What are recovery time tiers in business continuity planning?",
+        choices: [
+          "Employee salary levels",
+          "Categories of systems based on how quickly they must be recovered",
+          "Physical building floors for recovery",
+          "Different types of disasters"
+        ],
+        correct: 1,
+        explanation: "Recovery time tiers categorize systems by criticality and required recovery speed. Tier 1 systems need immediate recovery; lower tiers can take longer based on business impact.",
+        wrongExplanations: {
+          0: "Tiers classify systems by recovery priority based on business criticality, not employee compensation or organizational hierarchy.",
+          2: "Recovery tiers are logical system prioritization, not physical locations. They determine which systems must be restored first.",
+          3: "Tiers prioritize systems for recovery regardless of disaster type. They classify systems by business criticality and required recovery speed."
+        }
+      },
+      // Additional Security Operations (6 more)
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of a security playbook?",
+        choices: [
+          "To document sports strategies",
+          "To provide step-by-step procedures for responding to specific security scenarios",
+          "To store passwords",
+          "To list all security tools"
+        ],
+        correct: 1,
+        explanation: "Security playbooks provide detailed, step-by-step response procedures for specific scenarios (phishing, ransomware, etc.), ensuring consistent, effective incident handling.",
+        wrongExplanations: {
+          0: "Security playbooks document response procedures for cyber incidents, not athletic activities. They guide analysts through investigation and response steps.",
+          2: "Playbooks contain response procedures, not credentials. Password vaults securely store credentials; playbooks guide incident response actions.",
+          3: "While playbooks reference tools, their purpose is documenting response procedures. They provide step-by-step guidance for handling specific security events."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is indicator of compromise (IOC)?",
+        choices: [
+          "A type of firewall",
+          "Evidence that a security incident has occurred or is occurring",
+          "An encryption algorithm",
+          "A password policy"
+        ],
+        correct: 1,
+        explanation: "IOCs are forensic evidence indicating a security breach, such as unusual network traffic, suspicious files, known malware signatures, or unauthorized access patterns.",
+        wrongExplanations: {
+          0: "IOCs are evidence of compromise, not security devices. They're artifacts indicating security incidents have occurred or are underway.",
+          2: "IOCs are evidence artifacts from security incidents, not cryptographic methods. They help identify compromises, not protect data.",
+          3: "IOCs are signs of security breaches, not policy documents. They include suspicious files, network patterns, or activities indicating compromise."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is security configuration management?",
+        choices: [
+          "Managing security staff schedules",
+          "Controlling and documenting system configurations to maintain security baselines",
+          "Purchasing security equipment",
+          "Writing security policies only"
+        ],
+        correct: 1,
+        explanation: "Security configuration management establishes, documents, and maintains secure system configurations (baselines), ensuring systems remain secure throughout their lifecycle through change control.",
+        wrongExplanations: {
+          0: "Configuration management controls system settings, not personnel. It maintains secure baselines for hardware, software, and network configurations.",
+          2: "Procurement is separate. Configuration management establishes and maintains secure system settings according to security baselines.",
+          3: "While policies guide it, configuration management implements and maintains secure system settings based on defined security baselines."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of root cause analysis after a security incident?",
+        choices: [
+          "To punish those responsible",
+          "To identify the fundamental reason the incident occurred to prevent recurrence",
+          "To restore systems only",
+          "To contact law enforcement"
+        ],
+        correct: 1,
+        explanation: "Root cause analysis identifies the fundamental underlying reason an incident occurred, enabling organizations to address root issues and prevent similar incidents rather than just treating symptoms.",
+        wrongExplanations: {
+          0: "Root cause analysis focuses on prevention through understanding, not blame. It identifies systemic issues to prevent recurrence.",
+          2: "Restoration is separate from analysis. Root cause analysis investigates why incidents occurred to enable prevention of similar events.",
+          3: "Law enforcement notification is a separate decision. Root cause analysis investigates fundamental causes to enable prevention through remediation."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is security log aggregation?",
+        choices: [
+          "Deleting old logs",
+          "Collecting logs from multiple sources into a centralized location for analysis",
+          "Compressing log files",
+          "Printing log reports"
+        ],
+        correct: 1,
+        explanation: "Log aggregation collects logs from diverse sources (servers, applications, network devices) into a central system, enabling comprehensive analysis, correlation, and incident detection.",
+        wrongExplanations: {
+          0: "Aggregation consolidates logs for analysis, not deletes them. Collection and centralization enable comprehensive security monitoring.",
+          2: "While compression may occur, aggregation's purpose is collecting logs from multiple sources centrally for analysis and correlation.",
+          3: "Aggregation centralizes logs for analysis, not printing. It enables real-time correlation and detection across diverse systems."
+        }
+      },
+      {
+        domain: "Security Operations",
+        question: "What is the purpose of tabletop exercises in security operations?",
+        choices: [
+          "To test physical strength",
+          "To discuss and walk through incident response procedures without actual system changes",
+          "To replace actual incident response plans",
+          "To purchase security equipment"
+        ],
+        correct: 1,
+        explanation: "Tabletop exercises are discussion-based sessions where teams talk through incident scenarios and response procedures, identifying gaps and improving plans without disrupting operations.",
+        wrongExplanations: {
+          0: "Tabletop exercises test response planning through discussion, not physical capabilities. They validate procedures through scenario walk-throughs.",
+          2: "Exercises test and refine plans, not replace them. They validate plan effectiveness through discussion-based scenario walk-throughs.",
+          3: "Tabletop exercises validate response procedures through discussion, not procurement. They test plans and identify improvements before real incidents."
+        }
       }
     ];
 
@@ -2483,10 +3020,44 @@
       return shuffled;
     }
 
-    // Select 25 random questions from the pool
+    // Select 25 random questions from the pool (filtered by selected domains)
     function selectRandomQuestions() {
-      const shuffled = shuffleArray(questionPool);
+      // Get selected domains
+      const domainMap = {
+        'domainSecPrinciples': 'Security Principles',
+        'domainAccessControls': 'Access Controls',
+        'domainNetworkSec': 'Network Security',
+        'domainBusinessContinuity': 'Business Continuity',
+        'domainSecOps': 'Security Operations'
+      };
+      
+      const selectedDomains = [];
+      for (const [id, domain] of Object.entries(domainMap)) {
+        const checkbox = document.getElementById(id);
+        if (checkbox && checkbox.checked) {
+          selectedDomains.push(domain);
+        }
+      }
+      
+      // If no domains selected, show error and don't start test
+      if (selectedDomains.length === 0) {
+        alert('Please select at least one domain to test.');
+        return false;
+      }
+      
+      // Filter questions by selected domains
+      const filteredQuestions = questionPool.filter(q => selectedDomains.includes(q.domain));
+      
+      // If not enough questions in selected domains
+      if (filteredQuestions.length < 25) {
+        alert(`Not enough questions in selected domains. Selected domains have ${filteredQuestions.length} questions, but 25 are needed. Please select more domains.`);
+        return false;
+      }
+      
+      // Shuffle and select 25
+      const shuffled = shuffleArray(filteredQuestions);
       questions = shuffled.slice(0, 25);
+      return true;
     }
 
     function startTest() {
@@ -2496,7 +3067,9 @@
       score = 0;
       
       // Select new random questions
-      selectRandomQuestions();
+      if (!selectRandomQuestions()) {
+        return; // Don't start test if validation fails
+      }
       
       document.getElementById('startCard').style.display = 'none';
       document.getElementById('questionCard').style.display = 'block';
