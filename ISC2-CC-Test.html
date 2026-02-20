@@ -898,12 +898,12 @@
       // Additional Security Principles questions
       {
         domain: "Security Principles",
-        question: "Which security principle ensures that data has not been modified or tampered with?",
+        question: "Your organization's financial database contains transaction records, account balances, and customer information. Monday morning, accountants discover discrepancies: Customer A's account balance changed from $10,000 to $157,000 without any documented transaction, Customer B's payment of $5,000 was modified to $500 in the records (though bank confirms $5,000 was received), interest calculations are producing incorrect results due to altered interest rate values in configuration tables, and audit logs show someone accessed the database Sunday night when no authorized maintenance was scheduled. The CFO asks the security team: 'How can we ensure our financial data remains accurate, complete, and unaltered except through authorized documented processes, and detect when unauthorized changes occur?' Which security principle addresses protecting data from unauthorized modification?",
         choices: [
-          "Confidentiality",
-          "Integrity",
-          "Availability",
-          "Non-repudiation"
+          "Confidentiality—protecting data from unauthorized viewing",
+          "Integrity—ensuring data remains accurate, complete, and unaltered except through authorized processes",
+          "Availability—ensuring systems and data are accessible when needed",
+          "Non-repudiation—preventing denial of actions taken"
         ],
         correct: 1,
         explanation: "Integrity is the second pillar of the CIA Triad, which ensures that data and information remain accurate, complete, consistent, and trustworthy throughout their entire lifecycle, unaltered except through authorized and documented processes. Integrity protection prevents unauthorized modification, corruption, or tampering with data, whether intentional (by attackers or malicious insiders) or accidental (through system errors or bugs). Organizations implement integrity controls including cryptographic hashing to detect changes, digital signatures to verify authenticity and detect tampering, checksums for data transmission verification, access controls to prevent unauthorized modification, version control to track legitimate changes, audit trails to record who made what changes when, and database constraints to ensure data consistency. Integrity violations can have serious consequences including incorrect business decisions based on corrupt data, financial losses from manipulated transactions, safety incidents from altered engineering specifications, and compliance failures. Integrity is particularly critical for financial records, medical data, legal documents, audit logs, and any information used for important decisions or having regulatory requirements.",
@@ -915,12 +915,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What type of control is antivirus software?",
+        question: "Your security team evaluates various security controls for effectiveness categorization. The team examines antivirus software deployed on all workstations: the antivirus continuously monitors file systems, memory, network activity, and processes; when users download files, open email attachments, or copy data from USB drives, the antivirus scans content comparing against signature databases of known malware; if suspicious files are detected that match malware signatures or exhibit malicious behaviors, the software alerts administrators, quarantines threats, and logs incidents for investigation. The security manager explains: 'While modern antivirus includes real-time scanning that can block threats, its fundamental purpose is recognizing and identifying malware after files enter the system environment through scanning and detection mechanisms—it discovers threats and alerts us, enabling response.' What control category best describes this function?",
         choices: [
-          "Preventive control",
-          "Detective control",
-          "Corrective control",
-          "Compensating control"
+          "Preventive control—stopping threats before they occur",
+          "Detective control—identifying and alerting on threats after entry through recognition and discovery",
+          "Corrective control—repairing systems after incidents",
+          "Compensating control—alternative when primary controls cannot be used"
         ],
         correct: 1,
         explanation: "Antivirus software is primarily classified as a detective control within the security control framework because its fundamental function is identifying and alerting on malicious software after it has gained entry to systems through various means such as downloads, email attachments, removable media, or network infections. Detective controls are security measures that discover and report on security events, violations, or threats after they have occurred or while in progress. While modern antivirus solutions do incorporate preventive capabilities like real-time scanning that blocks known malware during file access, and corrective capabilities like quarantine and malware removal, the core technology relies on detecting malicious signatures, behaviors, or anomalies through scanning file systems, memory, and processes. The classification as detective emphasizes that even with preventive features, antivirus fundamentally works by recognizing threats through detection mechanisms (signature matching, heuristics, behavior analysis) rather than preventing the initial entry vector. Organizations layer antivirus with truly preventive controls like application whitelisting, secure configuration, and user education for defense in depth.",
@@ -932,12 +932,12 @@
       },
       {
         domain: "Security Principles",
-        question: "What does non-repudiation ensure in information security?",
+        question: "Your organization sends a critical contract to a vendor via email. The vendor receives the contract, agrees to terms, and digitally signs it using their private cryptographic key, creating a unique signature that mathematically binds their identity to the exact contract content. Weeks later, market conditions change unfavorably for the vendor. They contact your legal team claiming: 'We never signed that contract. Someone must have forged our signature. We're not bound by those terms.' Your legal team provides the digitally signed contract to forensic experts who use the vendor's public key to cryptographically verify that: (1) the signature was definitely created using the vendor's private key that only they possess, and (2) the contract content hasn't been altered since signing. The vendor cannot plausibly deny signing because the cryptographic proof is mathematically verifiable and legally binding. What security principle does this digital signature provide?",
         choices: [
-          "Data cannot be accessed by unauthorized users",
-          "Users cannot deny performing an action",
-          "Data cannot be modified",
-          "Systems are always available"
+          "Confidentiality—preventing unauthorized access to contract terms",
+          "Non-repudiation—ensuring parties cannot deny performing actions, providing verifiable proof of signing",
+          "Availability—ensuring contract accessibility when needed",
+          "Authorization—controlling who can sign contracts"
         ],
         correct: 1,
         explanation: "Non-repudiation is a critical security principle that ensures individuals, systems, or organizations cannot falsely deny the authenticity of their digital actions, signatures, or communications after the fact. This is achieved through technical mechanisms that create verifiable proof of origin, delivery, and integrity that cannot be disputed later. The most common implementation is digital signatures using public key cryptography, where the signer's private key creates a unique cryptographic signature that can be verified with their public key, proving both that they signed it (authentication) and that the content hasn't been altered since signing (integrity). Non-repudiation is essential for legal contracts, financial transactions, email correspondence, regulatory compliance, and any scenario where proving authorship or receipt is important. It provides accountability and supports dispute resolution by creating indisputable evidence. Audit logs and timestamps also contribute to non-repudiation by recording who performed what actions when, creating accountability trails that cannot be plausibly denied later.",
@@ -1052,12 +1052,12 @@
       // Additional Access Controls questions
       {
         domain: "Access Controls",
-        question: "What is the primary security benefit of implementing Single Sign-On (SSO)?",
+        question: "Your organization has 15 different systems employees must access daily: email, HR portal, timesheet system, CRM, project management tool, file sharing, collaboration platform, expense reporting, learning management system, VPN, database applications, and various specialized tools. Currently, each system requires separate username and password, forcing employees to remember 15 different credentials. Security audits reveal serious problems: employees reuse the same weak password 'Company123!' across multiple systems (compromising one system exposes many), staff write passwords on sticky notes attached to monitors (physical security risk), the help desk receives 40-50 password reset requests daily costing $25 each in support time ($1,000-1,250 daily), and users choose memorable but easily guessable passwords to cope with password fatigue. The IT team proposes implementing a solution where employees authenticate once in the morning with one strong password (enhanced with multi-factor authentication), and then gain automatic access to all authorized systems without re-entering credentials. What is the primary security benefit of this technology?",
         choices: [
-          "Users only need to remember one password",
-          "Eliminates the need for passwords entirely",
-          "Automatically grants access to all systems",
-          "Replaces the need for authorization"
+          "Users only need to remember one strong password instead of many weak ones, reducing password reuse and written passwords",
+          "Completely eliminates the need for any passwords or authentication",
+          "Automatically grants unlimited access to all company systems without restrictions",
+          "Replaces the need for authorization and permission controls"
         ],
         correct: 0,
         explanation: "Single Sign-On (SSO) is an authentication scheme that allows users to authenticate once with a single set of credentials and then gain access to multiple related but independent software systems and applications without needing to log in separately to each one. SSO's primary benefit is dramatically reducing password fatigue that occurs when users must remember and manage numerous different passwords for different systems, leading to weak password practices like reusing passwords, writing them down, or choosing simple memorable passwords that are easy to crack. By consolidating authentication into a single event, SSO improves user experience through convenience and reduced login friction while simultaneously enhancing security through centralized authentication management, stronger password policies on a single credential, reduced attack surface from multiple authentication points, and better monitoring and auditing capabilities. Organizations implementing SSO typically see reduced help desk costs from fewer password reset requests, improved productivity from eliminated re-authentication delays, and enhanced security through better credential management and multi-factor authentication enforcement at the central authentication point.",
@@ -1069,12 +1069,12 @@
       },
       {
         domain: "Access Controls",
-        question: "In Role-Based Access Control (RBAC), access is granted based on what?",
+        question: "Your organization manages access permissions for 500 employees across 50 different systems and applications. Currently, IT administrators grant permissions individually to each user—a time-consuming process prone to errors and inconsistencies: when Jennifer joins as an Accountant, administrators manually grant her access to the accounting software, general ledger, accounts payable, accounts receivable, financial reporting, and expense systems (10+ individual permission changes). When Mark becomes a Sales Representative, administrators grant access to CRM, sales portal, proposal system, customer database, and commission tracking (8+ changes). Managing 500 users individually across 50 systems creates thousands of permission assignments to track. The IT team proposes restructuring: create 'Accountant' role with pre-defined permissions to all accounting systems, create 'Sales Representative' role with sales system access, create 'HR Manager' role with HR system permissions, etc. Now, when Jennifer joins, IT simply assigns her the 'Accountant' role—she automatically inherits all permissions that accountant job function requires. When Mark joins, assigning 'Sales Representative' role gives him appropriate sales access. What access control model is this?",
         choices: [
-          "User identity",
-          "Security clearance level",
-          "Job functions and responsibilities",
-          "Time of day"
+          "Based on individual user identity with custom permission grants",
+          "Based on security clearance levels (Top Secret, Secret, Confidential)",
+          "Role-Based Access Control (RBAC)—granting access based on job functions and organizational responsibilities",
+          "Based exclusively on time of day access restrictions"
         ],
         correct: 2,
         explanation: "Role-Based Access Control (RBAC) is an access control model that grants permissions and access rights based on defined roles within an organization rather than to individual users directly, where each role corresponds to specific job functions, responsibilities, and duties. Users are assigned to one or more roles (such as 'Accountant,' 'HR Manager,' 'Database Administrator,' or 'Sales Representative'), and each role is granted specific permissions to access certain resources and perform certain operations based on what's necessary for that job function. When a user is assigned a role, they automatically inherit all permissions associated with that role, simplifying administration since permission changes can be made at the role level rather than individually for each user. RBAC is particularly effective in organizations with clear job function definitions and role hierarchies, enabling adherence to the principle of least privilege by granting access based on job needs, reducing administrative overhead through role-based rather than user-based permission management, and facilitating compliance auditing by clearly mapping roles to access rights.",
@@ -1086,12 +1086,12 @@
       },
       {
         domain: "Access Controls",
-        question: "What does the term 'least privilege' mean?",
+        question: "Your organization conducts an access rights audit discovering that Sarah, a Marketing Coordinator, has Domain Administrator privileges granting her control over all company servers, databases, and Active Directory—despite her job requiring only access to marketing files and the company website CMS. Tom, a junior developer, has database administrator rights to production financial databases containing customer payment information and revenue data—though his job involves developing test features that should only access development databases with fake data. Meanwhile, Jessica, the CFO, requires read access to specific financial reports but her account has full delete/modify permissions to all financial systems. The security team explains: 'These excessive permissions create unnecessary risk. If Sarah's account is compromised, attackers control everything. If Tom makes a coding mistake, he could corrupt real financial data. If Jessica's laptop is stolen, the thief could delete accounting records. Each person should have only the minimum access genuinely required for their actual job duties—nothing more.' What security principle is being violated and needs correction?",
         choices: [
-          "Give users maximum access for convenience",
-          "Grant minimum access needed to perform job duties",
-          "Remove all access permissions by default",
-          "Grant access only to executives"
+          "Grant maximum access to everyone for operational convenience and flexibility",
+          "Least privilege—grant only the minimum access needed to perform specific job duties, limiting damage from compromises or errors",
+          "Remove all access permissions completely, preventing any work",
+          "Grant administrative access only to executives and senior management"
         ],
         correct: 1,
         explanation: "The principle of least privilege is a fundamental security concept stating that users, systems, processes, and programs should be granted only the absolute minimum levels of access, permissions, privileges, and rights necessary to perform their specific authorized job functions or tasks, and nothing more. This principle significantly reduces the attack surface and limits potential damage from compromised accounts, insider threats, malware, errors, or misuse by ensuring that if an account is compromised, the attacker gains only limited access rather than broad system control. Least privilege implementation requires careful analysis of job requirements to determine necessary permissions, regular reviews to prevent privilege creep as roles change, and often involves starting with no access and incrementally granting only proven necessary rights. Organizations following least privilege make unauthorized actions more difficult, contain security breaches to smaller scopes, facilitate compliance with regulations requiring access controls, simplify auditing by creating clear connections between roles and permissions, and reduce the impact of both external attacks and insider threats by limiting what any single account can access or damage.",
